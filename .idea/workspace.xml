@@ -4,94 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28a2f1e1-4c61-45dc-92f1-d16097bc198a" name="Changes" comment="final">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/AppointmentFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/DashboardFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/Detail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/EmployeeFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/LoginFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/PatientFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/RegisterFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/ScheduleFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/SessionFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/TreatmentFormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Launcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/LauncherWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/db/DbConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Appointment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Schedule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Session.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Treatment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/TreatmentMethod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/TreatmentMethodDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/AppointmentTm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/EmployeeTm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/ScheduleTm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/SessionTm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentMethodDetailTm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentMethodTm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentTm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/AppointmentRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/EmployeeRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/PatientRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/ScheduleRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/SessionRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/TreatmentMethodDetailRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/TreatmentMethodRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/TreatmentRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/UserRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/border.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/button.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/button2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/Featured-IMG-Appointment-72-removebg-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/Mental_health_awareness_-_Main.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/Untitled-design-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/blue (1).jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/coaching.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counselling.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counselling123.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counselling2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counselling3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counselling5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counsellor4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counsellors__1_-removebg-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-appointment-50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-appointments-64.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-back-button-48.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-delete-48.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-employees-50 (1).png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-log-out-50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-password-24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-patient-64 (2).png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-report-50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-schedule-64.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-session-timeout-50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-transaction-48 (1).png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-treatment-50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-user-24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/images__10_-removebg-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/mechanical-gears-.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/patient (1).png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/people.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/pngtree-psychologist-counselling-depressed-woman-at-home-indoors-head-in-hands-therapy-photo-image_21712052-removebg-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/woman-having-counselling-session-female-counsellor-31172531-removebg-preview.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/appointment_form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/dashboard_form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/employee_form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/login_form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/patient_form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/registration_form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/schedule_form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/session_form.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/treatment_form.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="28a2f1e1-4c61-45dc-92f1-d16097bc198a" name="Changes" comment="final" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -460,7 +373,7 @@
       <workItem from="1715322376314" duration="362000" />
       <workItem from="1715322758759" duration="863000" />
       <workItem from="1715323801314" duration="1234000" />
-      <workItem from="1715325066919" duration="638000" />
+      <workItem from="1715325066919" duration="1415000" />
     </task>
     <servers />
   </component>
