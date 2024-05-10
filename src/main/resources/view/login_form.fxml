@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="rootNode" prefHeight="692.0" prefWidth="1202.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.eCounselling.Controller.LoginFormController">
+   <children>
+      <ImageView fitHeight="698.0" fitWidth="1209.0" layoutX="-3.0" layoutY="-1.0">
+         <image>
+            <Image url="@../asserts/counselling3.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="165.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text layoutX="165.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <AnchorPane layoutX="399.0" layoutY="55.0" prefHeight="581.0" prefWidth="481.0" style="-fx-background-color: white;">
+         <children>
+            <AnchorPane layoutX="1.0" layoutY="211.0" prefHeight="374.0" prefWidth="477.0">
+               <children>
+                  <ImageView fitHeight="374.0" fitWidth="482.0" layoutX="-1.0">
+                     <image>
+                        <Image url="@../asserts/Mental_health_awareness_-_Main.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <TextField fx:id="txtUserName" layoutX="68.0" layoutY="311.0" prefHeight="45.0" prefWidth="329.0" promptText="Enter username" style="-fx-border-color: black;" />
+            <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="368.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-user-24.png" />
+               </image>
+            </ImageView>
+            <PasswordField fx:id="txtPassword" layoutX="68.0" layoutY="389.0" prefHeight="45.0" prefWidth="329.0" promptText="Enter Password" style="-fx-border-color: black;" />
+            <Text fill="#111010" layoutX="67.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+            <Text fill="#0a0909" layoutX="70.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+            <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="368.0" layoutY="401.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-password-24.png" />
+               </image>
+            </ImageView>
+            <CheckBox layoutX="72.0" layoutY="442.0" mnemonicParsing="false" text="Remember Me" textFill="#252222" />
+            <Hyperlink layoutX="274.0" layoutY="440.0" text="Forgot Passward ?" textFill="#1e1c1c" />
+            <JFXButton layoutX="112.0" layoutY="473.0" onAction="#btnLoginOnAction" prefHeight="45.0" prefWidth="242.0" style="-fx-background-radius: 25; -fx-border-color: black; -fx-border-radius: 25;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Sign in now" textFill="#2f2a2a">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <Text fill="#1e1c1c" layoutX="113.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't hava an account ?" />
+            <Hyperlink layoutX="274.0" layoutY="527.0" onAction="#linkRegistrationOnAction" text="Sign in now" textFill="#171515" />
+            <Text fill="#221f1f" layoutX="67.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Now" wrappingWidth="185.953125">
+               <font>
+                  <Font name="System Bold" size="31.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="212.0" fitWidth="482.0">
+               <image>
+                  <Image url="@../asserts/counselling3.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

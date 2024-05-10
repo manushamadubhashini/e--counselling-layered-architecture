@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="693.0" prefWidth="1095.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.eCounselling.Controller.EmployeeFormController">
+   <children>
+      <AnchorPane layoutY="1.0" prefHeight="693.0" prefWidth="549.0">
+         <children>
+            <ImageView fitHeight="207.0" fitWidth="549.0" layoutY="-1.0">
+               <image>
+                  <Image url="@../asserts/counsellor4.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="490.0" fitWidth="549.0" layoutX="-1.0" layoutY="205.0">
+               <image>
+                  <Image url="@../asserts/blue%20(1).jpg" />
+               </image>
+            </ImageView>
+            <Text fill="#0a0a0a" layoutX="29.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee ID" />
+            <TextField fx:id="txtId" layoutX="28.0" layoutY="256.0" prefHeight="41.0" prefWidth="219.0" promptText="employee_id" style="-fx-border-color: black;" />
+            <TextField fx:id="txtName" layoutX="294.0" layoutY="256.0" prefHeight="41.0" prefWidth="219.0" promptText="emploee_name" style="-fx-border-color: black;" />
+            <Text layoutX="294.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Name" />
+            <TextField fx:id="txtAddress" layoutX="294.0" layoutY="359.0" prefHeight="41.0" prefWidth="219.0" promptText="emplyee_address" style="-fx-border-color: black;" />
+            <Text layoutX="294.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Emplyee Address" />
+            <Text layoutX="31.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Date of Birth" />
+            <DatePicker fx:id="txtDOB" layoutX="31.0" layoutY="359.0" prefHeight="41.0" prefWidth="219.0" promptText="date of birth" style="-fx-border-color: black;" />
+            <TextField fx:id="txtContact" layoutX="33.0" layoutY="456.0" prefHeight="41.0" prefWidth="219.0" promptText="employee_contact" style="-fx-border-color: black;" />
+            <Text layoutX="31.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Contact" />
+            <TextField fx:id="txtPosition" layoutX="294.0" layoutY="456.0" prefHeight="41.0" prefWidth="219.0" promptText="emploee_position" style="-fx-border-color: black;" />
+            <Text layoutX="294.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Position" />
+            <DatePicker fx:id="txtDate" layoutX="32.0" layoutY="549.0" prefHeight="41.0" prefWidth="219.0" promptText="join_date" style="-fx-border-color: black;" />
+            <Text layoutX="31.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Date" />
+            <JFXButton layoutX="10.0" layoutY="626.0" onAction="#btnSaveOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Save">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXButton>
+            <Text layoutX="107.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Information" wrappingWidth="323.83984375">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Separator layoutX="70.0" layoutY="118.0" prefHeight="7.0" prefWidth="399.0" style="-fx-background-color: black;" />
+            <JFXButton layoutX="143.0" layoutY="626.0" onAction="#btnClearOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Clear">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="275.0" layoutY="626.0" onAction="#btnUpdateOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Update">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="409.0" layoutY="626.0" onAction="#btnDeleteOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Delete">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="41.0" fitWidth="42.0" layoutX="12.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-back-button-48.png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutX="13.0" layoutY="150.0" onAction="#btnBackOnAction" prefHeight="41.0" prefWidth="41.0" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblEmployee" layoutX="545.0" layoutY="-1.0" prefHeight="696.0" prefWidth="549.0" style="-fx-border-color: white;">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="colName" prefWidth="75.0" text="name" />
+            <TableColumn fx:id="colDOB" prefWidth="75.0" text="DOB" />
+            <TableColumn fx:id="colAddress" prefWidth="75.0" text="address" />
+            <TableColumn fx:id="colContact" prefWidth="75.0" text="contact" />
+            <TableColumn fx:id="colPosition" prefWidth="75.0" text="position" />
+            <TableColumn fx:id="colJoinDate" prefWidth="104.0" text="join date" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

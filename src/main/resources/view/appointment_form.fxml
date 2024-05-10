@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="729.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.eCounselling.Controller.AppointmentFormController">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="15.0" prefHeight="116.0" prefWidth="1207.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20;">
+         <children>
+            <Text layoutX="367.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Manage">
+               <font>
+                  <Font name="System Bold" size="39.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="121.0" fitWidth="224.0" layoutX="969.0" layoutY="4.0">
+               <image>
+                  <Image url="@../asserts/counsellors__1_-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="22.0" layoutY="165.0" prefHeight="543.0" prefWidth="419.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20;">
+         <children>
+            <TextField fx:id="txtId" layoutX="53.0" layoutY="77.0" prefHeight="30.0" prefWidth="239.0" promptText="Enter appointment id" />
+            <TextField fx:id="txtType" layoutX="53.0" layoutY="155.0" prefHeight="30.0" prefWidth="239.0" promptText="Enter appointment type" />
+            <TextField fx:id="txtStatus" layoutX="53.0" layoutY="303.0" prefHeight="30.0" prefWidth="239.0" promptText="Enter appointment status" />
+            <Text layoutX="53.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID" />
+            <Text layoutX="54.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Type" />
+            <Text layoutX="53.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+            <Text layoutX="54.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Status" />
+            <DatePicker fx:id="txtDate" layoutX="53.0" layoutY="226.0" prefHeight="30.0" prefWidth="239.0" promptText="Enter date" />
+            <JFXButton layoutX="21.0" layoutY="461.0" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" stylesheets="@../StyleSheets/button2.css" text="Save ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="150.0" layoutY="461.0" onAction="#btnClearOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" stylesheets="@../StyleSheets/button2.css" text="Clear">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="276.0" layoutY="461.0" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" stylesheets="@../StyleSheets/button2.css" text="Update">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="48.0" fitWidth="41.0" layoutX="355.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-delete-48.png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutX="354.0" layoutY="66.0" onAction="#btnDeleteOnAction" prefHeight="41.0" prefWidth="41.0" />
+            <TextField fx:id="txtDuration" layoutX="53.0" layoutY="382.0" prefHeight="30.0" prefWidth="239.0" promptText="Enter duration" />
+            <Text layoutX="54.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblAppointment" layoutX="467.0" layoutY="199.0" prefHeight="504.0" prefWidth="759.0">
+        <columns>
+          <TableColumn fx:id="colID" prefWidth="128.0" text="App_id" />
+          <TableColumn fx:id="colType" prefWidth="178.0" text="App_type" />
+            <TableColumn fx:id="colDate" prefWidth="143.0" text="App_date" />
+            <TableColumn fx:id="colStatus" prefWidth="169.0" text="app_status" />
+            <TableColumn fx:id="colDuration" prefWidth="140.0" text="app_duration" />
+        </columns>
+      </TableView>
+      <ImageView fitHeight="41.0" fitWidth="50.0" layoutX="1163.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/icons8-back-button-48.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="1163.0" layoutY="153.0" onAction="#btnBackOnAction" prefHeight="37.0" prefWidth="41.0" />
+   </children>
+</AnchorPane>

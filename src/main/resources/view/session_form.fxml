@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="729.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.eCounselling.Controller.SessionFormController">
+   <children>
+      <AnchorPane layoutX="28.0" layoutY="25.0" prefHeight="116.0" prefWidth="1207.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20;">
+         <children>
+            <Text layoutX="425.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Session Manage">
+               <font>
+                  <Font name="System Bold" size="39.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="115.0" fitWidth="242.0" layoutX="1038.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/pngtree-psychologist-counselling-depressed-woman-at-home-indoors-head-in-hands-therapy-photo-image_21712052-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="28.0" layoutY="165.0" prefHeight="543.0" prefWidth="419.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20;">
+         <children>
+            <TextField fx:id="txtId" layoutX="45.0" layoutY="77.0" prefHeight="35.0" prefWidth="269.0" />
+            <TextField fx:id="txtType" layoutX="45.0" layoutY="157.0" prefHeight="35.0" prefWidth="269.0" />
+            <DatePicker fx:id="txtDate" layoutX="45.0" layoutY="237.0" prefHeight="35.0" prefWidth="269.0" />
+            <TextField fx:id="txtDuration" layoutX="45.0" layoutY="325.0" prefHeight="35.0" prefWidth="269.0" />
+
+            <JFXButton layoutX="21.0" layoutY="442.0" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Save">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="150.0" layoutY="442.0" onAction="#btnClearOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Clear">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="278.0" layoutY="442.0" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Update">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXButton>
+            <Text layoutX="45.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seesion ID" />
+            <Text layoutX="45.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Session Type" />
+            <Text layoutX="45.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+            <Text layoutX="45.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration " />
+            <ImageView fitHeight="45.0" fitWidth="49.0" layoutX="338.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-delete-48.png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutX="341.0" layoutY="100.0" onAction="#btnDeleteOnAction" prefHeight="45.0" prefWidth="39.0" />
+         </children></AnchorPane>
+      <TableView fx:id="tblSession" layoutX="471.0" layoutY="200.0" prefHeight="508.0" prefWidth="759.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="175.0" text="ses_id " />
+          <TableColumn fx:id="colType" minWidth="0.0" prefWidth="235.0" text="ses_type" />
+            <TableColumn fx:id="colDate" minWidth="0.0" prefWidth="189.0" text="ses_date     " />
+            <TableColumn fx:id="colDuration" prefWidth="159.0" text="ses_duration " />
+        </columns>
+      </TableView>
+      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="1146.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/icons8-back-button-48.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="1149.0" layoutY="149.0" onAction="#btnBackOnAction" prefHeight="45.0" prefWidth="39.0" />
+   </children>
+</AnchorPane>
