@@ -1,0 +1,11 @@
+.notification-label {
+    -fx-padding: 5px; /* Adjust padding as needed */
+    -fx-border-color: black; /* Add border color */
+    -fx-border-width: 1px; /* Add border width */
+    -fx-border-radius: 5px; /* Add border radius to make it slightly rounded */
+    -fx-pref-width: 100px; /* Set preferred width */
+    -fx-pref-height: 100px; /* Set preferred height */
+    -fx-background-color: red; /* Initial background color */
+
+}
+

@@ -5,16 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AppointmentTm {
+public class PatientDescTm {
     private String id;
-    private String type;
-    private Date date;
+    private String rid;
+    private String name;
+    private Date dob;
+    private String address;
+    private  String contact;
     private String status;
-    private int duration;
-    private String eid;
-    private String pid;
+    private String gender;
+    private String des;
 }

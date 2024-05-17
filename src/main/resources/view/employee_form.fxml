@@ -16,9 +16,9 @@
    <children>
       <AnchorPane layoutY="1.0" prefHeight="693.0" prefWidth="549.0">
          <children>
-            <ImageView fitHeight="207.0" fitWidth="549.0" layoutY="-1.0">
+            <ImageView fitHeight="208.0" fitWidth="549.0" layoutX="1.0" layoutY="-1.0">
                <image>
-                  <Image url="@../asserts/counsellor4.jpg" />
+                  <Image url="@../asserts/counsellors%20(1).jpg" />
                </image>
             </ImageView>
             <ImageView fitHeight="490.0" fitWidth="549.0" layoutX="-1.0" layoutY="205.0">
@@ -45,12 +45,12 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <Text layoutX="107.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Information" wrappingWidth="323.83984375">
+            <Text fill="#fffefe" layoutX="107.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Information" wrappingWidth="336.83984375">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="26.0" />
                </font>
             </Text>
-            <Separator layoutX="70.0" layoutY="118.0" prefHeight="7.0" prefWidth="399.0" style="-fx-background-color: black;" />
+            <Separator layoutX="70.0" layoutY="118.0" prefHeight="0.0" prefWidth="399.0" style="-fx-background-color: black;" />
             <JFXButton layoutX="143.0" layoutY="626.0" onAction="#btnClearOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Clear">
                <font>
                   <Font name="System Bold" size="16.0" />

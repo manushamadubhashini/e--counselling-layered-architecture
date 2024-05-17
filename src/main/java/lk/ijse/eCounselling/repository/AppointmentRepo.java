@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AppointmentRepo {
     public static boolean save(Appointment appointment) throws SQLException {
-        String sql = "INSERT INTO appointment (app_id, app_type, app_date, app_status, app_duration) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO appointment (app_id, app_type, app_date, app_status, app_duaration,emp_id,pa_id ) VALUES(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -20,12 +20,14 @@ public class AppointmentRepo {
         pstm.setObject(3, appointment.getDate());
         pstm.setObject(4, appointment.getStatus());
         pstm.setObject(5, appointment.getDuration());
+        pstm.setObject(6,appointment.getEid());
+        pstm.setObject(7,appointment.getPid());
         return pstm.executeUpdate() > 0;
 
 
     }
-    public static boolean update(String ID, String type, Date date, String status,int duration) throws SQLException {
-        String sql = "UPDATE appointment SET  app_type  = ?,app_date  = ?, app_status= ?, app_duration = ? WHERE app_id  = ?";
+    public static boolean update(String ID, String type, Date date, String status,int duration,String eid,String pid) throws SQLException {
+        String sql = "UPDATE appointment SET  app_type  = ?,app_date  = ?, app_status= ?, app_duration = ?,emp_id= ?,pa_id= ? WHERE app_id  = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -33,7 +35,9 @@ public class AppointmentRepo {
         pstm.setObject(2, date);
         pstm.setObject(3,status );
         pstm.setObject(4, duration);
-        pstm.setObject(5,ID);
+        pstm.setObject(5,eid);
+        pstm.setObject(6,pid);
+        pstm.setObject(7,ID);
         return pstm.executeUpdate() > 0;
 
 
@@ -64,8 +68,10 @@ public class AppointmentRepo {
             Date date = resultSet.getDate(3);
             String status = resultSet.getString(4);
             int duration = resultSet.getInt(5);
+            String eid=resultSet.getString(6);
+            String pid=resultSet.getString(7);
 
-            Appointment appointment = new Appointment(id, type,date,status,duration);
+            Appointment appointment = new Appointment(id, type,date,status,duration,eid,pid);
             appointmentList.add(appointment);
         }
         return appointmentList;

@@ -53,7 +53,7 @@
                </font>
             </JFXButton>
             <Text fill="#1e1c1c" layoutX="113.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't hava an account ?" />
-            <Hyperlink layoutX="274.0" layoutY="527.0" onAction="#linkRegistrationOnAction" text="Sign in now" textFill="#171515" />
+            <Hyperlink layoutX="274.0" layoutY="527.0" onAction="#linkRegistrationOnAction" text="Sign up now" textFill="#171515" />
             <Text fill="#221f1f" layoutX="67.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Now" wrappingWidth="185.953125">
                <font>
                   <Font name="System Bold" size="31.0" />

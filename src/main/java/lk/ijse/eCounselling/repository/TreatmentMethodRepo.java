@@ -15,7 +15,7 @@ public class TreatmentMethodRepo {
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
-        pstm.setObject(1, treatmentMethod.getId());
+        pstm.setObject(1, treatmentMethod.getMid());
         pstm.setObject(2, treatmentMethod.getDescription());
         return pstm.executeUpdate() > 0;
 

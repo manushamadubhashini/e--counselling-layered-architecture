@@ -4,7 +4,63 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28a2f1e1-4c61-45dc-92f1-d16097bc198a" name="Changes" comment="final" />
+    <list default="true" id="28a2f1e1-4c61-45dc-92f1-d16097bc198a" name="Changes" comment="final">
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/PatientViewFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Util/Regex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Util/TextField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Patient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/PatientDesc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Report.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/ReportDetail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/TreatmentDesc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/PatientDescTm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/PatientTm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/ReportDetailTm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/ReportTm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentDescTm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/PatientDescRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/ReportDetailRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/ReportRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/TreatmentDescRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Report/Patient.jrxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Report/TreatmentRepo.jrxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/notification-label.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/WhatsApp_Image_2024-03-04_at_00.20.45-removebg-preview.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counsellors (1).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/counsellors.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-add-administrator-50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-report-64.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/patientView_form.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/AppointmentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/AppointmentFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/DashboardFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/DashboardFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/LoginFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/LoginFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/PatientFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/PatientFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/RegisterFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/RegisterFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/TreatmentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/TreatmentFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Treatment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/Treatment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/TreatmentMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/TreatmentMethod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/AppointmentTm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/AppointmentTm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentMethodDetailTm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentMethodDetailTm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentMethodTm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentMethodTm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentTm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/model/tm/TreatmentTm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/AppointmentRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/AppointmentRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/EmployeeRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/EmployeeRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/PatientRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/PatientRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/TreatmentMethodRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/TreatmentMethodRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/TreatmentRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/TreatmentRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/UserRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/repository/UserRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/appointment_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/appointment_form.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/dashboard_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/dashboard_form.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/employee_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/employee_form.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/login_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/login_form.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/patient_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/patient_form.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/registration_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/registration_form.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/treatment_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/treatment_form.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +70,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Enum" />
         <option value="CSS File" />
         <option value="FxmlFile" />
         <option value="Class" />
@@ -40,13 +97,16 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ma/Desktop/eCounseling-system-programming/src/main/resources/asserts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ma/Desktop/eCounseling-system-programming/src/main/resources/Report&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -56,6 +116,7 @@
       <recent name="lk.ijse.eCounselling.Controller" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/Report" />
       <recent name="$PROJECT_DIR$/src/main/resources/asserts" />
       <recent name="$PROJECT_DIR$/src/main/resources/asserts.icon" />
       <recent name="$PROJECT_DIR$/src/main/resources/asserts.image" />
@@ -65,6 +126,26 @@
       <recent name="$PROJECT_DIR$/src/main/resources/asserts/asserts.icon" />
       <recent name="$PROJECT_DIR$/src/main/resources/asserts" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="LauncherWrapper" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lk.ijse.eCounselling.LauncherWrapper" />
+      <module name="eCounseling-system-programming" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lk.ijse.eCounselling.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.LauncherWrapper" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -374,6 +455,115 @@
       <workItem from="1715322758759" duration="863000" />
       <workItem from="1715323801314" duration="1234000" />
       <workItem from="1715325066919" duration="1749000" />
+      <workItem from="1715328030421" duration="788000" />
+      <workItem from="1715400487745" duration="66000" />
+      <workItem from="1715400652600" duration="130000" />
+      <workItem from="1715402200625" duration="339000" />
+      <workItem from="1715403486600" duration="623000" />
+      <workItem from="1715406666368" duration="479000" />
+      <workItem from="1715421163143" duration="1322000" />
+      <workItem from="1715423188985" duration="6156000" />
+      <workItem from="1715441731850" duration="2563000" />
+      <workItem from="1715444366893" duration="3402000" />
+      <workItem from="1715448538704" duration="1741000" />
+      <workItem from="1715454490040" duration="67000" />
+      <workItem from="1715454615365" duration="141000" />
+      <workItem from="1715487807564" duration="198000" />
+      <workItem from="1715488525311" duration="43000" />
+      <workItem from="1715489249030" duration="1878000" />
+      <workItem from="1715491359255" duration="95000" />
+      <workItem from="1715491525639" duration="32000" />
+      <workItem from="1715491643700" duration="1286000" />
+      <workItem from="1715496391206" duration="2186000" />
+      <workItem from="1715508916831" duration="145000" />
+      <workItem from="1715509600775" duration="6000" />
+      <workItem from="1715509821643" duration="47000" />
+      <workItem from="1715509959973" duration="384000" />
+      <workItem from="1715510481697" duration="2370000" />
+      <workItem from="1715515743461" duration="1067000" />
+      <workItem from="1715517290713" duration="528000" />
+      <workItem from="1715518179464" duration="2601000" />
+      <workItem from="1715527363641" duration="7915000" />
+      <workItem from="1715575680230" duration="2999000" />
+      <workItem from="1715586808087" duration="366000" />
+      <workItem from="1715591398958" duration="197000" />
+      <workItem from="1715595450844" duration="290000" />
+      <workItem from="1715599052663" duration="11000" />
+      <workItem from="1715599632358" duration="406000" />
+      <workItem from="1715602392922" duration="151000" />
+      <workItem from="1715602601821" duration="12462000" />
+      <workItem from="1715626560685" duration="7000" />
+      <workItem from="1715659143756" duration="6202000" />
+      <workItem from="1715671745626" duration="986000" />
+      <workItem from="1715672863968" duration="5482000" />
+      <workItem from="1715686713272" duration="3100000" />
+      <workItem from="1715693883770" duration="514000" />
+      <workItem from="1715701634915" duration="1171000" />
+      <workItem from="1715751551311" duration="640000" />
+      <workItem from="1715756857191" duration="130000" />
+      <workItem from="1715765671200" duration="1247000" />
+      <workItem from="1715768405282" duration="18000" />
+      <workItem from="1715768542424" duration="94000" />
+      <workItem from="1715768698540" duration="422000" />
+      <workItem from="1715769254975" duration="136000" />
+      <workItem from="1715769508415" duration="37000" />
+      <workItem from="1715769659550" duration="127000" />
+      <workItem from="1715769807732" duration="23000" />
+      <workItem from="1715769859002" duration="93000" />
+      <workItem from="1715770030926" duration="537000" />
+      <workItem from="1715770607911" duration="1698000" />
+      <workItem from="1715774889850" duration="829000" />
+      <workItem from="1715785082627" duration="11000" />
+      <workItem from="1715785662841" duration="15000" />
+      <workItem from="1715785707203" duration="9000" />
+      <workItem from="1715785730861" duration="183000" />
+      <workItem from="1715786191069" duration="105000" />
+      <workItem from="1715787621012" duration="529000" />
+      <workItem from="1715788884786" duration="49000" />
+      <workItem from="1715789034121" duration="7000" />
+      <workItem from="1715789082065" duration="273000" />
+      <workItem from="1715789399994" duration="74000" />
+      <workItem from="1715791101873" duration="807000" />
+      <workItem from="1715792017746" duration="321000" />
+      <workItem from="1715792552204" duration="906000" />
+      <workItem from="1715831665748" duration="1051000" />
+      <workItem from="1715832842634" duration="261000" />
+      <workItem from="1715833195018" duration="523000" />
+      <workItem from="1715833728064" duration="223000" />
+      <workItem from="1715834036884" duration="1166000" />
+      <workItem from="1715835582656" duration="171000" />
+      <workItem from="1715835787753" duration="338000" />
+      <workItem from="1715837105833" duration="1587000" />
+      <workItem from="1715842604578" duration="4000" />
+      <workItem from="1715842616411" duration="56000" />
+      <workItem from="1715842724460" duration="23000" />
+      <workItem from="1715842757669" duration="98000" />
+      <workItem from="1715842880083" duration="45000" />
+      <workItem from="1715842934796" duration="280000" />
+      <workItem from="1715843263347" duration="208000" />
+      <workItem from="1715843654517" duration="10000" />
+      <workItem from="1715843900425" duration="609000" />
+      <workItem from="1715844542820" duration="75000" />
+      <workItem from="1715844805839" duration="255000" />
+      <workItem from="1715845087458" duration="88000" />
+      <workItem from="1715845192732" duration="268000" />
+      <workItem from="1715845542214" duration="162000" />
+      <workItem from="1715845765567" duration="349000" />
+      <workItem from="1715846127026" duration="1334000" />
+      <workItem from="1715848033243" duration="5409000" />
+      <workItem from="1715855038681" duration="5362000" />
+      <workItem from="1715865798201" duration="1855000" />
+      <workItem from="1715869725591" duration="8167000" />
+      <workItem from="1715879117906" duration="2497000" />
+      <workItem from="1715888437764" duration="634000" />
+      <workItem from="1715916409437" duration="1086000" />
+      <workItem from="1715917816936" duration="910000" />
+      <workItem from="1715920737728" duration="827000" />
+      <workItem from="1715921816194" duration="316000" />
+      <workItem from="1715922171136" duration="771000" />
+      <workItem from="1715922955768" duration="533000" />
+      <workItem from="1715926238685" duration="3319000" />
+      <workItem from="1715929981718" duration="3188000" />
     </task>
     <servers />
   </component>
@@ -394,6 +584,17 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="final" />
     <option name="LAST_COMMIT_MESSAGE" value="final" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/LauncherWrapper.java</url>
+          <line>2</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

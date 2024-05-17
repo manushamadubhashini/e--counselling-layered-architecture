@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TreatmentMethod {
-    private String mid;
-    private String description;
+public class Report {
+    private String rid;
+    private String gender;
+    private String des;
+    private String id;
+
 }

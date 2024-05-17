@@ -10,4 +10,7 @@ import lombok.NoArgsConstructor;
 public class Treatment {
     private String id;
     private String status;
+    private String pid;
+
+
 }

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.2.final using JasperReports Library version 6.21.2-8434a0bd7c3bbc37cbf916f2968d35e4b165821a  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Patient" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="69bfdea8-e60a-4c3a-89cb-cfbb831ec55f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (5)"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT p.*
+FROM patient p
+LEFT JOIN treatments t ON p.pa_id = t.pa_id
+WHERE p.pa_status = 'High Risky Patient' AND t.pa_id IS NULL;]]>
+	</queryString>
+	<field name="pa_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pa_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="pa_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="Pa_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Pa_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="Pa_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="Pa_DOB" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="Pa_DOB"/>
+		<property name="com.jaspersoft.studio.field.label" value="Pa_DOB"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="Pa_address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Pa_address"/>
+		<property name="com.jaspersoft.studio.field.label" value="Pa_address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="pa_contact" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pa_contact"/>
+		<property name="com.jaspersoft.studio.field.label" value="pa_contact"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="pa_status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pa_status"/>
+		<property name="com.jaspersoft.studio.field.label" value="pa_status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{pa_id}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="9e8aad59-799d-491f-b57c-fa4c59a472a9"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[pa_id]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="eb556df1-2437-4c5d-9dd0-0ca181d766fc"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pa_id}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{Pa_name}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="100" y="0" width="455" height="32" forecolor="#006699" uuid="737bc191-7727-4e2b-9d0e-6e950f61987f"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Pa_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" forecolor="#666666" uuid="b24c48f6-bfab-4529-a3c0-28bc9d41a46f"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Pa_name]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupExpression><![CDATA[$F{Pa_DOB}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="100" y="0" width="455" height="32" forecolor="#006699" uuid="9d43bd60-57df-44a8-a151-ccbc707dd37e"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Pa_DOB}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" forecolor="#666666" uuid="67b9fe5a-883c-4bf8-a198-445f3b2c23a3"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Pa_DOB]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group4">
+		<groupExpression><![CDATA[$F{Pa_address}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="100" y="0" width="455" height="32" forecolor="#006699" uuid="843d5504-44dc-449f-bccc-a1c73d0012c9"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Pa_address}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" forecolor="#666666" uuid="1831862c-1506-4ab0-8fbb-ba9c92c087c9"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Pa_address]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="pa_contact">
+		<groupExpression><![CDATA[$F{pa_contact}]]></groupExpression>
+	</group>
+	<group name="pa_status">
+		<groupExpression><![CDATA[$F{pa_status}]]></groupExpression>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="102">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="10" width="595" height="92" backcolor="#006699" uuid="a17ed890-7206-41d5-8104-495972d5f520"/>
+				<staticText>
+					<reportElement x="20" y="20" width="480" height="43" forecolor="#FFFFFF" uuid="01f10e04-5907-4308-8f2b-effe43de42af"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[List Of High Risk Patient]]></text>
+				</staticText>
+				<image>
+					<reportElement x="514" y="16" width="50" height="50" uuid="cc83d0f7-3f84-4500-82a5-b3caab0ab81f"/>
+					<imageExpression><![CDATA["/home/ma/Downloads/images (10).jpeg"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21"/>
+	</columnHeader>
+	<detail>
+		<band height="20"/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="823e641f-838e-4df7-ade1-1b9831a79347"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="0b03d37f-8fb6-41d5-8877-c388d934948b"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="a95d7257-6f01-46fa-999d-b1fafd4d487b"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

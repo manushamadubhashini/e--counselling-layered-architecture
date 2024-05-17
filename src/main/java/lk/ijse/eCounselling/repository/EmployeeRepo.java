@@ -4,10 +4,7 @@ import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.model.Employee;
 
 import java.awt.*;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +76,19 @@ public class EmployeeRepo {
             employeeList.add(employee);
         }
         return employeeList;
+    }
+    public static List<String> getIds() throws SQLException {
+        String sql = "SELECT emp_id FROM employee";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
+
+        List<String> idList = new ArrayList<>();
+
+        while (resultSet.next()) {
+            idList.add(resultSet.getString(1));
+        }
+        return idList;
     }
 
 

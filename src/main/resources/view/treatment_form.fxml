@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -24,45 +25,46 @@
                   <Font name="System Bold" size="39.0" />
                </font>
             </Text>
-            <ImageView fitHeight="37.0" fitWidth="40.0" layoutX="873.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="29.0" layoutY="169.0" prefHeight="543.0" prefWidth="419.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20;">
+      <AnchorPane layoutX="29.0" layoutY="169.0" prefHeight="548.0" prefWidth="419.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20;">
          <children>
-            <TextField fx:id="txtId" layoutX="39.0" layoutY="66.0" prefHeight="33.0" prefWidth="258.0" promptText="Enater teatment id" />
-            <TextField fx:id="txtMethodId" layoutX="39.0" layoutY="149.0" prefHeight="33.0" prefWidth="258.0" promptText="Enter treatment method id" />
-            <TextField fx:id="txtStatus" layoutX="39.0" layoutY="226.0" prefHeight="33.0" prefWidth="258.0" promptText="Enter treatment status" />
-            <TextField fx:id="txtDescription" layoutX="39.0" layoutY="306.0" prefHeight="33.0" prefWidth="258.0" promptText="Enter treatment description" />
-            <TextField fx:id="txtDuration" layoutX="39.0" layoutY="383.0" prefHeight="33.0" prefWidth="258.0" promptText="Enter treatment  duration" />
-            <JFXButton layoutX="22.0" layoutY="471.0" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Save">
+            <TextField fx:id="txtId" layoutX="39.0" layoutY="60.0" prefHeight="33.0" prefWidth="258.0" promptText="Enater teatment id" />
+            <TextField fx:id="txtMethodId" layoutX="39.0" layoutY="138.0" prefHeight="33.0" prefWidth="258.0" promptText="Enter treatment method id" />
+            <TextField fx:id="txtStatus" layoutX="39.0" layoutY="218.0" prefHeight="33.0" prefWidth="258.0" promptText="Enter treatment status" />
+            <TextField fx:id="txtDescription" layoutX="39.0" layoutY="297.0" prefHeight="33.0" prefWidth="258.0" promptText="Enter treatment description" />
+            <TextField fx:id="txtDuration" layoutX="38.0" layoutY="374.0" prefHeight="33.0" prefWidth="258.0" promptText="Enter treatment  duration" />
+            <JFXButton layoutX="22.0" layoutY="497.0" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Save">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="150.0" layoutY="471.0" onAction="#btnClearOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Clear">
+            <JFXButton layoutX="150.0" layoutY="497.0" onAction="#btnClearOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Clear">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="279.0" layoutY="471.0" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Update">
+            <JFXButton layoutX="279.0" layoutY="497.0" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Update">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
-            <Text layoutX="39.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment ID" />
-            <Text layoutX="39.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment MethodId" />
-            <Text layoutX="39.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment Status" />
-            <Text layoutX="39.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment description" />
-            <Text layoutX="39.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment Duration" />
-            <ImageView fitHeight="47.0" fitWidth="48.0" layoutX="339.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+            <Text layoutX="39.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment ID" />
+            <Text layoutX="36.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment MethodId" />
+            <Text layoutX="39.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment Status" />
+            <Text layoutX="39.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment description" />
+            <Text layoutX="38.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment Duration" />
+            <ImageView fitHeight="47.0" fitWidth="48.0" layoutX="340.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../asserts/icons8-delete-48.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="343.0" layoutY="76.0" onAction="#btnDeleteOnAction" prefHeight="47.0" prefWidth="40.0" />
+            <JFXButton layoutX="344.0" layoutY="148.0" onAction="#btnDeleteOnAction" prefHeight="47.0" prefWidth="40.0" />
+            <JFXComboBox fx:id="cmbPatientId" layoutX="39.0" layoutY="443.0" prefHeight="33.0" prefWidth="258.0" promptText="Select patient id" style="-fx-background-color: white;" />
+            <Text layoutX="38.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient ID" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblTreatment" layoutX="471.0" layoutY="200.0" prefHeight="504.0" prefWidth="759.0">
+      <TableView fx:id="tblTreatment" layoutX="471.0" layoutY="200.0" prefHeight="517.0" prefWidth="759.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="127.0" text="treat_id " />
           <TableColumn fx:id="colMId" prefWidth="122.0" text=" treatm_id " />
@@ -71,9 +73,19 @@
             <TableColumn fx:id="colDuration" prefWidth="142.0" text="treat_duration" />
         </columns>
       </TableView>
-      <ImageView fitHeight="47.0" fitWidth="57.0" layoutX="1120.0" layoutY="138.0" onDragDetected="#btnBackOnAction" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="47.0" fitWidth="57.0" layoutX="1014.0" layoutY="140.0" onDragDetected="#btnBackOnAction" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../asserts/icons8-back-button-48.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="1089.0" layoutY="142.0" onAction="#btnReportOnAction" prefHeight="45.0" prefWidth="145.0" style="-fx-background-color: #7393B3;" text="     Report">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="1101.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/icons8-report-64.png" />
          </image>
       </ImageView>
    </children>

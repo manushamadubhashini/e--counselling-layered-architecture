@@ -34,17 +34,37 @@ public class LoginFormController {
     void btnLoginOnAction(ActionEvent actionEvent) throws IOException, SQLException {
         String userName = txtUserName.getText();
         String password = txtPassword.getText();
-        User user= UserRepo.setLogionDetail(userName);
-        try {
-            if (user.getPassword().equals(password)) {
-                navigateDashBoard();
+        if (userName.isEmpty() || password.isEmpty()) {
+            // Set border color to red if username or password is empty
+            if (userName.isEmpty()) {
+                txtUserName.setStyle("-fx-border-color: red;");
             } else {
-                new Alert(Alert.AlertType.ERROR, "Password is incorrect").show();
+                txtUserName.setStyle("-fx-border-color: green;");
             }
-        } catch (Exception e){
-            new Alert(Alert.AlertType.ERROR, "User name not found").show();
+
+            if (password.isEmpty()) {
+                txtPassword.setStyle("-fx-border-color: red;");
+            } else {
+                txtPassword.setStyle("-fx-border-color: green;");
+            }
+
+            new Alert(Alert.AlertType.ERROR, "Please fill in all fields.").show();
+        } else {
+            // Reset border color if both fields are filled
+            txtUserName.setStyle("-fx-border-color: green;");
+            txtPassword.setStyle("-fx-border-color: green;");
+            User user = UserRepo.setLogionDetail(userName);
+            try {
+                if (user.getPassword().equals(password)) {
+                    navigateDashBoard();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Password is incorrect").show();
+                }
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, "User name not found").show();
 
 
+            }
         }
     }
 

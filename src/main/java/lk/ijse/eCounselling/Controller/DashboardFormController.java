@@ -1,20 +1,32 @@
 package lk.ijse.eCounselling.Controller;
 
+//import com.lowagie.text.List;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.paint.Color;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import lk.ijse.eCounselling.db.DbConnection;
+import lk.ijse.eCounselling.model.Patient;
+import lk.ijse.eCounselling.model.Treatment;
+import lk.ijse.eCounselling.repository.PatientRepo;
+import lk.ijse.eCounselling.repository.TreatmentRepo;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DashboardFormController {
     @FXML
@@ -29,6 +41,9 @@ public class DashboardFormController {
     @FXML
     private Label lblSessionCount;
 
+    @FXML
+    private Label lblHighRiskMessage;
+
     private int appointmentCount;
 
     private int patientCount;
@@ -39,7 +54,8 @@ public class DashboardFormController {
         try {
             patientCount = getPatientCount();
             appointmentCount = getAppointmentCount();
-            sessionCount=getSessionCount();
+            sessionCount = getSessionCount();
+            checkForHighRiskPatients();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -88,6 +104,7 @@ public class DashboardFormController {
         }
         return appointmentCount;
     }
+
     private void setSessionCount(int sessionCount) {
 
         lblSessionCount.setText(String.valueOf(sessionCount));
@@ -107,6 +124,7 @@ public class DashboardFormController {
         }
         return sessionCount;
     }
+
     @FXML
     void btnAppointmentFormOnAction(ActionEvent event) throws IOException {
         AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/appointment_form.fxml"));
@@ -149,7 +167,15 @@ public class DashboardFormController {
     }
 
     @FXML
-    void btnPatientOnAction(ActionEvent event) {
+    void btnPatientOnAction(ActionEvent event) throws IOException {
+        AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/patientView_form.fxml"));
+
+        Scene scene = new Scene(rootNode);
+
+        Stage stage = (Stage) this.rootNode.getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.setTitle("patient Form");
 
 
     }
@@ -180,7 +206,6 @@ public class DashboardFormController {
         stage.setTitle("session Form");
 
 
-
     }
 
     @FXML
@@ -202,7 +227,38 @@ public class DashboardFormController {
 
     }
 
-}
+    private void checkForHighRiskPatients() {
+            try {
+                List<Patient> patients = PatientRepo.getAll();
+                boolean highRiskFound = false;
+
+                for (Patient patient : patients) {
+                    if (patient.getStatus().equalsIgnoreCase("High Risky Patient")) {
+                        highRiskFound = true;
+                        break; // Exit loop once a high-risk patient is found
+                    }
+                }
+
+                if (highRiskFound) {
+                    // Defer showing the alert until after the dashboard is loaded
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("High Risk Patients Alert");
+                        alert.setHeaderText("High-risk patients found!");
+                        alert.setContentText("There are high-risk patients in the database. Immediate attention is required!");
+                        alert.showAndWait();
+                    });
+
+                    // Update UI on the JavaFX Application Thread
+
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle database exception appropriately
+            }
+        }
+    }
+
+
 
 
 

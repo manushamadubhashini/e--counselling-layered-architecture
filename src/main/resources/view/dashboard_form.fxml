@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -171,26 +170,7 @@
       </Label>
       <AnchorPane layoutX="214.0" layoutY="-2.0" prefHeight="90.0" prefWidth="1055.0" style="-fx-background-color: #AFDBF5;">
          <children>
-            <Hyperlink layoutX="865.0" layoutY="40.0" text="Profile" textFill="#070707">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Hyperlink>
-            <ImageView fitHeight="36.0" fitWidth="45.0" layoutX="822.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/people.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="36.0" fitWidth="45.0" layoutX="941.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../asserts/mechanical-gears-.png" />
-               </image>
-            </ImageView>
-            <Hyperlink layoutX="977.0" layoutY="40.0" text="Setting" textFill="#0a0a0a">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Hyperlink>
+            <Label fx:id="lblHighRiskMessage" layoutX="856.0" layoutY="5.0" prefHeight="78.0" prefWidth="190.0" styleClass="notification-label" stylesheets="@../StyleSheets/notification-labl.css" />
          </children>
       </AnchorPane>
    </children>

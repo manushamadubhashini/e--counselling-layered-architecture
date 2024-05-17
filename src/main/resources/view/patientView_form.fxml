@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="729.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.eCounselling.Controller.PatientViewFormController">
+   <children>
+      <AnchorPane layoutX="22.0" layoutY="21.0" prefHeight="116.0" prefWidth="1207.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20;">
+         <children>
+            <Text layoutX="403.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Manage">
+               <font>
+                  <Font name="System Bold" size="45.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="110.0" fitWidth="184.0" layoutX="1032.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/WhatsApp_Image_2024-03-04_at_00.20.45-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblPatient" layoutX="22.0" layoutY="227.0" prefHeight="482.0" prefWidth="1207.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="79.0" text="pa_id" />
+          <TableColumn fx:id="colRid" prefWidth="91.0" text="rep_id" />
+            <TableColumn fx:id="colName" prefWidth="117.0" text="Pa_name" />
+            <TableColumn fx:id="colDob" prefWidth="122.0" text="Pa_DOB" />
+            <TableColumn fx:id="colAddress" prefWidth="131.0" text="Pa_address" />
+            <TableColumn fx:id="colContact" prefWidth="164.0" text="pa_contact" />
+            <TableColumn fx:id="colStatus" prefWidth="215.0" text="pa_status" />
+            <TableColumn fx:id="colGender" prefWidth="123.0" text="gender" />
+            <TableColumn fx:id="colDes" prefWidth="164.0" text="description" />
+        </columns>
+      </TableView>
+      <Separator layoutX="60.0" layoutY="157.0" prefHeight="0.0" prefWidth="1131.0" style="-fx-background-color: white;">
+         <effect>
+            <DropShadow />
+         </effect>
+      </Separator>
+      <AnchorPane layoutX="105.0" layoutY="169.0" prefHeight="48.0" prefWidth="50.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%);">
+         <children>
+            <ImageView fitHeight="43.0" fitWidth="38.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-add-administrator-50.png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutY="1.0" onAction="#btnPatientAddOnAction" prefHeight="48.0" prefWidth="50.0" text=" " />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="43.0" fitWidth="50.0" layoutX="40.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView layoutX="36.0" layoutY="170.0">
+         <image>
+            <Image url="@../asserts/icons8-back-button-48.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="31.0" layoutY="173.0" onAction="#btnBackOnAction" prefHeight="43.0" prefWidth="57.0" text="  " />
+      <JFXButton layoutX="1077.0" layoutY="171.0" onAction="#btnReportOnAction" prefHeight="45.0" prefWidth="145.0" style="-fx-background-color: #7393B3;" text="     Report">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="28.0" fitWidth="30.0" layoutX="1091.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/icons8-report-64.png" />
+         </image></ImageView>
+   </children>
+</AnchorPane>
