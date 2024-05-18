@@ -28,21 +28,21 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="22.0" layoutY="165.0" prefHeight="552.0" prefWidth="419.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20;">
+      <AnchorPane layoutX="22.0" layoutY="165.0" prefHeight="552.0" prefWidth="419.0" style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%); -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
          <children>
             <TextField fx:id="txtId" layoutX="47.0" layoutY="51.0" onAction="#txtAppointmentIdOnAction" prefHeight="30.0" prefWidth="251.0" promptText="Enter appointment id" />
-            <TextField fx:id="txtType" layoutX="47.0" layoutY="115.0" prefHeight="30.0" prefWidth="251.0" promptText="Enter appointment type" />
+            <TextField fx:id="txtType" layoutX="47.0" layoutY="115.0" onAction="#AppointmentTypeOnAction" prefHeight="30.0" prefWidth="251.0" promptText="Enter appointment type" />
             <Text layoutX="44.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID" />
             <Text layoutX="44.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Type" />
             <Text layoutX="45.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
             <Text layoutX="45.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Status" />
-            <DatePicker fx:id="txtDate" layoutX="47.0" layoutY="180.0" prefHeight="30.0" prefWidth="251.0" promptText="Enter date" />
+            <DatePicker fx:id="txtDate" layoutX="47.0" layoutY="180.0" onAction="#DateOnAction" prefHeight="30.0" prefWidth="251.0" promptText="Enter date" />
             <JFXButton layoutX="16.0" layoutY="501.0" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" stylesheets="@../StyleSheets/button2.css" text="Save ">
                <font>
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="150.0" layoutY="501.0" onAction="#btnClearOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" stylesheets="@../StyleSheets/button2.css" text="Clear">
+            <JFXButton layoutX="146.0" layoutY="501.0" onAction="#btnClearOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" stylesheets="@../StyleSheets/button2.css" text="Clear">
                <font>
                   <Font size="15.0" />
                </font>
@@ -52,19 +52,19 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <ImageView fitHeight="48.0" fitWidth="41.0" layoutX="355.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="48.0" fitWidth="41.0" layoutX="355.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../asserts/icons8-delete-48.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="354.0" layoutY="110.0" onAction="#btnDeleteOnAction" prefHeight="41.0" prefWidth="41.0" text="Button" />
-            <TextField fx:id="txtDuration" layoutX="47.0" layoutY="311.0" prefHeight="30.0" prefWidth="251.0" promptText="Enter duration" />
+            <JFXButton layoutX="355.0" layoutY="46.0" onAction="#btnDeleteOnAction" prefHeight="41.0" prefWidth="41.0" />
+            <TextField fx:id="txtDuration" layoutX="47.0" layoutY="311.0" onAction="#DurationOnAction" prefHeight="30.0" prefWidth="251.0" promptText="Enter duration" />
             <Text layoutX="44.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration" />
-            <JFXComboBox fx:id="cmbStatus" layoutX="47.0" layoutY="248.0" prefHeight="24.0" prefWidth="251.0" style="-fx-background-color: white;" />
+            <JFXComboBox fx:id="cmbStatus" layoutX="47.0" layoutY="248.0" onAction="#StatusOnAction" prefHeight="24.0" prefWidth="251.0" style="-fx-background-color: white;" />
             <Text layoutX="44.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee ID" />
             <Text layoutX="44.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient ID" />
-            <JFXComboBox fx:id="cmbEmployeeId" layoutX="49.0" layoutY="375.0" prefHeight="24.0" prefWidth="251.0" style="-fx-background-color: white;" />
-            <JFXComboBox fx:id="cmbPatientId" layoutX="49.0" layoutY="439.0" prefHeight="24.0" prefWidth="251.0" style="-fx-background-color: white;" />
+            <JFXComboBox fx:id="cmbEmployeeId" layoutX="49.0" layoutY="375.0" onAction="#EIDOnAction" prefHeight="24.0" prefWidth="251.0" style="-fx-background-color: white;" />
+            <JFXComboBox fx:id="cmbPatientId" layoutX="49.0" layoutY="439.0" onAction="#PIDOnAction" prefHeight="24.0" prefWidth="251.0" style="-fx-background-color: white;" />
          </children>
       </AnchorPane>
       <TableView fx:id="tblAppointment" layoutX="467.0" layoutY="199.0" prefHeight="517.0" prefWidth="759.0">

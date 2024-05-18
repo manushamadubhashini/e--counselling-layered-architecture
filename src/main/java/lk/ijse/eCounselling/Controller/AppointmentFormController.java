@@ -155,8 +155,8 @@ public class AppointmentFormController {
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        colEmpId.setCellValueFactory(new PropertyValueFactory<>("emp_id"));
-        colPaId.setCellValueFactory(new PropertyValueFactory<>("pa_id"));
+        colEmpId.setCellValueFactory(new PropertyValueFactory<>("eid"));
+        colPaId.setCellValueFactory(new PropertyValueFactory<>("pid"));
     }
 
     private void loadAppointmentTable() {
@@ -229,27 +229,74 @@ public class AppointmentFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String type = txtType.getText();
-        LocalDate date = txtDate.getValue();
-        Date datee = java.sql.Date.valueOf(date);
-        String status= (String) cmbStatus.getValue();
-        int duration= Integer.parseInt(txtDuration.getText());
-        String eid= (String) cmbEmployeeId.getValue();
-        String pid= (String) cmbPatientId.getValue();
-
-        Appointment appointment = new Appointment(id, type, (java.sql.Date) datee, status,duration,eid,pid);
-
-        try {
-            boolean isSaved = AppointmentRepo.save(appointment);
-            if (isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "appointment saved!").show();
+        if (txtId.getText().isEmpty() || txtType.getText().isEmpty() || txtDate.getValue() == null || txtDuration.getText().isEmpty() || cmbStatus.getValue() == null || cmbEmployeeId.getValue() == null || cmbPatientId.getValue() == null) {
+            // Set border color of empty text fields to red
+            if (txtId.getText().isEmpty()) {
+                txtId.setStyle("-fx-border-color: red;");
+            } else {
+                txtId.setStyle("");
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
+            if (txtType.getText().isEmpty()) {
+                txtType.setStyle("-fx-border-color: red;");
+            } else {
+                txtType.setStyle("");
+            }
+            if (txtDate.getValue() == null) {
+                txtDate.setStyle("-fx-border-color: red;");
+            } else {
+                txtDate.setStyle("");
+            }
+            if (txtDuration.getText().isEmpty()) {
+                txtDuration.setStyle("-fx-border-color: red;");
+            } else {
+                txtDuration.setStyle("");
+            }
+            if (cmbStatus.getValue() == null) {
+                cmbStatus.setStyle("-fx-border-color: red;");
+            } else {
+                cmbStatus.setStyle("");
+            }
+            if (cmbEmployeeId.getValue() == null) {
+                cmbEmployeeId.setStyle("-fx-border-color: red;");
+            } else {
+                cmbEmployeeId.setStyle("");
+            }
+            if (cmbPatientId.getValue() == null) {
+                cmbPatientId.setStyle("-fx-border-color: red;");
+            } else {
+                cmbPatientId.setStyle("");
+            }
 
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill in all fields.");
+            alert.show();
+
+            String id = txtId.getText();
+            String type = txtType.getText();
+            LocalDate date = txtDate.getValue();
+            Date datee = java.sql.Date.valueOf(date);
+            String status = (String) cmbStatus.getValue();
+            int duration = Integer.parseInt(txtDuration.getText());
+            String eid = (String) cmbEmployeeId.getValue();
+            String pid = (String) cmbPatientId.getValue();
+
+            Appointment appointment = new Appointment(id, type, (java.sql.Date) datee, status, duration, eid, pid);
+
+            try {
+                boolean isSaved = AppointmentRepo.save(appointment);
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "appointment saved!").show();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
+        }
     }
+
+
+
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
@@ -288,4 +335,53 @@ public class AppointmentFormController {
 
     }
 
+    public void AppointmentTypeOnAction(ActionEvent event) {
+        String type=txtType.getText();
+        txtType.setStyle("-fx-border-color: green");
+        txtDate.requestFocus();
+
+    }
+
+    public void DateOnAction(ActionEvent event) {
+        LocalDate date=txtDate.getValue();
+        txtDate.setStyle("-fx-border-color: green");
+        cmbStatus.requestFocus();
+    }
+
+    public void DurationOnAction(ActionEvent event) {
+        try {
+            int duration = Integer.parseInt(txtDuration.getText());
+            if (Regex.isDuration(duration)) {
+                txtDuration.setStyle("-fx-border-color: green;");
+                cmbEmployeeId.requestFocus();
+            } else {
+                txtDuration.setStyle("-fx-border-color: red;");
+            }
+        } catch (NumberFormatException e) {
+            txtDuration.setStyle("-fx-border-color: red;");
+        }
+    }
+
+
+
+    public void StatusOnAction(ActionEvent event) {
+        String status= (String) cmbStatus.getValue();
+        cmbStatus.setStyle("-fx-border-color: green");
+        txtDuration.requestFocus();
+    }
+
+    public void EIDOnAction(ActionEvent event) {
+        String eid= (String) cmbEmployeeId.getValue();
+        cmbEmployeeId.setStyle("-fx-border-color: green");
+        cmbPatientId.requestFocus();
+
+
+    }
+
+    public void PIDOnAction(ActionEvent event) {
+        String pid= (String) cmbPatientId.getValue();
+        cmbPatientId.setStyle("-fx-border-color: green");
+
+
+    }
 }

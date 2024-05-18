@@ -19,6 +19,14 @@ public class Regex {
         Matcher matcher = pattern.matcher(app_id);
         return matcher.matches();
     }
+    public static boolean isDuration(int duration) {
+        String regex = "^(?:[1-9]|1[0-9]|20)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(String.valueOf(duration));
+        return matcher.matches();
+    }
+
+
 
 
 
