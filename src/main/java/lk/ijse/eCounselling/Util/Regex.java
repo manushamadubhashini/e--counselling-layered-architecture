@@ -27,7 +27,25 @@ public class Regex {
     }
 
 
+    public static boolean isPatientId(String pid) {
+        String regex = "^(P[0-9]{3})$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(pid);
+        return matcher.matches();
+    }
 
+    public static boolean isReportId(String rid) {
+        String regex = "^(R[0-9]{3})$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(rid);
+        return matcher.matches();
+    }
 
+    public static boolean isContact(String contact) {
+        String regex = "^0[0-9]{9}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contact);
+        return matcher.matches();
 
+    }
 }
