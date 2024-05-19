@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ScheduleRepo {
     public static boolean save(Schedule schedule) throws SQLException {
-        String sql = "INSERT INTO schedule(sch_id, sch_date , start_time, end_time) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO schedule(sch_id, sch_date , start_time, end_time,emp_id VALUES(?, ?, ?, ?,?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -25,15 +25,16 @@ public class ScheduleRepo {
 
 
     }
-    public static boolean update(String ID,Date date, String STime, String ETime) throws SQLException {
-        String sql = "UPDATE schedule SET  sch_date  = ?,start_time  = ?,end_time= ? WHERE sch_id  = ?";
+    public static boolean update(String ID,Date date, String STime, String ETime,String eid) throws SQLException {
+        String sql = "UPDATE schedule SET  sch_date  = ?,start_time  = ?,end_time= ?,eid=?  WHERE sch_id  = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
         pstm.setObject(1, date);
         pstm.setObject(2, STime);
         pstm.setObject(3,ETime );
-        pstm.setObject(4,ID);
+        pstm.setObject(4,eid );
+        pstm.setObject(5,ID);
         return pstm.executeUpdate() > 0;
 
 
@@ -63,8 +64,9 @@ public class ScheduleRepo {
             Date date = resultSet.getDate(2);
             String STime = resultSet.getString(3);
             String ETime = resultSet.getString(4);
+            String eid=resultSet.getString(5);
 
-            Schedule schedule = new Schedule(id, date,STime,ETime);
+            Schedule schedule = new Schedule(id, date,STime,ETime,eid);
             scheduleList.add(schedule);
         }
         return scheduleList;

@@ -48,4 +48,17 @@ public class Regex {
         return matcher.matches();
 
     }
+    public static boolean isSessionId(String id) {
+        String regex = "^(S[0-9]{3})$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(id);
+        return matcher.matches();
+    }
+
+    public static boolean isScheduleId(String schId) {
+        String regex = "^(H[0-9]{3})$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(schId);
+        return matcher.matches();
+    }
 }

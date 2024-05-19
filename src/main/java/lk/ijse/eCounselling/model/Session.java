@@ -14,4 +14,6 @@ public class Session {
     private String type;
     private Date date;
     private int duration;
+    private String eid;
+    private String pid;
 }

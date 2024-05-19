@@ -1,6 +1,7 @@
 package lk.ijse.eCounselling.Controller;
 
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.eCounselling.Util.Regex;
 import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.model.User;
 import lk.ijse.eCounselling.repository.UserRepo;
@@ -29,6 +31,10 @@ public class LoginFormController {
 
     @FXML
     private TextField txtUserName;
+
+    @FXML
+    private JFXButton btnLoginButton;
+
 
     @FXML
     void btnLoginOnAction(ActionEvent actionEvent) throws IOException, SQLException {
@@ -54,19 +60,18 @@ public class LoginFormController {
             txtUserName.setStyle("-fx-border-color: green;");
             txtPassword.setStyle("-fx-border-color: green;");
             User user = UserRepo.setLogionDetail(userName);
-            try {
+            if (user != null) {
                 if (user.getPassword().equals(password)) {
                     navigateDashBoard();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Password is incorrect").show();
                 }
-            } catch (Exception e) {
+            } else {
                 new Alert(Alert.AlertType.ERROR, "User name not found").show();
-
-
             }
         }
     }
+
 
     private void navigateDashBoard() throws IOException {
         AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/dashboard_form.fxml"));
@@ -87,6 +92,19 @@ public class LoginFormController {
         stage.setScene(scene);
         stage.setTitle("registration form");
         stage.show();
+
+    }
+
+    public void UserNameOnAction(ActionEvent event) {
+        String name=txtUserName.getText();
+        txtUserName.setStyle("-fx-border-color: green");
+        txtPassword.requestFocus();
+    }
+
+    public void PasswordOnAction(ActionEvent event) {
+        String password=txtPassword.getText();
+        txtPassword.setStyle("-fx-border-color: green");
+        btnLoginButton.requestFocus();
 
     }
 }

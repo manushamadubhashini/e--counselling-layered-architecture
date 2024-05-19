@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -31,13 +30,13 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <TextField fx:id="txtUserName" layoutX="68.0" layoutY="311.0" prefHeight="45.0" prefWidth="329.0" promptText="Enter username" style="-fx-border-color: black;" />
+            <TextField fx:id="txtUserName" layoutX="68.0" layoutY="311.0" onAction="#UserNameOnAction" prefHeight="45.0" prefWidth="329.0" promptText="Enter username" style="-fx-border-color: black;" />
             <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="368.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../asserts/icons8-user-24.png" />
                </image>
             </ImageView>
-            <PasswordField fx:id="txtPassword" layoutX="68.0" layoutY="389.0" prefHeight="45.0" prefWidth="329.0" promptText="Enter Password" style="-fx-border-color: black;" />
+            <PasswordField fx:id="txtPassword" layoutX="68.0" layoutY="389.0" onAction="#PasswordOnAction" prefHeight="45.0" prefWidth="329.0" promptText="Enter Password" style="-fx-border-color: black;" />
             <Text fill="#111010" layoutX="67.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
             <Text fill="#0a0909" layoutX="70.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
             <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="368.0" layoutY="401.0" pickOnBounds="true" preserveRatio="true">
@@ -45,9 +44,8 @@
                   <Image url="@../asserts/icons8-password-24.png" />
                </image>
             </ImageView>
-            <CheckBox layoutX="72.0" layoutY="442.0" mnemonicParsing="false" text="Remember Me" textFill="#252222" />
             <Hyperlink layoutX="274.0" layoutY="440.0" text="Forgot Passward ?" textFill="#1e1c1c" />
-            <JFXButton layoutX="112.0" layoutY="473.0" onAction="#btnLoginOnAction" prefHeight="45.0" prefWidth="242.0" style="-fx-background-radius: 25; -fx-border-color: black; -fx-border-radius: 25;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Sign in now" textFill="#2f2a2a">
+            <JFXButton fx:id="btnLoginButton" layoutX="112.0" layoutY="473.0" onAction="#btnLoginOnAction" prefHeight="45.0" prefWidth="242.0" style="-fx-background-radius: 25; -fx-border-color: black; -fx-border-radius: 25;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Sign in now" textFill="#2f2a2a">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

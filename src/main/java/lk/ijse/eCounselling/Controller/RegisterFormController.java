@@ -95,56 +95,53 @@ public class RegisterFormController {
                 txtUserId.setStyle("-fx-border-color: red;");
             } else {
                 txtUserId.setStyle("");
-
-            }if (txtUserName.getText().isEmpty()) {
+            }
+            if (txtUserName.getText().isEmpty()) {
                 txtUserName.setStyle("-fx-border-color: red;");
-            }else{
+            } else {
                 txtUserName.setStyle("");
             }
             if (txtPassword.getText().isEmpty()) {
                 txtPassword.setStyle("-fx-border-color: red;");
-            }else{
+            } else {
                 txtPassword.setStyle("");
             }
             if (txtConfirmPassword.getText().isEmpty()) {
                 txtConfirmPassword.setStyle("-fx-border-color: red;");
-            }else{
+            } else {
                 txtConfirmPassword.setStyle("");
             }
             if (cmbUserType.getValue() == null) {
                 cmbUserType.setStyle("-fx-border-color: red;");
-            }else{
+            } else {
                 cmbUserType.setStyle("");
             }
 
+            // Show the alert for missing fields
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Please fill in all fields.");
+            alert.show();
+        } else {
+            // If all fields are filled, proceed with registration
+            String id = txtUserId.getText();
+            String name = txtUserName.getText();
+            String type = cmbUserType.getValue();
+            String password = txtPassword.getText();
 
-            // Position the alert near the confirm password field
-            alert.initOwner(rootNode.getScene().getWindow());
-            alert.showAndWait();
+            User user = new User(id, name, type, password);
 
-
-                String id = txtUserId.getText();
-                String name = txtUserName.getText();
-                String type = cmbUserType.getValue();
-                String password = txtPassword.getText();
-
-                User user = new User(id, name, type, password);
-
-                try {
-                    boolean isSaved = UserRepo.setUser(user);
-                    if (isSaved) {
-                        new Alert(Alert.AlertType.CONFIRMATION, "Registration Successfully!").show();
-                    }
-                } catch (SQLException e) {
-                    new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            try {
+                boolean isSaved = UserRepo.setUser(user);
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Registration Successfully!").show();
                 }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
         }
     }
-
 
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {

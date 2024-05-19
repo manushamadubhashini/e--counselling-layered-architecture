@@ -17,5 +17,6 @@ public class EmployeeTm {
     private String contact;
     private String position;
     private Date joinDate;
+    private String uid;
 
 }

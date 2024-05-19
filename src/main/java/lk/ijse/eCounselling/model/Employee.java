@@ -19,7 +19,7 @@ public class Employee {
     private String contact;
     private String position;
     private Date joinDate;
-   // private String user_id;
+    private String uid;
 
 
 }

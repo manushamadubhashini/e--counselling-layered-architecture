@@ -231,26 +231,63 @@ public class TreatmentFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String mid = txtMethodId.getText();
-        String pid= (String) cmbPatientId.getValue();
-        String status=txtStatus.getText();
-        String description=txtDescription.getText();
-        int duration= Integer.parseInt(txtDuration.getText());
-
-        Treatment treatment = new Treatment(id,status,pid);
-        TreatmentMethod treatmentMethod=new TreatmentMethod(mid,description);
-        TreatmentMethodDetail treatmentMethodDetail=new TreatmentMethodDetail(id,mid,duration);
-
-        try {
-            boolean isTreatmentSaved = TreatmentRepo.save(treatment);
-            boolean isMethodSaved= TreatmentMethodRepo.save(treatmentMethod);
-            boolean isDetailSaved= TreatmentMethodDetailRepo.save(treatmentMethodDetail);
-            if (isTreatmentSaved && isMethodSaved && isDetailSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Treatment, Method, and Detail saved!").show();
+        if (txtId.getText().isEmpty() || txtStatus.getText().isEmpty() || txtMethodId.getText().isEmpty() || txtDuration.getText().isEmpty() || txtDescription.getText().isEmpty()|| txtMethodId.getText().isEmpty());
+        {
+            // Set border color of empty text fields to red
+            if (txtId.getText().isEmpty()) {
+                txtId.setStyle("-fx-border-color: red;");
+            } else {
+                txtId.setStyle("");
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            if (txtStatus.getText().isEmpty()) {
+                txtStatus.setStyle("-fx-border-color: red;");
+            } else {
+                txtStatus.setStyle("");
+
+            }
+            if (txtDuration.getText().isEmpty()) {
+                txtDuration.setStyle("-fx-border-color: red;");
+            } else {
+                txtDuration.setStyle("");
+            }
+            if (txtMethodId.getText().isEmpty()) {
+                txtMethodId.setStyle("-fx-border-color: red;");
+            } else {
+                txtMethodId.setStyle("");
+            }
+            if (txtDescription.getText().isEmpty()) {
+                txtDescription.setStyle("-fx-border-color: red;");
+            } else {
+                txtDescription.setStyle("");
+            }
+
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill in all fields.");
+            alert.show();
+            String id = txtId.getText();
+            String mid = txtMethodId.getText();
+            String pid = (String) cmbPatientId.getValue();
+            String status = txtStatus.getText();
+            String description = txtDescription.getText();
+            int duration = Integer.parseInt(txtDuration.getText());
+
+            Treatment treatment = new Treatment(id, status, pid);
+            TreatmentMethod treatmentMethod = new TreatmentMethod(mid, description);
+            TreatmentMethodDetail treatmentMethodDetail = new TreatmentMethodDetail(id, mid, duration);
+
+            try {
+                boolean isTreatmentSaved = TreatmentRepo.save(treatment);
+                boolean isMethodSaved = TreatmentMethodRepo.save(treatmentMethod);
+                boolean isDetailSaved = TreatmentMethodDetailRepo.save(treatmentMethodDetail);
+                if (isTreatmentSaved && isMethodSaved && isDetailSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Treatment, Method, and Detail saved!").show();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
         }
 
     }

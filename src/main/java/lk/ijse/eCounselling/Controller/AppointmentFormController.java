@@ -326,7 +326,7 @@ public class AppointmentFormController {
         String appId = txtId.getText();
         if (Regex.isAppointmentId(appId)) {
             txtId.setStyle("-fx-border-color: green;");
-            txtId.requestFocus();
+            txtType.requestFocus();
         } else {
             txtId.setStyle("-fx-border-color: red;");
             txtId.requestFocus();

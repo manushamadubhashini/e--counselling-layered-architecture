@@ -13,4 +13,5 @@ public class ScheduleTm {
     private Date date;
     private String etime;
     private String  stime;
+    private String eid;
 }

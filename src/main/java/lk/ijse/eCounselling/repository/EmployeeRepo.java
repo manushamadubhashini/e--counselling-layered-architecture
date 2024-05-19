@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EmployeeRepo {
     public static boolean save(Employee employee) throws SQLException {
-        String sql = "INSERT INTO employee ( emp_id ,  emp_name , emp_DOB  ,  emp_address, emp_contact, emp_position, emp_joinDate) VALUES(?, ?, ?, ?, ?,?,?)";
+        String sql = "INSERT INTO employee ( emp_id ,  emp_name , emp_DOB  ,  emp_address, emp_contact, emp_position, emp_joinDate,user_id) VALUES(?, ?, ?, ?, ?,?,?,?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -22,13 +22,14 @@ public class EmployeeRepo {
         pstm.setObject(5, employee.getContact());
         pstm.setObject(6, employee.getPosition());
         pstm.setObject(7, employee.getJoinDate());
+        pstm.setObject(8,employee.getUid());
         //pstm.setObject(8,employee.getUser_id());
         return pstm.executeUpdate() > 0;
 
 
     }
-    public static boolean update(String id, String name, LocalDate DOB,String address,String contact,String position,LocalDate joinDate) throws SQLException {
-        String sql = "UPDATE employee SET emp_name = ?, emp_DOB = ?, emp_address = ?,emp_contact= ?,emp_position= ?,emp_joinDate= ?WHERE emp_id = ?";
+    public static boolean update(String id, String name, LocalDate DOB,String address,String contact,String position,LocalDate joinDate,String uid) throws SQLException {
+        String sql = "UPDATE employee SET emp_name = ?, emp_DOB = ?, emp_address = ?,emp_contact= ?,emp_position= ?,emp_joinDate= ?,user_id=? WHERE emp_id = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -38,7 +39,8 @@ public class EmployeeRepo {
         pstm.setObject(4, contact);
         pstm.setObject(5, position);
         pstm.setObject(6, joinDate);
-        pstm.setObject(7,id);
+        pstm.setObject(7,uid);
+        pstm.setObject(8,id);
         return pstm.executeUpdate() > 0;
 
 
@@ -71,8 +73,9 @@ public class EmployeeRepo {
             String contact = resultSet.getString(5);
             String position=resultSet.getString(6);
             Date joinDate = resultSet.getDate(7);
+            String uid=resultSet.getString(8);
 
-            Employee employee = new Employee(id, name,dob,address,contact,position,joinDate);
+            Employee employee = new Employee(id, name,dob,address,contact,position,joinDate,uid);
             employeeList.add(employee);
         }
         return employeeList;
