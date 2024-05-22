@@ -160,7 +160,7 @@ public class EmployeeFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtDOB.getValue() == null || txtAddress.getText().isEmpty() || txtContact.getText().isEmpty() || txtPosition.getText().isEmpty() || txtDate.getValue() == null || txtUserId.getValue() == null) {
+            boolean hasError = false;
             // Set border color of empty text fields to red
             if (txtId.getText().isEmpty()) {
                 txtId.setStyle("-fx-border-color: red;");
@@ -234,7 +234,6 @@ public class EmployeeFormController {
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        }
 
 
     }

@@ -229,51 +229,62 @@ public class AppointmentFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (txtId.getText().isEmpty() || txtType.getText().isEmpty() || txtDate.getValue() == null || txtDuration.getText().isEmpty() || cmbStatus.getValue() == null || cmbEmployeeId.getValue() == null || cmbPatientId.getValue() == null) {
-            // Set border color of empty text fields to red
-            if (txtId.getText().isEmpty()) {
-                txtId.setStyle("-fx-border-color: red;");
-            } else {
-                txtId.setStyle("");
-            }
-            if (txtType.getText().isEmpty()) {
-                txtType.setStyle("-fx-border-color: red;");
-            } else {
-                txtType.setStyle("");
-            }
-            if (txtDate.getValue() == null) {
-                txtDate.setStyle("-fx-border-color: red;");
-            } else {
-                txtDate.setStyle("");
-            }
-            if (txtDuration.getText().isEmpty()) {
-                txtDuration.setStyle("-fx-border-color: red;");
-            } else {
-                txtDuration.setStyle("");
-            }
-            if (cmbStatus.getValue() == null) {
-                cmbStatus.setStyle("-fx-border-color: red;");
-            } else {
-                cmbStatus.setStyle("");
-            }
-            if (cmbEmployeeId.getValue() == null) {
-                cmbEmployeeId.setStyle("-fx-border-color: red;");
-            } else {
-                cmbEmployeeId.setStyle("");
-            }
-            if (cmbPatientId.getValue() == null) {
-                cmbPatientId.setStyle("-fx-border-color: red;");
-            } else {
-                cmbPatientId.setStyle("");
-            }
+        boolean hasError = false;
 
+        if (txtId.getText().isEmpty()) {
+            txtId.setStyle("-fx-border-color: red;");
+            hasError = true;
+        } else {
+            txtId.setStyle("");
+        }
+        if (txtType.getText().isEmpty()) {
+            txtType.setStyle("-fx-border-color: red;");
+            hasError = true;
+        } else {
+            txtType.setStyle("");
+        }
+        if (txtDate.getValue() == null) {
+            txtDate.setStyle("-fx-border-color: red;");
+            hasError = true;
+        } else {
+            txtDate.setStyle("");
+        }
+        if (txtDuration.getText().isEmpty()) {
+            txtDuration.setStyle("-fx-border-color: red;");
+            hasError = true;
+        } else {
+            txtDuration.setStyle("");
+        }
+        if (cmbStatus.getValue() == null) {
+            cmbStatus.setStyle("-fx-border-color: red;");
+            hasError = true;
+        } else {
+            cmbStatus.setStyle("");
+        }
+        if (cmbEmployeeId.getValue() == null) {
+            cmbEmployeeId.setStyle("-fx-border-color: red;");
+            hasError = true;
+        } else {
+            cmbEmployeeId.setStyle("");
+        }
+        if (cmbPatientId.getValue() == null) {
+            cmbPatientId.setStyle("-fx-border-color: red;");
+            hasError = true;
+        } else {
+            cmbPatientId.setStyle("");
+        }
+
+        // If there is an error, show an alert and return
+        if (hasError) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Please fill in all fields.");
             alert.show();
+            return;
+        }
 
-            String id = txtId.getText();
+        String id = txtId.getText();
             String type = txtType.getText();
             LocalDate date = txtDate.getValue();
             Date datee = java.sql.Date.valueOf(date);
@@ -292,7 +303,6 @@ public class AppointmentFormController {
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        }
     }
 
 
