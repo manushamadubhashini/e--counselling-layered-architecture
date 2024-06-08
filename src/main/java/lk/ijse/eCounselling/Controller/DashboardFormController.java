@@ -5,6 +5,11 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.Parent;
@@ -25,7 +30,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class DashboardFormController {
@@ -33,7 +40,7 @@ public class DashboardFormController {
     private AnchorPane rootNode;
 
     @FXML
-    private Label lblAppointmentCount;
+    private Label lblappid;
 
     @FXML
     private Label lblPatientCount;
@@ -50,7 +57,15 @@ public class DashboardFormController {
 
     private int sessionCount;
 
-    public void initialize() {
+    @FXML
+    private BarChart<String, Number> barChart;
+
+    @FXML
+    private PieChart pieChart;
+
+
+
+    public void initialize() throws SQLException {
         try {
             patientCount = getPatientCount();
             appointmentCount = getAppointmentCount();
@@ -63,6 +78,10 @@ public class DashboardFormController {
         setPatientCount(patientCount);
         setAppointmentCount(appointmentCount);
         setSessionCount(sessionCount);
+        populateChart(barChart);
+        populatePieChart(pieChart);
+
+
 
     }
 
@@ -87,7 +106,7 @@ public class DashboardFormController {
     }
 
     private void setAppointmentCount(int appointmentCount) {
-        lblAppointmentCount.setText(String.valueOf(appointmentCount));
+        lblappid.setText(String.valueOf(appointmentCount));
     }
 
     private int getAppointmentCount() throws SQLException {
@@ -228,35 +247,74 @@ public class DashboardFormController {
     }
 
     private void checkForHighRiskPatients() {
-            try {
-                List<Patient> patients = PatientRepo.getAll();
-                boolean highRiskFound = false;
-
-                for (Patient patient : patients) {
-                    if (patient.getStatus().equalsIgnoreCase("High Risky Patient")) {
-                        highRiskFound = true;
-                        break; // Exit loop once a high-risk patient is found
-                    }
+        try {
+            List<Patient> patients = PatientRepo.getAll();
+            boolean highRiskFound = false;
+            for (Patient patient : patients) {
+                if (patient.getStatus().equalsIgnoreCase("High Risky Patient")) {
+                    highRiskFound = true;
+                    break;
                 }
-
-                if (highRiskFound) {
-                    // Defer showing the alert until after the dashboard is loaded
-                    Platform.runLater(() -> {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("High Risk Patients Alert");
-                        alert.setHeaderText("High-risk patients found!");
-                        alert.setContentText("There are high-risk patients in the database. Immediate attention is required!");
-                        alert.showAndWait();
-                    });
-
-                    // Update UI on the JavaFX Application Thread
-
-                }
-            } catch (SQLException e) {
-                e.printStackTrace(); // Handle database exception appropriately
             }
+            if (highRiskFound) {
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("High Risk Patients Alert");
+                    alert.setHeaderText("High-risk patients found!");
+                    alert.setContentText("There are high-risk patients in the database. Immediate attention is required!");
+                    alert.showAndWait();
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        }
+    private void populateChart(BarChart<String, Number> barChart) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT DATE_FORMAT(app_date, '%m') as app_month, COUNT(app_id) as Count FROM appointment GROUP BY app_month";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Appointments per Month");
+
+        while (resultSet.next()) {
+            String appMonth = resultSet.getString("app_month");
+            int count = resultSet.getInt("Count");
+            series.getData().add(new XYChart.Data<>(appMonth, count));
+        }
+
+        barChart.getData().add(series);
+
+        // Define an array of colors
+        String[] colors = {"#AFDBF5", "#FFD700", "#FF6347", "#4CBB17", "#0096FF"};
+
+        // Wait for the chart to be rendered
+        Platform.runLater(() -> {
+            int colorIndex = 0;
+            for (Node n : barChart.lookupAll(".chart-bar")) {
+                n.setStyle("-fx-bar-fill: " + colors[colorIndex % colors.length] + ";");
+                colorIndex++;
+            }
+        });
+
+    }
+    private void populatePieChart(PieChart pieChart) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT treat_status, COUNT(treat_status) as treatment_count FROM treatments GROUP BY treat_status";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            String treatmentName = resultSet.getString("treat_status");
+            int count = resultSet.getInt("treatment_count");
+            PieChart.Data slice = new PieChart.Data(treatmentName, count);
+            pieChart.getData().add(slice);
         }
     }
+
+}
+
 
 
 

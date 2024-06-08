@@ -5,9 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28a2f1e1-4c61-45dc-92f1-d16097bc198a" name="Changes" comment="final">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/1602628661024.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/360_F_225707294_V0jKFrHm1Bm5mLQjTAhKFplaWQIgdHby.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/blue-gradient-color-background-website-banner-creative-graphic-design_120819-1373 (1).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/blue-gradient-color-background-website-banner-creative-graphic-design_120819-1373.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/depositphotos_218003704-stock-photo-smiling-young-female-doctor-medical.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-appointment-scheduling-48.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-headache-48.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-session-64.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-star-48.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/images (12).jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/patient-data-access.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/AppointmentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/AppointmentFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/DashboardFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/DashboardFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/EmployeeFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/EmployeeFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/dashboard_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/dashboard_form.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +73,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ma/Desktop/eCounseling-system-programming/src/main/resources/Report&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ma/Desktop/eCounseling-system-programming/src/main/resources/asserts&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -78,8 +92,8 @@
       <recent name="lk.ijse.eCounselling.Controller" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/Report" />
       <recent name="$PROJECT_DIR$/src/main/resources/asserts" />
+      <recent name="$PROJECT_DIR$/src/main/resources/Report" />
       <recent name="$PROJECT_DIR$/src/main/resources/asserts.icon" />
       <recent name="$PROJECT_DIR$/src/main/resources/asserts.image" />
     </key>
@@ -561,7 +575,36 @@
       <workItem from="1716105866688" duration="1743000" />
       <workItem from="1716108359360" duration="3363000" />
       <workItem from="1716364196504" duration="184000" />
-      <workItem from="1716364425851" duration="1524000" />
+      <workItem from="1716364425851" duration="2221000" />
+      <workItem from="1716366812530" duration="408000" />
+      <workItem from="1716393145648" duration="112000" />
+      <workItem from="1716524394288" duration="626000" />
+      <workItem from="1716527557095" duration="172000" />
+      <workItem from="1716527770933" duration="181000" />
+      <workItem from="1716532196178" duration="552000" />
+      <workItem from="1716533448196" duration="294000" />
+      <workItem from="1716533769833" duration="683000" />
+      <workItem from="1716534649174" duration="2506000" />
+      <workItem from="1716537252899" duration="3136000" />
+      <workItem from="1716543523878" duration="12000" />
+      <workItem from="1716548657519" duration="9000" />
+      <workItem from="1716550713375" duration="3488000" />
+      <workItem from="1716576213585" duration="39000" />
+      <workItem from="1716576406515" duration="1259000" />
+      <workItem from="1716610618215" duration="9000" />
+      <workItem from="1716618397085" duration="47000" />
+      <workItem from="1716630672268" duration="3335000" />
+      <workItem from="1716783201216" duration="8359000" />
+      <workItem from="1716806634034" duration="1345000" />
+      <workItem from="1716815608965" duration="3607000" />
+      <workItem from="1716819738175" duration="4887000" />
+      <workItem from="1716825604356" duration="551000" />
+      <workItem from="1716826225041" duration="614000" />
+      <workItem from="1716827329447" duration="1087000" />
+      <workItem from="1716907296189" duration="424000" />
+      <workItem from="1716908083839" duration="2020000" />
+      <workItem from="1716915002908" duration="614000" />
+      <workItem from="1717339904278" duration="2116000" />
     </task>
     <task id="LOCAL-00001" summary="final">
       <option name="closed" value="true" />
@@ -619,7 +662,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716101622552</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="final">
+      <option name="closed" value="true" />
+      <created>1716366223458</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1716366223458</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

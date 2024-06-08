@@ -166,51 +166,64 @@ public class EmployeeFormController {
                 txtId.setStyle("-fx-border-color: red;");
             } else {
                 txtId.setStyle("");
+                hasError = true;
             }
             if (txtName.getText().isEmpty()) {
                 txtName.setStyle("-fx-border-color: red;");
             } else {
                 txtName.setStyle("");
+                hasError = true;
             }
             if (txtDOB.getValue() == null) {
                 txtDOB.setStyle("-fx-border-color: red;");
             } else {
                 txtDOB.setStyle("");
+                hasError = true;
             }
             if (txtAddress.getText().isEmpty()) {
                 txtAddress.setStyle("-fx-border-color: red;");
             } else {
                 txtAddress.setStyle("");
+                hasError = true;
             }
 
             if (txtContact.getText().isEmpty()) {
                 txtContact.setStyle("-fx-border-color: red;");
+                hasError = true;
             } else {
                 txtContact.setStyle("");
+
             }
             if (txtPosition.getText().isEmpty()) {
                 txtPosition.setStyle("-fx-border-color: red;");
+                hasError = true;
             } else {
                 txtPosition.setStyle("");
+
 
             }
             if (txtDate.getValue() == null) {
                 txtDate.setStyle("-fx-border-color: red;");
+                hasError = true;
             } else {
                 txtDate.setStyle("");
+
             }
             if (txtUserId.getValue() == null) {
                 txtUserId.setStyle("-fx-border-color: red;");
+                hasError = true;
             } else {
                 txtUserId.setStyle("");
+
             }
 
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all fields.");
-            alert.show();
+            if(hasError) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill in all fields.");
+                alert.show();
+            }
 
             String id = txtId.getText();
             String name = txtName.getText();

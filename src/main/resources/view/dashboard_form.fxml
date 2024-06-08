@@ -1,176 +1,302 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootNode" prefHeight="672.0" prefWidth="1269.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.eCounselling.Controller.DashboardFormController">
+<AnchorPane fx:id="rootNode" prefHeight="695.0" prefWidth="1334.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.eCounselling.Controller.DashboardFormController">
    <children>
-      <ImageView fitHeight="606.0" fitWidth="1055.0" layoutX="214.0" layoutY="89.0">
-         <image>
-            <Image url="@../asserts/counselling123.jpg" />
-         </image>
-      </ImageView>
       <VBox prefHeight="695.0" prefWidth="214.0" style="-fx-background-color: white;">
          <children>
             <AnchorPane prefHeight="697.0" prefWidth="214.0" style="-fx-background-color: #AFDBF5;">
                <children>
-                  <JFXButton layoutX="7.0" layoutY="200.0" onAction="#btnEmployeeFormOnAction" prefHeight="54.0" prefWidth="201.0" style="-fx-border-color: black;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="      Employee" textFill="#070707">
+                  <JFXButton layoutX="10.0" layoutY="184.0" onAction="#btnEmployeeFormOnAction" prefHeight="54.0" prefWidth="191.0" style="-fx-background-color: #0096FF;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="        Employee" textFill="#070707">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="27.0" fitWidth="22.0" layoutX="18.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="27.0" fitWidth="22.0" layoutX="20.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/icons8-employees-50%20(1).png" />
                      </image>
                   </ImageView>
-                  <JFXButton layoutX="5.0" layoutY="263.0" onAction="#btnPatientOnAction" prefHeight="54.0" prefWidth="201.0" style="-fx-border-color: black;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="      Patients" textFill="#070707">
+                  <JFXButton layoutX="7.0" layoutY="306.0" onAction="#btnPatientOnAction" prefHeight="54.0" prefWidth="201.0" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="        Patients" textFill="#070707">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="19.0" fitWidth="19.0" layoutX="19.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="19.0" layoutX="19.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/patient%20(1).png" />
                      </image>
                   </ImageView>
-                  <JFXButton layoutX="7.0" layoutY="324.0" onAction="#btnScheduleOnAction" prefHeight="54.0" prefWidth="201.0" style="-fx-border-color: black;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="      Schedule" textFill="#070707">
+                  <JFXButton layoutX="7.0" layoutY="360.0" onAction="#btnScheduleOnAction" prefHeight="54.0" prefWidth="201.0" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="        Schedule" textFill="#070707">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="22.0" fitWidth="29.0" layoutX="17.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="29.0" layoutX="20.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/icons8-schedule-64.png" />
                      </image>
                   </ImageView>
-                  <JFXButton layoutX="7.0" layoutY="390.0" onAction="#btnTreatmentOnAction" prefHeight="54.0" prefWidth="201.0" style="-fx-border-color: black;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="      Treatment" textFill="#070707">
+                  <JFXButton layoutX="7.0" layoutY="422.0" onAction="#btnTreatmentOnAction" prefHeight="54.0" prefWidth="201.0" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="        Treatment" textFill="#070707">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="19.0" fitWidth="22.0" layoutX="19.0" layoutY="407.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="19.0" fitWidth="22.0" layoutX="19.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/icons8-treatment-50.png" />
                      </image>
                   </ImageView>
-                  <JFXButton layoutX="7.0" layoutY="450.0" onAction="#btnPaymentOnAction" prefHeight="54.0" prefWidth="201.0" style="-fx-border-color: black;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="      Payment" textFill="#070707">
+                  <JFXButton layoutX="10.0" layoutY="482.0" onAction="#btnPaymentOnAction" prefHeight="54.0" prefWidth="201.0" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="        Payment" textFill="#070707">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="27.0" fitWidth="22.0" layoutX="17.0" layoutY="466.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="27.0" fitWidth="22.0" layoutX="20.0" layoutY="498.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/icons8-transaction-48%20(1).png" />
                      </image>
                   </ImageView>
-                  <JFXButton layoutX="7.0" layoutY="512.0" onAction="#btnSessionOnAction" prefHeight="54.0" prefWidth="201.0" style="-fx-border-color: black;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="      Sessions" textFill="#070707">
+                  <JFXButton layoutX="9.0" layoutY="541.0" onAction="#btnSessionOnAction" prefHeight="54.0" prefWidth="201.0" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="        Sessions" textFill="#070707">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="18.0" layoutY="528.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="20.0" layoutY="557.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/coaching.png" />
                      </image>
                   </ImageView>
-                  <JFXButton layoutX="5.0" layoutY="576.0" onAction="#btnLogoutOnAction" prefHeight="54.0" prefWidth="201.0" style="-fx-border-color: black;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="      Log Out" textFill="#070707">
+                  <JFXButton layoutX="10.0" layoutY="601.0" onAction="#btnLogoutOnAction" prefHeight="54.0" prefWidth="201.0" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="        Log Out" textFill="#070707">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="18.0" layoutY="592.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="20.0" layoutY="617.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/icons8-log-out-50.png" />
                      </image>
                   </ImageView>
-                  <JFXButton layoutX="7.0" layoutY="137.0" onAction="#btnAppointmentFormOnAction" prefHeight="54.0" prefWidth="201.0" style="-fx-border-color: black;" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="      Appointment" textFill="#070707">
+                  <JFXButton layoutX="12.0" layoutY="246.0" onAction="#btnAppointmentFormOnAction" prefHeight="54.0" prefWidth="191.0" styleClass="jfx-button" stylesheets="@../StyleSheets/button.css" text="        Appointment" textFill="#1e1e1e">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="20.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="20.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/icons8-appointment-50.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="124.0" fitWidth="119.0" layoutX="38.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="118.0" fitWidth="129.0" layoutX="38.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../asserts/images__10_-removebg-preview.png" />
                      </image>
                   </ImageView>
                </children></AnchorPane>
          </children></VBox>
-      <AnchorPane layoutX="245.0" layoutY="127.0" prefHeight="173.0" prefWidth="310.0">
+      <AnchorPane layoutX="304.0" layoutY="39.0" prefHeight="172.0" prefWidth="254.0" style="-fx-background-color: #AFDBF5;">
          <children>
-            <AnchorPane layoutX="-21.0" layoutY="-26.0" prefHeight="186.0" prefWidth="1029.0" style="-fx-background-color: white;">
-               <children>
-                  <AnchorPane layoutX="18.0" layoutY="15.0" prefHeight="153.0" prefWidth="316.0" style="-fx-background-color: #AFDBF5;">
-                     <children>
-                        <Label fx:id="lblAppointmentCount" layoutX="266.0" layoutY="93.0" text="0">
-                           <font>
-                              <Font name="System Bold" size="26.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="20.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../Downloads/icons8-appointments-64.png" />
-                           </image>
-                        </ImageView>
-                     </children></AnchorPane>
-                  <AnchorPane layoutX="356.0" layoutY="15.0" prefHeight="153.0" prefWidth="316.0" style="-fx-background-color: #AFDBF5;">
-                     <children>
-                        <Label fx:id="lblPatientCount" layoutX="275.0" layoutY="93.0" text="0" textFill="#252b2c">
-                           <font>
-                              <Font name="System Bold" size="26.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="28.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../asserts/icons8-patient-64%20(2).png" />
-                           </image>
-                        </ImageView>
-                     </children></AnchorPane>
-                  <AnchorPane layoutX="696.0" layoutY="15.0" prefHeight="153.0" prefWidth="316.0" style="-fx-background-color: #AFDBF5;">
-                     <children>
-                        <Label fx:id="lblSessionCount" layoutX="271.0" layoutY="95.0" text="0" textFill="#363c3c">
-                           <font>
-                              <Font name="System Bold" size="26.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="64.0" fitWidth="58.0" layoutX="29.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../asserts/icons8-session-timeout-50.png" />
-                           </image>
-                        </ImageView>
-                     </children></AnchorPane>
-               </children>
-            </AnchorPane>
-            <Label layoutX="76.0" layoutY="27.0" prefHeight="30.0" prefWidth="225.0" text="Appointment Count" textFill="#101110">
+            <Label layoutX="14.0" layoutY="18.0" prefHeight="30.0" prefWidth="182.0" text="Appointment Count" textFill="#101110">
                <font>
-                  <Font name="System Bold" size="19.0" />
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="54.0" fitWidth="42.0" layoutX="190.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-appointment-scheduling-48.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblappid" layoutX="14.0" layoutY="65.0" text="0" textFill="#252b2c">
+               <font>
+                  <Font name="System Bold" size="48.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="728.0" layoutY="151.0" text="Patient Count" textFill="#101110">
-         <font>
-            <Font name="System Bold" size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="1059.0" layoutY="151.0" text="Session Count" textFill="#101110">
-         <font>
-            <Font name="System Bold" size="19.0" />
-         </font>
-      </Label>
-      <AnchorPane layoutX="214.0" layoutY="-2.0" prefHeight="90.0" prefWidth="1055.0" style="-fx-background-color: #AFDBF5;">
+      <AnchorPane layoutX="641.0" layoutY="39.0" prefHeight="172.0" prefWidth="254.0" style="-fx-background-color: white;">
          <children>
-            <Label fx:id="lblHighRiskMessage" layoutX="856.0" layoutY="5.0" prefHeight="78.0" prefWidth="190.0" styleClass="notification-label" stylesheets="@../StyleSheets/notification-labl.css" />
+            <Label fx:id="lblPatientCount" layoutX="14.0" layoutY="65.0" text="0" textFill="#252b2c">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="23.0" text="Patient Count" textFill="#101110">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="191.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-headache-48.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="982.0" layoutY="39.0" prefHeight="172.0" prefWidth="254.0" style="-fx-background-color: white;">
+         <children>
+            <Label fx:id="lblSessionCount" layoutX="18.0" layoutY="65.0" text="0" textFill="#363c3c">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="18.0" layoutY="24.0" text="Session Count" textFill="#101110">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="54.0" fitWidth="42.0" layoutX="192.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-session-64.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <PieChart fx:id="pieChart" layoutX="943.0" layoutY="232.0" prefHeight="450.0" prefWidth="367.0" style="-fx-background-color: white;" />
+      <BarChart fx:id="barChart" layoutX="251.0" layoutY="234.0" prefHeight="227.0" prefWidth="419.0" style="-fx-background-color: white;">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <AnchorPane layoutX="251.0" layoutY="484.0" prefHeight="197.0" prefWidth="670.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="14.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="01" />
+            <ImageView fitHeight="42.0" fitWidth="49.0" layoutX="63.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/360_F_225707294_V0jKFrHm1Bm5mLQjTAhKFplaWQIgdHby.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="49.0" layoutX="63.0" layoutY="56.0">
+               <image>
+                  <Image url="@../asserts/counsellors__1_-removebg-preview.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="146.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dr.Shamali Rathnayaka" />
+            <Text layoutX="347.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guidance counselor" />
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="529.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="551.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="573.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="595.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="617.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="14.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="02" />
+            <Text layoutX="144.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dr.Nimal Fernando" />
+            <Text layoutX="349.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adoption counselor" />
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="529.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="551.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="573.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="595.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="617.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="14.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="03" />
+            <ImageView fitHeight="42.0" fitWidth="49.0" layoutX="73.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/images%20(12).jpeg" />
+               </image>
+            </ImageView>
+            <Text layoutX="146.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dr.Darshani Hewa" />
+            <Text layoutX="348.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mental health counselor" />
+            <ImageView fitHeight="22.0" fitWidth="49.0" layoutX="529.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="551.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="573.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="595.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="617.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/icons8-star-48.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="16.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top Counselor">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Text layoutX="990.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment Situation">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="668.0" layoutY="234.0" prefHeight="227.0" prefWidth="254.0" style="-fx-background-color: white;">
+         <children>
+            <AnchorPane layoutX="20.0" layoutY="159.0" prefHeight="15.0" prefWidth="17.0" style="-fx-background-color: #0096FF;" />
+            <AnchorPane layoutX="20.0" layoutY="37.0" prefHeight="15.0" prefWidth="17.0" style="-fx-background-color: #AFDBF5;" />
+            <AnchorPane layoutX="20.0" layoutY="69.0" prefHeight="15.0" prefWidth="17.0" style="-fx-background-color: #FFD700;" />
+            <AnchorPane layoutX="20.0" layoutY="99.0" prefHeight="15.0" prefWidth="17.0" style="-fx-background-color: #FF6347;" />
+            <AnchorPane layoutX="20.0" layoutY="130.0" prefHeight="15.0" prefWidth="17.0" style="-fx-background-color: #4CBB17;" />
+            <Text layoutX="71.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="January" />
+            <Text layoutX="71.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="February" />
+            <Text layoutX="71.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="March" />
+            <Text layoutX="71.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="April" />
+            <Text layoutX="71.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="May" />
          </children>
       </AnchorPane>
    </children>
