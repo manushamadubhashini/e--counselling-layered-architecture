@@ -5,23 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28a2f1e1-4c61-45dc-92f1-d16097bc198a" name="Changes" comment="final">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/1602628661024.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/360_F_225707294_V0jKFrHm1Bm5mLQjTAhKFplaWQIgdHby.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/blue-gradient-color-background-website-banner-creative-graphic-design_120819-1373 (1).jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/blue-gradient-color-background-website-banner-creative-graphic-design_120819-1373.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/depositphotos_218003704-stock-photo-smiling-young-female-doctor-medical.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-appointment-scheduling-48.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-headache-48.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-session-64.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/icons8-star-48.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/images (12).jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/asserts/patient-data-access.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/AppointmentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/AppointmentFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/DashboardFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/DashboardFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/EmployeeFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Controller/EmployeeFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/eCounselling/Launcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/dashboard_form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/dashboard_form.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -605,6 +589,7 @@
       <workItem from="1716908083839" duration="2020000" />
       <workItem from="1716915002908" duration="614000" />
       <workItem from="1717339904278" duration="2116000" />
+      <workItem from="1717846208645" duration="3584000" />
     </task>
     <task id="LOCAL-00001" summary="final">
       <option name="closed" value="true" />
