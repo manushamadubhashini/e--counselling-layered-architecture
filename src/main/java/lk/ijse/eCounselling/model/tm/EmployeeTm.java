@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -12,11 +13,11 @@ import java.util.Date;
 public class EmployeeTm {
     private String id;
     private String name;
-    private Date DOB;
+    private String DOB;
     private String address;
     private String contact;
     private String position;
-    private Date joinDate;
+    private LocalDate joinDate;
     private String uid;
 
 }

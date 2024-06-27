@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,7 +12,7 @@ import java.util.Date;
 public class SessionTm {
     private String id;
     private String type;
-    private Date date;
+    private LocalDate date;
     private int duration;
     private String eid;
     private String pid;

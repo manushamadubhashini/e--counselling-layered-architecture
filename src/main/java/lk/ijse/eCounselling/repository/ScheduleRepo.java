@@ -4,29 +4,28 @@ import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.model.Appointment;
 import lk.ijse.eCounselling.model.Schedule;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleRepo {
     public static boolean save(Schedule schedule) throws SQLException {
-        String sql = "INSERT INTO schedule(sch_id, sch_date , start_time, end_time,emp_id VALUES(?, ?, ?, ?,?)";
+        String sql = "INSERT INTO schedule(sch_id, sch_date,start_time,end_time,emp_id) VALUES(?, ?, ?, ?, ?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
         pstm.setObject(1, schedule.getId());
         pstm.setObject(2, schedule.getDate());
-        pstm.setObject(3, schedule.getEtime());
+        pstm.setObject(3, schedule.getStime());
         pstm.setObject(4, schedule.getEtime());
+        pstm.setObject(5,schedule.getEid());
         return pstm.executeUpdate() > 0;
 
 
     }
-    public static boolean update(String ID,Date date, String STime, String ETime,String eid) throws SQLException {
-        String sql = "UPDATE schedule SET  sch_date  = ?,start_time  = ?,end_time= ?,eid=?  WHERE sch_id  = ?";
+    public static boolean update(String ID, LocalDate date, String STime, String ETime, String eid) throws SQLException {
+        String sql = "UPDATE schedule SET  sch_date  = ?,start_time  = ?,end_time= ?,emp_id=?  WHERE sch_id  = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -50,7 +49,7 @@ public class ScheduleRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static List<Schedule> getAll() throws SQLException {
+    public static ArrayList<Schedule> getAll() throws SQLException {
         String sql = "SELECT * FROM schedule";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -58,7 +57,7 @@ public class ScheduleRepo {
 
         ResultSet resultSet = pstm.executeQuery();
 
-        List<Schedule> scheduleList = new ArrayList<>();
+        ArrayList<Schedule> scheduleList = new ArrayList<>();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             Date date = resultSet.getDate(2);
@@ -66,10 +65,22 @@ public class ScheduleRepo {
             String ETime = resultSet.getString(4);
             String eid=resultSet.getString(5);
 
-            Schedule schedule = new Schedule(id, date,STime,ETime,eid);
+            Schedule schedule = new Schedule(id, date.toLocalDate(),STime,ETime,eid);
             scheduleList.add(schedule);
         }
         return scheduleList;
     }
 
+    public static String generateId() throws SQLException {
+        Connection connection=DbConnection.getInstance().getConnection();
+        Statement stm=connection.createStatement();
+        ResultSet rst=stm.executeQuery("SELECT sch_id  FROM schedule ORDER BY sch_id  DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("sch_id");
+            int newScheduleId = Integer.parseInt(id.replace("H", "")) + 1;
+            return String.format("H%03d", newScheduleId);
+        } else {
+            return "H001";
+        }
+    }
 }

@@ -12,9 +12,8 @@ import java.util.Date;
 public class Appointment {
     private String id;
     private String type;
-    private Date date;
-    private String status;
-    private int duration;
+    private String date;
+    private String time;
     private String eid;
     private String pid;
 }

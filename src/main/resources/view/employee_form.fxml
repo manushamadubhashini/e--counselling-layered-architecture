@@ -34,14 +34,13 @@
             <TextField fx:id="txtAddress" layoutX="294.0" layoutY="359.0" prefHeight="41.0" prefWidth="219.0" promptText="emplyee_address" style="-fx-border-color: black;" />
             <Text layoutX="294.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Emplyee Address" />
             <Text layoutX="31.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Date of Birth" />
-            <DatePicker fx:id="txtDOB" layoutX="31.0" layoutY="359.0" prefHeight="41.0" prefWidth="219.0" promptText="date of birth" style="-fx-border-color: black;" />
-            <TextField fx:id="txtContact" layoutX="33.0" layoutY="456.0" prefHeight="41.0" prefWidth="219.0" promptText="employee_contact" style="-fx-border-color: black;" />
+            <TextField fx:id="txtContact" layoutX="28.0" layoutY="456.0" prefHeight="41.0" prefWidth="219.0" promptText="contact (0AA-NNN NNNN)" style="-fx-border-color: black;" />
             <Text layoutX="31.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Contact" />
             <TextField fx:id="txtPosition" layoutX="294.0" layoutY="456.0" prefHeight="41.0" prefWidth="219.0" promptText="emploee_position" style="-fx-border-color: black;" />
             <Text layoutX="294.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Position" />
-            <DatePicker fx:id="txtDate" layoutX="32.0" layoutY="549.0" prefHeight="41.0" prefWidth="219.0" promptText="join_date" style="-fx-border-color: black;" />
+            <DatePicker fx:id="txtDate" layoutX="28.0" layoutY="549.0" prefHeight="41.0" prefWidth="219.0" promptText="join_date" style="-fx-border-color: black;" />
             <Text layoutX="31.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Date" />
-            <JFXButton layoutX="10.0" layoutY="626.0" onAction="#btnSaveOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Save">
+            <JFXButton fx:id="btnSave" layoutX="10.0" layoutY="626.0" onAction="#btnSaveOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Save">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -57,12 +56,12 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="275.0" layoutY="626.0" onAction="#btnUpdateOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Update">
+            <JFXButton fx:id="btnUpdate" layoutX="275.0" layoutY="626.0" onAction="#btnUpdateOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Update">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="409.0" layoutY="626.0" onAction="#btnDeleteOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Delete">
+            <JFXButton fx:id="btnDelete" layoutX="409.0" layoutY="626.0" onAction="#btnDeleteOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" styleClass="jfx-button" stylesheets="@../StyleSheets/button2.css" text="Delete">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -74,7 +73,9 @@
             </ImageView>
             <JFXButton layoutX="13.0" layoutY="150.0" onAction="#btnBackOnAction" prefHeight="41.0" prefWidth="41.0" />
             <Text layoutX="297.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee UserId" />
-            <JFXComboBox fx:id="txtUserId" layoutX="297.0" layoutY="549.0" prefHeight="41.0" prefWidth="219.0" promptText="select user Id" style="-fx-background-color: white; -fx-border-color: black;" />
+            <JFXComboBox fx:id="txtUserId" layoutX="294.0" layoutY="549.0" prefHeight="41.0" prefWidth="219.0" promptText="select user Id" style="-fx-background-color: white; -fx-border-color: black;" />
+            <JFXButton fx:id="btnNewEmployee" layoutX="388.0" layoutY="156.0" onAction="#btnNewEmployeeOnAction" prefHeight="30.0" prefWidth="141.0" style="-fx-background-color: #4B9CD3;" stylesheets="@../StyleSheets/button2.css" text="+new employee" />
+            <TextField fx:id="txtDOB" layoutX="28.0" layoutY="359.0" prefHeight="41.0" prefWidth="219.0" promptText="date of birth   (YYYY-MM-DD) " style="-fx-border-color: black;" />
          </children>
       </AnchorPane>
       <TableView fx:id="tblEmployee" layoutX="545.0" layoutY="-1.0" prefHeight="696.0" prefWidth="807.0" style="-fx-border-color: white;">

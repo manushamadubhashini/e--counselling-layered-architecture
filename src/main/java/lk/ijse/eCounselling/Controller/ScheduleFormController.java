@@ -1,5 +1,6 @@
 package lk.ijse.eCounselling.Controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +33,20 @@ import java.util.Date;
 import java.util.List;
 
 public class ScheduleFormController {
+    @FXML
+    private JFXButton btnDelete;
+
+    @FXML
+    private JFXButton btnClear;
+
+    @FXML
+    private JFXButton btnSave;
+
+    @FXML
+    private JFXButton btnUpdate;
+
+    @FXML
+    private JFXButton btnNewSchedule;
 
     @FXML
     private AnchorPane root;
@@ -76,6 +91,34 @@ public class ScheduleFormController {
         setCellValueFactory();
         loadScheduleTable();
         getEmployeeId();
+        btnSave.setDisable(true);
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
+        txtId.setEditable(false);
+        txtId.setDisable(true);
+        txtDate.setDisable(true);
+        txtStartTime.setDisable(true);
+        txtEndTime.setDisable(true);
+        cmbEmpId.setDisable(true);
+        tblSchedule.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnDelete.setDisable(newValue == null);
+            //btnUpdate.setText(newValue != null ? "Update" : "Save");
+            btnUpdate.setDisable(newValue == null);
+
+            if (newValue != null) {
+                txtId.setText(newValue.getId());
+                txtDate.setValue(newValue.getDate());
+                txtStartTime.setText(newValue.getStime());
+                txtEndTime.setText(newValue.getEtime());
+                cmbEmpId.setValue(newValue.getEid());
+
+                txtId.setDisable(false);
+                txtDate.setDisable(false);
+                txtStartTime.setDisable(false);
+                txtEndTime.setDisable(false);
+                cmbEmpId.setDisable(false);
+            }
+        });
     }
 
     private void getEmployeeId() {
@@ -95,24 +138,16 @@ public class ScheduleFormController {
     }
 
     private void loadScheduleTable() {
-        ObservableList<ScheduleTm> ScheduleTMS = FXCollections.observableArrayList();
+        tblSchedule.getItems().clear();
+        try {
+            ArrayList<Schedule> schedules = ScheduleRepo.getAll();
+            for (Schedule s : schedules) {
+                tblSchedule.getItems().add(new ScheduleTm(s.getId(), s.getDate(), s.getStime(), s.getEtime(), s.getEid()));
+            }
 
-
-        for (Schedule schedule : scheduleList) {
-            ScheduleTm scheduleTm=new ScheduleTm(
-                    schedule.getId(),
-                    schedule.getDate(),
-                    schedule.getStime(),
-                    schedule.getEtime(),
-                    schedule.getEid()
-
-            );
-            ScheduleTMS.add(scheduleTm);
-
+        }catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
-        tblSchedule.setItems(ScheduleTMS);
-        ScheduleTm selectedItem = (ScheduleTm) tblSchedule.getSelectionModel().getSelectedItem();
-        System.out.println("selectedItem = " + selectedItem);
 
     }
 
@@ -164,58 +199,65 @@ public class ScheduleFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (txtId.getText().isEmpty() || txtDate.getValue() == null || txtStartTime.getText().isEmpty() || txtEndTime.getText().isEmpty() || cmbEmpId.getValue() == null) {
+            boolean hasError=false;
             // Set border color of empty text fields to red
             if (txtId.getText().isEmpty()) {
                 txtId.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtId.setStyle("");
             }
             if (txtStartTime.getText().isEmpty()) {
                 txtStartTime.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtStartTime.setStyle("");
             }
             if (txtDate.getValue() == null) {
                 txtDate.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtDate.setStyle("");
             }
             if (txtEndTime.getText().isEmpty()) {
                 txtEndTime.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtEndTime.setStyle("");
             }
             if (cmbEmpId.getValue() == null) {
                 cmbEmpId.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 cmbEmpId.setStyle("");
             }
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all fields.");
-            alert.show();
+            if(hasError) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill in all fields.");
+                alert.show();
+                return;
+            }
 
             String id = txtId.getText();
             LocalDate date = txtDate.getValue();
-            Date datee = java.sql.Date.valueOf(date);
             String STime = txtStartTime.getText();
             String ETime = txtEndTime.getText();
             String eid = (String) cmbEmpId.getValue();
 
-            Schedule schedule = new Schedule(id, (java.sql.Date) datee, STime, ETime, eid);
+            Schedule schedule = new Schedule(id, date, STime, ETime, eid);
 
             try {
                 boolean isSaved = ScheduleRepo.save(schedule);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "schedule saved!").show();
+                    init();
                 }
+                tblSchedule.getItems().add(new ScheduleTm(id,date,STime,ETime,eid));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        }
 
 
     }
@@ -225,17 +267,24 @@ public class ScheduleFormController {
 
         String id = txtId.getText();
         LocalDate date = txtDate.getValue();
-        Date datee = java.sql.Date.valueOf(date);
         String STime=txtStartTime.getText();
         String ETime=txtEndTime.getText();
         String eid= (String) cmbEmpId.getValue();
 
 
         try {
-            boolean isUpdated = ScheduleRepo.update(id, (java.sql.Date) datee,STime,ETime,eid);
+            boolean isUpdated = ScheduleRepo.update(id,date,STime,ETime,eid);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "schedule updated!").show();
             }
+            ScheduleTm selectedItem=tblSchedule.getSelectionModel().getSelectedItem();
+            selectedItem.setDate(date);
+            selectedItem.setStime(STime);
+            selectedItem.setEtime(ETime);
+            selectedItem.setEid(eid);
+            tblSchedule.refresh();
+            tblSchedule.getSelectionModel().clearSelection();
+            init();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
@@ -250,6 +299,14 @@ public class ScheduleFormController {
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "schedule deleted!").show();
             }
+            tblSchedule.getItems().remove(tblSchedule.getSelectionModel().getSelectedItem());
+            tblSchedule.getSelectionModel().clearSelection();
+            txtId.clear();
+            txtDate.setValue(null);
+            txtStartTime.clear();
+            txtEndTime.clear();
+            cmbEmpId.setValue(null);
+            init();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
@@ -265,6 +322,35 @@ public class ScheduleFormController {
             txtId.requestFocus();
         }
 
+    }
+    @FXML
+    void btnNewScheduleOnAction(ActionEvent event) {
+        txtId.clear();
+        txtDate.setValue(null);
+        txtStartTime.clear();
+        txtEndTime.clear();
+        cmbEmpId.setValue(null);
+        txtId.setDisable(false);
+        txtDate.setDisable(false);
+        txtStartTime.setDisable(false);
+        txtEndTime.setDisable(false);
+        cmbEmpId.setDisable(false);
+        txtId.setText(generateNewId());
+        btnSave.setDisable(false);
+    }
+    private String generateNewId(){
+        try {
+            //Generate New ID
+            return ScheduleRepo.generateId();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
+        }
+        return "H001";
+    }
+    private void init(){
+        btnSave.setDisable(true);
+        btnDelete.setDisable(true);
+        btnUpdate.setDisable(true);
     }
 }
 

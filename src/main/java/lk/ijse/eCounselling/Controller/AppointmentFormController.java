@@ -1,5 +1,6 @@
 package lk.ijse.eCounselling.Controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,21 +14,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.eCounselling.Util.Regex;
-import lk.ijse.eCounselling.model.Appointment;
-import lk.ijse.eCounselling.model.Employee;
-import lk.ijse.eCounselling.model.User;
+import lk.ijse.eCounselling.model.*;
 import lk.ijse.eCounselling.model.tm.AppointmentTm;
 import lk.ijse.eCounselling.model.tm.EmployeeTm;
-import lk.ijse.eCounselling.repository.AppointmentRepo;
-import lk.ijse.eCounselling.repository.EmployeeRepo;
-import lk.ijse.eCounselling.repository.PatientRepo;
-import lk.ijse.eCounselling.repository.UserRepo;
+import lk.ijse.eCounselling.repository.*;
 
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +32,19 @@ import java.util.List;
 public class AppointmentFormController {
 
     @FXML
-    public JFXComboBox cmbStatus;
+    private JFXButton btnAddNewItem;
+
+    @FXML
+    private JFXButton btnDelete;
+
+    @FXML
+    private JFXButton btnUpdate;
+
+    @FXML
+    private JFXButton btnSave;
+
+    @FXML
+    private JFXComboBox cmbTime;
 
     @FXML
     public JFXComboBox cmbEmployeeId;
@@ -47,13 +56,10 @@ public class AppointmentFormController {
     private TableColumn<?, ?> colDate;
 
     @FXML
-    private TableColumn<?, ?> colDuration;
-
-    @FXML
     private TableColumn<?, ?> colID;
 
     @FXML
-    private TableColumn<?, ?> colStatus;
+    private TableColumn<?, ?> colTime;
 
     @FXML
     private TableColumn<?, ?> colType;
@@ -71,116 +77,113 @@ public class AppointmentFormController {
     private TableView<AppointmentTm> tblAppointment;
 
     @FXML
-    private DatePicker txtDate;
-
-    @FXML
-    private TextField txtDuration;
+    private TextField txtDate;
 
     @FXML
     private TextField txtId;
 
-
     @FXML
     private TextField txtType;
 
-    private List<Appointment> appointmentList = new ArrayList<>();
     public void initialize() {
-        this.appointmentList = getAllAppointment();
+        txtId.setDisable(true);
+        txtType.setDisable(true);
+        txtDate.setDisable(true);
+        cmbTime.setDisable(true);
+        cmbEmployeeId.setDisable(true);
+        cmbPatientId.setDisable(true);
+        btnSave.setDisable(true);
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
+        txtId.setEditable(false);
         setCellValueFactory();
         loadAppointmentTable();
         getPatientId();
         getEmployeeId();
-        setStatus();
+        setTime();
+
+        tblAppointment.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnDelete.setDisable(newValue == null);
+            //btnUpdate.setText(newValue != null ? "Update" : "Save");
+            btnUpdate.setDisable(newValue == null);
+
+            if (newValue != null) {
+                txtId.setText(newValue.getId());
+                txtType.setText(newValue.getType());
+                txtDate.setText(newValue.getDate());
+                cmbTime.setValue(newValue.getTime());
+                cmbEmployeeId.setValue(newValue.getEid());
+                cmbPatientId.setValue(newValue.getPid());
+
+                txtId.setDisable(false);
+                txtType.setDisable(false);
+                txtDate.setDisable(false);
+                cmbTime.setDisable(false);
+                cmbEmployeeId.setDisable(false);
+                cmbPatientId.setDisable(false);
+
+
+            }
+        });
     }
 
-    private void setStatus() {
+    private void setTime() {
         ObservableList<String> obList = FXCollections.observableArrayList();
-        List<String> status = new ArrayList<>();
-        status.add("Completed");
-        status.add("Pending");
-        status.add("Cancelled");
+        List<String> time = new ArrayList<>();
+        time.add("6.30 p.m-8.30 p.m");
+        time.add("7.00 a.m-9.00 a.m");
+        time.add("10.00 p.m-11.00 p.m");
 
-        for (String STATUS : status) {
-            obList.add(STATUS);
+        for (String Time : time) {
+            obList.add(Time);
         }
-        cmbStatus.setItems(obList);
+        cmbTime.setItems(obList);
 
     }
 
     private void getEmployeeId() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<String> codeList = EmployeeRepo.getIds();
-            for (String code : codeList) {
-                obList.add(code);
+          ArrayList<Employee> employees= EmployeeRepo.getAll();
+            for (Employee e : employees) {
+                cmbEmployeeId.getItems().add(e.getId());
             }
-
-            cmbEmployeeId.setItems(obList);
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void getPatientId() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<String> codeList = PatientRepo.getIds();
-            for (String code : codeList) {
-                obList.add(code);
-            }
+        ArrayList<Patient> patients= PatientRepo.getAll();
+        for (Patient p:patients){
+            cmbPatientId.getItems().add(p.getId());
 
-            cmbPatientId.setItems(obList);
-
+        }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private List<Appointment> getAllAppointment() {
-        List<Appointment>  appointmentList1 = null;
-        try {
-            appointmentList1 = AppointmentRepo.getAll();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return appointmentList1;
     }
 
     private void setCellValueFactory() {
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
         colEmpId.setCellValueFactory(new PropertyValueFactory<>("eid"));
         colPaId.setCellValueFactory(new PropertyValueFactory<>("pid"));
     }
 
-    private void loadAppointmentTable() {
-        ObservableList<AppointmentTm> AppointmentTMS = FXCollections.observableArrayList();
-
-
-        for (Appointment appointment : appointmentList) {
-            AppointmentTm appointmentTm=new AppointmentTm(
-                    appointment.getId(),
-                    appointment.getType(),
-                    appointment.getDate(),
-                    appointment.getStatus(),
-                    appointment.getDuration(),
-                    appointment.getEid(),
-                    appointment.getPid()
-
-            );
-            AppointmentTMS.add(appointmentTm);
-
-        }
-        tblAppointment.setItems(AppointmentTMS);
-        AppointmentTm selectedItem = (AppointmentTm) tblAppointment.getSelectionModel().getSelectedItem();
-        System.out.println("selectedItem = " + selectedItem);
-
+    private void loadAppointmentTable(){
+       tblAppointment.getItems().clear();
+       try {
+           ArrayList<Appointment> appointments=AppointmentRepo.getAll();
+           for (Appointment a:appointments){
+               tblAppointment.getItems().add(new AppointmentTm(a.getId(),a.getType(),a.getDate(),a.getTime(),a.getEid(),a.getPid()));
+           }
+       }catch (SQLException e){
+           new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+       }
 
     }
 
@@ -205,22 +208,30 @@ public class AppointmentFormController {
     private void clearFields() {
         txtId.setText("");
         txtType.setText("");
-        txtDate.setValue(null);
-        cmbStatus.setValue(null);
-        txtDuration.setText("");
+        txtDate.setText("");
+        cmbTime.setValue(null);
         cmbEmployeeId.setValue(null);
         cmbPatientId.setValue(null);
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        String id = txtId.getText();
+        String id = tblAppointment.getSelectionModel().getSelectedItem().getId();
 
         try {
             boolean isDeleted = AppointmentRepo.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "appointment deleted!").show();
             }
+            tblAppointment.getItems().remove(tblAppointment.getSelectionModel().getSelectedItem());
+            tblAppointment.getSelectionModel().clearSelection();
+            txtId.clear();
+            txtType.clear();
+            txtDate.clear();
+            cmbTime.setValue(null);
+            cmbEmployeeId.setValue(null);
+            cmbPatientId.setValue(null);
+            init();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
@@ -243,23 +254,17 @@ public class AppointmentFormController {
         } else {
             txtType.setStyle("");
         }
-        if (txtDate.getValue() == null) {
+        if (txtDate.getText().isEmpty()) {
             txtDate.setStyle("-fx-border-color: red;");
             hasError = true;
         } else {
             txtDate.setStyle("");
         }
-        if (txtDuration.getText().isEmpty()) {
-            txtDuration.setStyle("-fx-border-color: red;");
+        if (cmbTime.getValue() == null) {
+            cmbTime.setStyle("-fx-border-color: red;");
             hasError = true;
         } else {
-            txtDuration.setStyle("");
-        }
-        if (cmbStatus.getValue() == null) {
-            cmbStatus.setStyle("-fx-border-color: red;");
-            hasError = true;
-        } else {
-            cmbStatus.setStyle("");
+            cmbTime.setStyle("");
         }
         if (cmbEmployeeId.getValue() == null) {
             cmbEmployeeId.setStyle("-fx-border-color: red;");
@@ -283,23 +288,22 @@ public class AppointmentFormController {
             alert.show();
             return;
         }
-
-        String id = txtId.getText();
+            String id = txtId.getText();
             String type = txtType.getText();
-            LocalDate date = txtDate.getValue();
-            Date datee = java.sql.Date.valueOf(date);
-            String status = (String) cmbStatus.getValue();
-            int duration = Integer.parseInt(txtDuration.getText());
+            String date=txtDate.getText();
+            String time = (String) cmbTime.getValue();
             String eid = (String) cmbEmployeeId.getValue();
             String pid = (String) cmbPatientId.getValue();
 
-            Appointment appointment = new Appointment(id, type, (java.sql.Date) datee, status, duration, eid, pid);
+            Appointment appointment = new Appointment(id, type, date, time, eid, pid);
 
             try {
                 boolean isSaved = AppointmentRepo.save(appointment);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "appointment saved!").show();
+                    init();
                 }
+                tblAppointment.getItems().add(new AppointmentTm(id,type,date,time,eid,pid));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
@@ -312,37 +316,38 @@ public class AppointmentFormController {
     void btnUpdateOnAction(ActionEvent event) {
         String id = txtId.getText();
         String type = txtType.getText();
-        LocalDate date = txtDate.getValue();
-        Date datee = java.sql.Date.valueOf(date);
-        String status= (String) cmbStatus.getValue();
-        int duration= Integer.parseInt(txtDuration.getText());
+        String date=txtDate.getText();
+        String time= (String) cmbTime.getValue();
         String eid= (String) cmbEmployeeId.getValue();
         String pid= (String) cmbPatientId.getValue();
 
 
 
         try {
-            boolean isUpdated = AppointmentRepo.update(id,type, (java.sql.Date) datee,status,duration,eid,pid);
+            boolean isUpdated = AppointmentRepo.update(id,type,date,time,eid,pid);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "appointment updated!").show();
             }
+            AppointmentTm selectedAppo=tblAppointment.getSelectionModel().getSelectedItem();
+            selectedAppo.setType(type);
+            selectedAppo.setDate(date);
+            selectedAppo.setTime(time);
+            selectedAppo.setEid(eid);
+            selectedAppo.setPid(pid);
+            tblAppointment.refresh();
+            tblAppointment.getSelectionModel().clearSelection();
+            init();
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
+
     }
 
     public void txtAppointmentIdOnAction(ActionEvent event) {
-        String appId = txtId.getText();
-        if (Regex.isAppointmentId(appId)) {
             txtId.setStyle("-fx-border-color: green;");
             txtType.requestFocus();
-        } else {
-            txtId.setStyle("-fx-border-color: red;");
-            txtId.requestFocus();
-        }
-
-
     }
 
     public void AppointmentTypeOnAction(ActionEvent event) {
@@ -353,31 +358,18 @@ public class AppointmentFormController {
     }
 
     public void DateOnAction(ActionEvent event) {
-        LocalDate date=txtDate.getValue();
+        String date=txtDate.getText();
         txtDate.setStyle("-fx-border-color: green");
-        cmbStatus.requestFocus();
-    }
+        cmbTime.requestFocus();
 
-    public void DurationOnAction(ActionEvent event) {
-        try {
-            int duration = Integer.parseInt(txtDuration.getText());
-            if (Regex.isDuration(duration)) {
-                txtDuration.setStyle("-fx-border-color: green;");
-                cmbEmployeeId.requestFocus();
-            } else {
-                txtDuration.setStyle("-fx-border-color: red;");
-            }
-        } catch (NumberFormatException e) {
-            txtDuration.setStyle("-fx-border-color: red;");
-        }
     }
 
 
 
     public void StatusOnAction(ActionEvent event) {
-        String status= (String) cmbStatus.getValue();
-        cmbStatus.setStyle("-fx-border-color: green");
-        txtDuration.requestFocus();
+        String status= (String) cmbTime.getValue();
+        cmbTime.setStyle("-fx-border-color: green");
+        cmbEmployeeId.requestFocus();
     }
 
     public void EIDOnAction(ActionEvent event) {
@@ -394,4 +386,43 @@ public class AppointmentFormController {
 
 
     }
+    @FXML
+    void btnNewAppointmentOnAction(ActionEvent event) {
+        txtId.clear();
+        txtType.clear();
+        txtDate.clear();
+        cmbTime.setValue(null);
+        cmbEmployeeId.setValue(null);
+        cmbPatientId.setValue(null);
+        txtId.setDisable(false);
+        txtType.setDisable(false);
+        txtDate.setDisable(false);
+        cmbTime.setDisable(false);
+        cmbEmployeeId.setDisable(false);
+        cmbPatientId.setDisable(false);
+        txtId.setText(generateNewId());
+        txtId.setEditable(false);
+        btnSave.setDisable(false);
+        txtDate.setText(String.valueOf(LocalDate.now()));
+        txtDate.setEditable(false);
+
+    }
+
+    private String generateNewId() {
+        try {
+            //Generate New ID
+            return AppointmentRepo.generateId();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
+        }
+        return "A001";
+
+    }
+    private void init(){
+        btnSave.setDisable(true);
+        btnDelete.setDisable(true);
+        btnUpdate.setDisable(true);
+
+    }
+
 }

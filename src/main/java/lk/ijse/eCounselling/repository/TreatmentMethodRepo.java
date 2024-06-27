@@ -3,9 +3,7 @@ package lk.ijse.eCounselling.repository;
 import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.model.TreatmentMethod;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +41,7 @@ public class TreatmentMethodRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static List<TreatmentMethod> getAll() throws SQLException {
+    public static ArrayList<TreatmentMethod> getAll() throws SQLException {
         String sql = "SELECT * FROM treatment_method";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -51,7 +49,7 @@ public class TreatmentMethodRepo {
 
         ResultSet resultSet = pstm.executeQuery();
 
-        List<TreatmentMethod> treatmentMethodList = new ArrayList<>();
+        ArrayList<TreatmentMethod> treatmentMethodList = new ArrayList<>();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             String description = resultSet.getString(2);
@@ -61,7 +59,17 @@ public class TreatmentMethodRepo {
         }
         return treatmentMethodList;
     }
-
-
+    public static String generateId() throws SQLException {
+        Connection connection=DbConnection.getInstance().getConnection();
+        Statement stm=connection.createStatement();
+        ResultSet rst=stm.executeQuery("SELECT  treatm_id FROM treatment_method ORDER BY treatm_id  DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("treatm_id");
+            int newScheduleId = Integer.parseInt(id.replace("M", "")) + 1;
+            return String.format("M%03d", newScheduleId);
+        } else {
+            return "M001";
+        }
+    }
 
 }

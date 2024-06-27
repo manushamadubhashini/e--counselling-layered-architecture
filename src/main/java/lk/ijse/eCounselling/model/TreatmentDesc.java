@@ -13,4 +13,5 @@ public class TreatmentDesc {
     private String status;
     private String description;
     private int duration;
+    private String pid;
 }

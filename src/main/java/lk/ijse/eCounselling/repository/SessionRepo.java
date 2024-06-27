@@ -3,10 +3,8 @@ package lk.ijse.eCounselling.repository;
 import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.model.Session;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +25,8 @@ public class SessionRepo {
 
 
     }
-    public static boolean update(String id, String type, java.util.Date date, int duration,String eid,String pid) throws SQLException {
-        String sql = "UPDATE sessions SET  ses_type = ?, ses_date = ?,ses_duration= ?,eid=?,pid=?  WHERE ses_id = ?";
+    public static boolean update(String id, String type, LocalDate date, int duration, String eid, String pid) throws SQLException {
+        String sql = "UPDATE sessions SET  ses_type = ?, ses_date = ?,ses_duration= ?,emp_id=?,pa_id=?  WHERE ses_id = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -53,7 +51,7 @@ public class SessionRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static List<Session> getAll() throws SQLException {
+    public static ArrayList<Session> getAll() throws SQLException {
         String sql = "SELECT * FROM sessions";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -61,7 +59,7 @@ public class SessionRepo {
 
         ResultSet resultSet = pstm.executeQuery();
 
-        List<Session> sessionList = new ArrayList<>();
+        ArrayList<Session> sessionList = new ArrayList<>();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             String type = resultSet.getString(2);
@@ -70,10 +68,22 @@ public class SessionRepo {
             String eid=resultSet.getString(5);
             String pid=resultSet.getString(6);
 
-            Session session = new Session(id,type,date,duration,eid,pid);
+            Session session = new Session(id,type, date.toLocalDate(),duration,eid,pid);
             sessionList.add(session);
         }
         return sessionList;
+    }
+    public static String generateId() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        Statement stm = connection.createStatement();
+        ResultSet rst = stm.executeQuery("SELECT ses_id  FROM sessions ORDER BY ses_id  DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("ses_id");
+            int newSessionId = Integer.parseInt(id.replace("S", "")) + 1;
+            return String.format("S%03d", newSessionId);
+        } else {
+            return "S001";
+        }
     }
 
 }

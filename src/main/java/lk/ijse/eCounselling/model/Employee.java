@@ -14,11 +14,11 @@ import java.util.Date;
 public class Employee {
     private String id;
     private String name;
-    private  Date DOB;
+    private  String DOB;
     private String address;
     private String contact;
     private String position;
-    private Date joinDate;
+    private LocalDate joinDate;
     private String uid;
 
 

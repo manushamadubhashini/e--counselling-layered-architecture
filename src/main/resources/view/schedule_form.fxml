@@ -38,29 +38,30 @@
             <Text layoutX="50.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time" />
             <Text layoutX="50.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Time" />
             <DatePicker fx:id="txtDate" layoutX="50.0" layoutY="175.0" prefHeight="38.0" prefWidth="284.0" promptText="Enter schedule date" />
-            <JFXButton layoutX="24.0" layoutY="492.0" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Save">
+            <JFXButton fx:id="btnSave" layoutX="24.0" layoutY="492.0" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Save">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="150.0" layoutY="492.0" onAction="#btnClearOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Clear">
+            <JFXButton fx:id="btnClear" layoutX="150.0" layoutY="492.0" onAction="#btnClearOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Clear">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="274.0" layoutY="492.0" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Update">
+            <JFXButton fx:id="btnUpdate" layoutX="274.0" layoutY="492.0" onAction="#btnUpdateOnAction" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: #3E8EDE;" text="Update">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
-            <ImageView fitHeight="45.0" fitWidth="47.0" layoutX="347.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="45.0" fitWidth="47.0" layoutX="360.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../asserts/icons8-delete-48.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="354.0" layoutY="128.0" onAction="#btnDeleteOnAction" prefHeight="45.0" prefWidth="26.0" />
+            <JFXButton fx:id="btnDelete" layoutX="367.0" layoutY="84.0" onAction="#btnDeleteOnAction" prefHeight="45.0" prefWidth="26.0" />
             <JFXComboBox fx:id="cmbEmpId" layoutX="53.0" layoutY="428.0" prefHeight="37.0" prefWidth="284.0" promptText="Select employee id" style="-fx-background-color: white;" />
             <Text layoutX="53.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee ID" />
+            <JFXButton fx:id="btnNewSchedule" layoutX="253.0" layoutY="26.0" onAction="#btnNewScheduleOnAction" prefHeight="37.0" prefWidth="152.0" style="-fx-background-color: #3E8EDE;" text="add new schedule" />
          </children></AnchorPane>
       <TableView fx:id="tblSchedule" layoutX="471.0" layoutY="191.0" prefHeight="517.0" prefWidth="760.0">
         <columns>
@@ -76,6 +77,6 @@
             <Image url="@../asserts/icons8-back-button-48.png" />
          </image>
       </ImageView>
-      <JFXButton layoutX="1160.0" layoutY="147.0" onAction="#btnBackOnAction" prefHeight="37.0" prefWidth="38.0" />
+      <JFXButton layoutX="1160.0" layoutY="147.0" onAction="#btnBackOnAction" prefHeight="37.0" prefWidth="38.0" text="  " />
    </children>
 </AnchorPane>

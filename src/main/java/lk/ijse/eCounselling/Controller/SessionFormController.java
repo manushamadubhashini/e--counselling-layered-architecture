@@ -1,5 +1,6 @@
 package lk.ijse.eCounselling.Controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,10 +17,7 @@ import lk.ijse.eCounselling.model.Appointment;
 import lk.ijse.eCounselling.model.Session;
 import lk.ijse.eCounselling.model.tm.AppointmentTm;
 import lk.ijse.eCounselling.model.tm.SessionTm;
-import lk.ijse.eCounselling.repository.AppointmentRepo;
-import lk.ijse.eCounselling.repository.EmployeeRepo;
-import lk.ijse.eCounselling.repository.PatientRepo;
-import lk.ijse.eCounselling.repository.SessionRepo;
+import lk.ijse.eCounselling.repository.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -29,6 +27,21 @@ import java.util.Date;
 import java.util.List;
 
 public class SessionFormController  {
+
+    @FXML
+    private JFXButton btnClear;
+
+    @FXML
+    private JFXButton btnDelete;
+
+    @FXML
+    private JFXButton btnNewSession;
+
+    @FXML
+    private JFXButton btnSave;
+
+    @FXML
+    private JFXButton btnUpdate;
 
     @FXML
     private JFXComboBox cmbId;
@@ -72,13 +85,44 @@ public class SessionFormController  {
     @FXML
     private TextField txtType;
 
-    private List<Session> sessionList = new ArrayList<>();
     public void initialize() {
-        this.sessionList = getAllSession();
         setCellValueFactory();
         loadSessionTable();
         getEmployeeId();
         getPatientId();
+        txtId.setDisable(true);
+        txtType.setDisable(true);
+        txtDate.setDisable(true);
+        txtDuration.setDisable(true);
+        cmbId.setDisable(true);
+        cmbPaid.setDisable(true);
+        btnSave.setDisable(true);
+        btnDelete.setDisable(true);
+        btnUpdate.setDisable(true);
+        txtId.setEditable(false);
+        tblSession.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnDelete.setDisable(newValue == null);
+            //btnUpdate.setText(newValue != null ? "Update" : "Save");
+            btnUpdate.setDisable(newValue == null);
+
+            if (newValue != null) {
+                txtId.setText(newValue.getId());
+                txtType.setText(newValue.getType());
+                txtDate.setValue(newValue.getDate());
+                txtDuration.setText(String.valueOf(newValue.getDuration()));
+                cmbId.setValue(newValue.getEid());
+                cmbPaid.setValue(newValue.getPid());
+
+                txtId.setDisable(false);
+                txtType.setDisable(false);
+                txtDate.setDisable(false);
+                txtDuration.setDisable(false);
+                cmbId.setDisable(false);
+                cmbPaid.setDisable(false);
+
+
+            }
+        });
     }
 
     private void getPatientId() {
@@ -124,35 +168,16 @@ public class SessionFormController  {
     }
 
     private void loadSessionTable() {
-        ObservableList<SessionTm> SessionTMS = FXCollections.observableArrayList();
-
-
-        for (Session session : sessionList) {
-            SessionTm sessionTm = new SessionTm(
-                    session.getId(),
-                    session.getType(),
-                    session.getDate(),
-                    session.getDuration(),
-                    session.getEid(),
-                    session.getPid()
-            );
-            SessionTMS.add(sessionTm);
-
-        }
-        tblSession.setItems(SessionTMS);
-        SessionTm selectedItem = (SessionTm) tblSession.getSelectionModel().getSelectedItem();
-        System.out.println("selectedItem = " + selectedItem);
-
-    }
-
-    private List<Session> getAllSession() {
-        List<Session>  sessionList1 = null;
+        tblSession.getItems().clear();
         try {
-            sessionList1 = SessionRepo.getAll();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            ArrayList<Session> sessions = SessionRepo.getAll();
+            for (Session s : sessions) {
+                tblSession.getItems().add(new SessionTm(s.getId(), s.getType(), s.getDate(), s.getDuration(), s.getEid(), s.getPid()));
+            }
+        }catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
-        return sessionList1;
+
 
     }
 
@@ -190,6 +215,16 @@ public class SessionFormController  {
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "session deleted!").show();
             }
+            tblSession.getItems().remove(tblSession.getSelectionModel().getSelectedItem());
+            tblSession.getSelectionModel().clearSelection();
+            txtId.clear();
+            txtType.clear();
+            txtDate.setValue(null);
+            txtDuration.clear();
+            cmbId.setValue(null);
+            cmbPaid.setValue(null);
+            init();
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
@@ -198,63 +233,70 @@ public class SessionFormController  {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (txtId.getText().isEmpty() || txtType.getText().isEmpty() || txtDate.getValue() == null || txtDuration.getText().isEmpty() || cmbId.getValue() == null || cmbPaid.getValue() == null) {
+           boolean hasError=false;
             // Set border color of empty text fields to red
             if (txtId.getText().isEmpty()) {
                 txtId.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtId.setStyle("");
             }
             if (txtType.getText().isEmpty()) {
                 txtType.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtType.setStyle("");
             }
             if (txtDate.getValue() == null) {
                 txtDate.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtDate.setStyle("");
             }
             if (txtDuration.getText().isEmpty()) {
                 txtDuration.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtDuration.setStyle("");
             }
             if (cmbId.getValue() == null) {
                 cmbId.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 cmbId.setStyle("");
             }
             if (cmbPaid.getValue() == null) {
                 cmbPaid.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 cmbPaid.setStyle("");
             }
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all fields.");
-            alert.show();
+            if(hasError) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill in all fields.");
+                alert.show();
+            }
 
             String id = txtId.getText();
             String type = txtType.getText();
             LocalDate date = txtDate.getValue();
-            Date datee = java.sql.Date.valueOf(date);
             int duration = Integer.parseInt(txtDuration.getText());
             String eid = (String) cmbId.getValue();
             String pid = (String) cmbPaid.getValue();
-            Session session = new Session(id, type, (java.sql.Date) datee, duration, eid, pid);
+            Session session = new Session(id, type, date, duration, eid, pid);
 
             try {
                 boolean isSaved = SessionRepo.save(session);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "session saved!").show();
+                    init();
                 }
+                tblSession.getItems().add(new SessionTm(id,type,date,duration,eid,pid));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        }
 
     }
 
@@ -264,17 +306,25 @@ public class SessionFormController  {
         String id = txtId.getText();
         String type = txtType.getText();
         LocalDate date = txtDate.getValue();
-        Date datee = java.sql.Date.valueOf(date);
         int duration= Integer.parseInt(txtDuration.getText());
         String eid= (String) cmbId.getValue();
         String pid= (String) cmbPaid.getValue();
 
 
         try {
-            boolean isUpdated = SessionRepo.update(id,type,datee,duration,eid,pid);
+            boolean isUpdated = SessionRepo.update(id,type,date,duration,eid,pid);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "session updated!").show();
+                init();
             }
+            SessionTm selectedSessions=tblSession.getSelectionModel().getSelectedItem();
+            selectedSessions.setType(type);
+            selectedSessions.setDate(date);
+            selectedSessions.setDuration(duration);
+            selectedSessions.setEid(eid);
+            selectedSessions.setPid(pid);
+            tblSession.refresh();
+            tblSession.getSelectionModel().clearSelection();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
@@ -291,6 +341,39 @@ public class SessionFormController  {
             txtId.requestFocus();
         }
 
+    }
+    @FXML
+    void btnNewSessionOnAction(ActionEvent event) {
+        txtId.clear();
+        txtType.clear();
+        txtDate.setValue(null);
+        txtDuration.clear();
+        cmbId.setValue(null);
+        cmbPaid.setValue(null);
+        txtId.setDisable(false);
+        txtType.setDisable(false);
+        txtDate.setDisable(false);
+        txtDuration.setDisable(false);
+        cmbId.setDisable(false);
+        cmbPaid.setDisable(false);
+        btnSave.setDisable(false);
+        txtId.setEditable(false);
+
+       txtId.setText(generateId());
+    }
+    private String generateId(){
+        try {
+            return SessionRepo.generateId();
+        }catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        }
+        return "S001";
+
+    }
+    private void init(){
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
+        btnSave.setDisable(true);
     }
 }
 

@@ -50,7 +50,7 @@ public class PatientRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static List<Patient> getAll() throws SQLException {
+    public static ArrayList<Patient> getAll() throws SQLException {
         String sql = "SELECT * FROM patient";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -58,7 +58,7 @@ public class PatientRepo {
 
         ResultSet resultSet = pstm.executeQuery();
 
-        List<Patient> patientList = new ArrayList<>();
+        ArrayList<Patient> patientList = new ArrayList<>();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             String name = resultSet.getString(2);

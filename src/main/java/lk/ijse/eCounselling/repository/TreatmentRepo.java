@@ -3,9 +3,7 @@ package lk.ijse.eCounselling.repository;
 import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.model.Treatment;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class TreatmentRepo {
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
         pstm.setObject(1, status);
-        pstm.setObject(2, pstm);
+        pstm.setObject(2, pid);
         pstm.setObject(3,ID);
         return pstm.executeUpdate() > 0;
 
@@ -62,6 +60,18 @@ public class TreatmentRepo {
             treatmentList.add(treatment);
         }
         return treatmentList;
+    }
+    public static String generateId() throws SQLException {
+        Connection connection=DbConnection.getInstance().getConnection();
+        Statement stm=connection.createStatement();
+        ResultSet rst=stm.executeQuery("SELECT treat_id  FROM treatments ORDER BY treat_id  DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("treat_id");
+            int newScheduleId = Integer.parseInt(id.replace("T", "")) + 1;
+            return String.format("T%03d", newScheduleId);
+        } else {
+            return "T001";
+        }
     }
 
 

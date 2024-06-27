@@ -28,7 +28,7 @@ public class EmployeeRepo {
 
 
     }
-    public static boolean update(String id, String name, LocalDate DOB,String address,String contact,String position,LocalDate joinDate,String uid) throws SQLException {
+    public static boolean update(String id, String name, String DOB,String address,String contact,String position,LocalDate joinDate,String uid) throws SQLException {
         String sql = "UPDATE employee SET emp_name = ?, emp_DOB = ?, emp_address = ?,emp_contact= ?,emp_position= ?,emp_joinDate= ?,user_id=? WHERE emp_id = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -56,7 +56,7 @@ public class EmployeeRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static List<Employee> getAll() throws SQLException {
+    public static ArrayList<Employee> getAll() throws SQLException {
         String sql = "SELECT * FROM employee";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -64,18 +64,18 @@ public class EmployeeRepo {
 
         ResultSet resultSet = pstm.executeQuery();
 
-        List<Employee> employeeList = new ArrayList<>();
+       ArrayList<Employee> employeeList=new ArrayList<>();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             String name = resultSet.getString(2);
-            Date dob = resultSet.getDate(3);
+            String dob = resultSet.getString(3);
             String address = resultSet.getString(4);
             String contact = resultSet.getString(5);
             String position=resultSet.getString(6);
             Date joinDate = resultSet.getDate(7);
             String uid=resultSet.getString(8);
 
-            Employee employee = new Employee(id, name,dob,address,contact,position,joinDate,uid);
+            Employee employee = new Employee(id, name, dob,address,contact,position, joinDate.toLocalDate(),uid);
             employeeList.add(employee);
         }
         return employeeList;
@@ -92,6 +92,18 @@ public class EmployeeRepo {
             idList.add(resultSet.getString(1));
         }
         return idList;
+    }
+    public static String generateId() throws SQLException {
+        Connection connection=DbConnection.getInstance().getConnection();
+        Statement stm=connection.createStatement();
+        ResultSet rst=stm.executeQuery("SELECT emp_id  FROM employee ORDER BY emp_id  DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("emp_id");
+            int newEmployeeId = Integer.parseInt(id.replace("E", "")) + 1;
+            return String.format("E%03d",newEmployeeId);
+        } else {
+            return "E001";
+        }
     }
 
 

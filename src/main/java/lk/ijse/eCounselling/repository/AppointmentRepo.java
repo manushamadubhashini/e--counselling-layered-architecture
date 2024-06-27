@@ -11,33 +11,31 @@ import java.util.List;
 
 public class AppointmentRepo {
     public static boolean save(Appointment appointment) throws SQLException {
-        String sql = "INSERT INTO appointment (app_id, app_type, app_date, app_status, app_duaration,emp_id,pa_id ) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO appointment (app_id, app_type, app_date, app_time, emp_id,pa_id ) VALUES(?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
         pstm.setObject(1, appointment.getId());
         pstm.setObject(2, appointment.getType());
         pstm.setObject(3, appointment.getDate());
-        pstm.setObject(4, appointment.getStatus());
-        pstm.setObject(5, appointment.getDuration());
-        pstm.setObject(6,appointment.getEid());
-        pstm.setObject(7,appointment.getPid());
+        pstm.setObject(4, appointment.getTime());
+        pstm.setObject(5,appointment.getEid());
+        pstm.setObject(6,appointment.getPid());
         return pstm.executeUpdate() > 0;
 
 
     }
-    public static boolean update(String ID, String type, Date date, String status,int duration,String eid,String pid) throws SQLException {
-        String sql = "UPDATE appointment SET  app_type  = ?,app_date  = ?, app_status= ?, app_duration = ?,emp_id= ?,pa_id= ? WHERE app_id  = ?";
+    public static boolean update(String ID, String type, String date, String time,String eid,String pid) throws SQLException {
+        String sql = "UPDATE appointment SET  app_type  = ?,app_date  = ?, app_time= ?,emp_id= ?,pa_id= ? WHERE app_id  = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
         pstm.setObject(1, type);
         pstm.setObject(2, date);
-        pstm.setObject(3,status );
-        pstm.setObject(4, duration);
-        pstm.setObject(5,eid);
-        pstm.setObject(6,pid);
-        pstm.setObject(7,ID);
+        pstm.setObject(3,time );
+        pstm.setObject(4,eid);
+        pstm.setObject(5,pid);
+        pstm.setObject(6,ID);
         return pstm.executeUpdate() > 0;
 
 
@@ -53,7 +51,7 @@ public class AppointmentRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static List<Appointment> getAll() throws SQLException {
+    public static ArrayList<Appointment> getAll() throws SQLException {
         String sql = "SELECT * FROM appointment";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -61,20 +59,31 @@ public class AppointmentRepo {
 
         ResultSet resultSet = pstm.executeQuery();
 
-        List<Appointment> appointmentList = new ArrayList<>();
+        ArrayList<Appointment> appointmentList = new ArrayList<>();
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             String type = resultSet.getString(2);
-            Date date = resultSet.getDate(3);
-            String status = resultSet.getString(4);
-            int duration = resultSet.getInt(5);
-            String eid=resultSet.getString(6);
-            String pid=resultSet.getString(7);
+            String date = resultSet.getString(3);
+            String time = resultSet.getString(4);
+            String eid=resultSet.getString(5);
+            String pid=resultSet.getString(6);
 
-            Appointment appointment = new Appointment(id, type,date,status,duration,eid,pid);
+            Appointment appointment = new Appointment(id, type,date,time,eid,pid);
             appointmentList.add(appointment);
         }
         return appointmentList;
+    }
+    public static String generateId() throws SQLException {
+        Connection connection=DbConnection.getInstance().getConnection();
+        Statement stm=connection.createStatement();
+        ResultSet rst=stm.executeQuery("SELECT app_id  FROM appointment ORDER BY app_id  DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("app_id");
+            int newAppointmentId = Integer.parseInt(id.replace("A", "")) + 1;
+            return String.format("A%03d", newAppointmentId);
+        } else {
+            return "A001";
+        }
     }
 
 

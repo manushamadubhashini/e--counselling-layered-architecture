@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,8 +12,8 @@ import java.util.Date;
 
 public class Schedule {
     private String id;
-    private Date date;
-    private String etime;
+    private LocalDate date;
     private String stime;
+    private String etime;
     private String eid;
 }

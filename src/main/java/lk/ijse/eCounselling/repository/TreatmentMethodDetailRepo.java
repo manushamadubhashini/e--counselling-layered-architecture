@@ -23,7 +23,7 @@ public class TreatmentMethodDetailRepo {
 
     }
     public static boolean update(String ID,String MID,int duration) throws SQLException {
-        String sql = "UPDATE treatment_details SET  treat_duration  = ?, WHERE  treat_id = ? AND treatm_id = ?";
+        String sql = "UPDATE treatment_details SET  treat_duration  = ? WHERE  treat_id = ? AND treatm_id = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -36,12 +36,12 @@ public class TreatmentMethodDetailRepo {
 
     }
     public static boolean delete(String id,String MID) throws SQLException {
-        String sql = "DELETE FROM  treatment_details WHERE app_id = ?AND treatm_id = ?";
+        String sql = "DELETE FROM  treatment_details WHERE treat_id= ? AND treatm_id = ?";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
         pstm.setObject(1, id);
-        pstm.setObject(1,MID);
+        pstm.setObject(2,MID);
 
         return pstm.executeUpdate() > 0;
     }

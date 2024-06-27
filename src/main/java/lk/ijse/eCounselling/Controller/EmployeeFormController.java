@@ -1,5 +1,6 @@
 package lk.ijse.eCounselling.Controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +28,18 @@ import java.util.List;
 import java.util.Date;
 
 public class EmployeeFormController {
+
+    @FXML
+    private JFXButton btnDelete;
+
+    @FXML
+    private JFXButton btnNewEmployee;
+
+    @FXML
+    private JFXButton btnSave;
+
+    @FXML
+    private JFXButton btnUpdate;
     @FXML
     private TableColumn<?, ?> colAddress;
 
@@ -64,7 +77,7 @@ public class EmployeeFormController {
     private TextField txtContact;
 
     @FXML
-    private DatePicker txtDOB;
+    private TextField txtDOB;
 
     @FXML
     private DatePicker txtDate;
@@ -82,14 +95,49 @@ public class EmployeeFormController {
     private JFXComboBox txtUserId;
 
 
-    private List<Employee> employeeList = new ArrayList<>();
 
     public void initialize() {
-         this.employeeList = getAllEmployee();
-         setCellValueFactory();
-         loadCustomerTable();
-         setUserId();
+        txtId.setDisable(true);
+        txtName.setDisable(true);
+        txtDOB.setDisable(true);
+        txtAddress.setDisable(true);
+        txtContact.setDisable(true);
+        txtPosition.setDisable(true);
+        txtDate.setDisable(true);
+        txtUserId.setDisable(true);
+        btnSave.setDisable(true);
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
+        txtId.setEditable(false);
+        txtUserId.setDisable(false);
+        setCellValueFactory();
+        loadCustomerTable();
+        setUserId();
+        tblEmployee.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnDelete.setDisable(newValue == null);
+            //btnUpdate.setText(newValue != null ? "Update" : "Save");
+            btnUpdate.setDisable(newValue == null);
 
+            if (newValue != null) {
+                txtId.setText(newValue.getId());
+                txtName.setText(newValue.getName());
+                txtDOB.setText(newValue.getDOB());
+                txtAddress.setText(newValue.getAddress());
+                txtContact.setText(newValue.getContact());
+                txtPosition.setText(newValue.getPosition());
+                txtDate.setValue(newValue.getJoinDate());
+                txtUserId.setValue(newValue.getUid());
+
+                txtId.setDisable(false);
+                txtName.setDisable(false);
+                txtDOB.setDisable(false);
+                txtAddress.setDisable(false);
+                txtContact.setDisable(false);
+                txtPosition.setDisable(false);
+                txtDate.setDisable(false);
+                txtUserId.setDisable(false);
+            }
+        });
 
     }
     private void setUserId(){
@@ -110,39 +158,15 @@ public class EmployeeFormController {
     }
 
     private void loadCustomerTable() {
-        ObservableList<EmployeeTm> EmployeeTMS = FXCollections.observableArrayList();
-
-
-            for (Employee employee : employeeList) {
-                EmployeeTm employeeTm=new EmployeeTm(
-                        employee.getId(),
-                        employee.getName(),
-                        employee.getDOB(),
-                        employee.getAddress(),
-                        employee.getContact(),
-                        employee.getPosition(),
-                        employee.getJoinDate(),
-                        employee.getUid()
-
-                );
-                EmployeeTMS.add(employeeTm);
-
-            }
-        tblEmployee.setItems(EmployeeTMS);
-        EmployeeTm selectedItem = (EmployeeTm) tblEmployee.getSelectionModel().getSelectedItem();
-        System.out.println("selectedItem = " + selectedItem);
-
-    }
-
-
-    private List<Employee> getAllEmployee() {
-        List<Employee>  employeerList = null;
+        tblEmployee.getItems().clear();
         try {
-            employeerList = EmployeeRepo.getAll();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            ArrayList<Employee> employees=EmployeeRepo.getAll();
+            for (Employee e:employees){
+                tblEmployee.getItems().add(new EmployeeTm(e.getId(),e.getName(),e.getDOB(),e.getAddress(),e.getContact(),e.getPosition(),e.getJoinDate(),e.getUid()));
+            }
+        }catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
-        return employeerList;
 
 
     }
@@ -164,27 +188,27 @@ public class EmployeeFormController {
             // Set border color of empty text fields to red
             if (txtId.getText().isEmpty()) {
                 txtId.setStyle("-fx-border-color: red;");
+                hasError = true;
             } else {
                 txtId.setStyle("");
-                hasError = true;
             }
             if (txtName.getText().isEmpty()) {
                 txtName.setStyle("-fx-border-color: red;");
+                hasError = true;
             } else {
                 txtName.setStyle("");
-                hasError = true;
             }
-            if (txtDOB.getValue() == null) {
+            if (txtDOB.getText().isEmpty()) {
                 txtDOB.setStyle("-fx-border-color: red;");
+                hasError = true;
             } else {
                 txtDOB.setStyle("");
-                hasError = true;
             }
             if (txtAddress.getText().isEmpty()) {
                 txtAddress.setStyle("-fx-border-color: red;");
+                hasError = true;
             } else {
                 txtAddress.setStyle("");
-                hasError = true;
             }
 
             if (txtContact.getText().isEmpty()) {
@@ -199,15 +223,12 @@ public class EmployeeFormController {
                 hasError = true;
             } else {
                 txtPosition.setStyle("");
-
-
             }
             if (txtDate.getValue() == null) {
                 txtDate.setStyle("-fx-border-color: red;");
                 hasError = true;
             } else {
                 txtDate.setStyle("");
-
             }
             if (txtUserId.getValue() == null) {
                 txtUserId.setStyle("-fx-border-color: red;");
@@ -223,27 +244,74 @@ public class EmployeeFormController {
                 alert.setHeaderText(null);
                 alert.setContentText("Please fill in all fields.");
                 alert.show();
+                return;
             }
 
             String id = txtId.getText();
             String name = txtName.getText();
-            LocalDate dob = txtDOB.getValue();
-            Date dateOfBirth = java.sql.Date.valueOf(dob);
+            String dob = txtDOB.getText();
             String address = txtAddress.getText();
             String contact = txtContact.getText();
             String position = txtPosition.getText();
             LocalDate joinDate = txtDate.getValue();
-            Date joiningDate = java.sql.Date.valueOf(joinDate);
             String uid = (String) txtUserId.getValue();
             //String userId = getCurrentUserId();
+            if(! name.matches("[A-Za-z ]+")){
+                new Alert(Alert.AlertType.ERROR,"Invalid Name").show();
+                txtName.requestFocus();
+                txtName.setStyle("-fx-border-color: red");
+                return;
+            }else{
+                txtName.setStyle("-fx-border-color: green");
+                txtDOB.requestFocus();
+            }
+            if(!dob.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")){
+                new Alert(Alert.AlertType.ERROR,"Invalid Date of Birth").show();
+                txtDOB.requestFocus();
+                txtDOB.setStyle("-fx-border-color: red");
+                return;
+            }else{
+                txtDOB.setStyle("-fx-border-color: green");
+                txtAddress.requestFocus();
+            }
+            if (!address.matches(".{3,}")) {
+                new Alert(Alert.AlertType.ERROR, "Address should be at least 3 characters long").show();
+                txtAddress.requestFocus();
+                txtAddress.setStyle("-fx-border-color: red");
+                return;
+            }else{
+                txtAddress.setStyle("-fx-border-color: green");
+                txtContact.requestFocus();
+            }
+            if(!contact.matches("^0[0-9]{9}$")){
+                new Alert(Alert.AlertType.ERROR,"Invalid Phone Number").show();
+                txtContact.requestFocus();
+                txtAddress.setStyle("-fx-border-color: red");
+                return;
+            }else{
+                txtContact.setStyle("-fx-border-color: green");
+                txtPosition.requestFocus();
+            }
+            if(! position.matches("[A-Za-z ]+")){
+                new Alert(Alert.AlertType.ERROR,"Invalid Value").show();
+                txtPosition.requestFocus();
+                txtPosition.setStyle("-fx-border-color: red");
+                return;
+            }else{
+                txtPosition.setStyle("-fx-border-color: green");
+                txtUserId.requestFocus();
+            }
 
-            Employee employee = new Employee(id, name, dateOfBirth, address, contact, position, joiningDate, uid);
+
+            Employee employee = new Employee(id, name, dob, address, contact, position, joinDate, uid);
 
             try {
                 boolean isSaved = EmployeeRepo.save(employee);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
                 }
+                tblEmployee.getItems().add(new EmployeeTm(id,name,dob,address,contact,position,joinDate,uid));
+                init();
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
@@ -255,7 +323,7 @@ public class EmployeeFormController {
     private void clearFields() {
         txtId.setText("");
         txtName.setText("");
-        txtDOB.setValue(null);
+        txtDOB.setText("");
         txtAddress.setText("");
         txtContact.setText("");
         txtContact.setText("");
@@ -266,7 +334,7 @@ public class EmployeeFormController {
     void btnUpdateOnAction(ActionEvent event) {
         String id = txtId.getText();
         String name = txtName.getText();
-        LocalDate DOB=txtDOB.getValue();
+        String DOB=txtDOB.getText();
         String address = txtAddress.getText();
         String contact = txtContact.getText();
         String position=txtPosition.getText();
@@ -281,6 +349,19 @@ public class EmployeeFormController {
            if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
             }
+           EmployeeTm selectedEmployee=tblEmployee.getSelectionModel().getSelectedItem();
+           selectedEmployee.setName(name);
+           selectedEmployee.setDOB(DOB);
+           selectedEmployee.setAddress(address);
+           selectedEmployee.setContact(contact);
+           selectedEmployee.setPosition(position);
+           selectedEmployee.setJoinDate(joinDate);
+           selectedEmployee.setUid(uid);
+           tblEmployee.refresh();
+           tblEmployee.getSelectionModel().clearSelection();
+           init();
+
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
@@ -296,6 +377,18 @@ public class EmployeeFormController {
             boolean isDeleted = EmployeeRepo.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "employee deleted!").show();
+                tblEmployee.getItems().remove(tblEmployee.getSelectionModel().getSelectedItem());
+                tblEmployee.getSelectionModel().clearSelection();
+                txtId.clear();
+                txtName.clear();
+                txtDOB.clear();
+                txtAddress.clear();
+                txtContact.clear();
+                txtPosition.clear();
+                txtDate.setValue(null);
+                txtUserId.setValue(null);
+                init();
+
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -315,6 +408,43 @@ public class EmployeeFormController {
         stage.setScene(new Scene(anchorPane));
         stage.setTitle("Dashboard Form");
         stage.centerOnScreen();
+    }
+    @FXML
+    void btnNewEmployeeOnAction(ActionEvent event) {
+        txtId.clear();
+        txtName.clear();
+        txtDOB.clear();
+        txtAddress.clear();
+        txtContact.clear();
+        txtPosition.clear();
+        txtDate.setValue(null);
+        txtUserId.setValue(null);
+        txtId.setDisable(false);
+        txtName.setDisable(false);
+        txtDOB.setDisable(false);
+        txtAddress.setDisable(false);
+        txtContact.setDisable(false);
+        txtPosition.setDisable(false);
+        txtDate.setDisable(false);
+        txtUserId.setDisable(false);
+        btnSave.setDisable(false);
+        txtId.setText(generateNewId());
+        txtId.setEditable(false);
+
+    }
+    private String generateNewId() {
+        try {
+            return EmployeeRepo.generateId();
+        }
+        catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+        return "E001";
+    }
+    private void init(){
+        btnSave.setDisable(true);
+        btnDelete.setDisable(true);
+        btnUpdate.setDisable(true);
     }
 
 }

@@ -233,6 +233,17 @@ public class DashboardFormController {
     }
 
     @FXML
+    void btnTreatmentMethodOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane=FXMLLoader.load(getClass().getResource("/view/treatment_method_form.fxml"));
+        Stage stage=(Stage)  rootNode.getScene().getWindow();
+        stage.setScene(new Scene(anchorPane));
+        stage.setTitle("treatment method form");
+        stage.centerOnScreen();
+
+    }
+
+
+    @FXML
     void btnTreatmentOnAction(ActionEvent event) throws IOException {
         AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/treatment_form.fxml"));
 
