@@ -201,7 +201,7 @@ public class DashboardFormController {
 
     @FXML
     void btnScheduleOnAction(ActionEvent event) throws IOException {
-        AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/schedule_form.fxml"));
+        AnchorPane rootNode = FXMLLoader.load(getClass().getResource("/view/schedule_form.fxml"));
 
         Scene scene = new Scene(rootNode);
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TreatmentDescRepo {
     public static ArrayList<TreatmentDesc> getAll() throws SQLException {
-        String sql = "SELECT t.treat_id,tm.treatm_id, t.treat_status, tm.treatm_description, td.treat_duration ,t.pa_id FROM treatments t JOIN treatment_details td ON t.treat_id = td.treat_id JOIN treatment_method tm ON td.treatm_id = tm.treatm_id";
+        String sql = "SELECT t.treat_id,tm.treatm_id, t.treat_status, td.treat_duration ,t.pa_id FROM treatments t JOIN treatment_details td ON t.treat_id = td.treat_id JOIN treatment_method tm ON td.treatm_id = tm.treatm_id";
 
         Connection connection = DbConnection.getInstance().getConnection();
         connection.setAutoCommit(false);
@@ -26,11 +26,10 @@ public class TreatmentDescRepo {
                 String id = resultSet.getString("t.treat_id");
                 String mid=resultSet.getString("tm.treatm_id");
                 String status = resultSet.getString("t.treat_status");
-                String methodDescription = resultSet.getString("tm.treatm_description");
                 int duration = resultSet.getInt("td.treat_duration");
                 String pid=resultSet.getString("t.pa_id");
 
-                TreatmentDesc treatmentDesc = new TreatmentDesc(id,mid, status, methodDescription, duration,pid);
+                TreatmentDesc treatmentDesc = new TreatmentDesc(id,mid, status, duration,pid);
                 treatmentDescList.add(treatmentDesc);
             }
             connection.commit();

@@ -45,12 +45,12 @@
             <Text fill="#171717" layoutX="291.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
             <PasswordField fx:id="txtPassword" layoutX="279.0" layoutY="397.0" onAction="#txtPasswordOnAction" onKeyReleased="#txtPasswordOnAction" prefHeight="41.0" prefWidth="227.0" promptText="Enter Password" style="-fx-border-color: black;" />
             <PasswordField fx:id="txtConfirmPassword" layoutX="21.0" layoutY="472.0" onAction="#txtConfirmPasswordOnAction" prefHeight="41.0" prefWidth="227.0" promptText="Enter Password" style="-fx-border-color: black;" />
-            <ImageView fitHeight="41.0" fitWidth="46.0" layoutX="476.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="41.0" fitWidth="46.0" layoutX="34.0" layoutY="538.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../asserts/icons8-back-button-48.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="479.0" layoutY="240.0" onAction="#btnBackOnAction" prefHeight="41.0" prefWidth="35.0" />
+            <JFXButton layoutX="37.0" layoutY="538.0" onAction="#btnBackOnAction" prefHeight="41.0" prefWidth="35.0" />
             <JFXComboBox fx:id="cmbUserType" layoutX="21.0" layoutY="397.0" onAction="#userTypeOnAction" prefHeight="41.0" prefWidth="227.0" style="-fx-background-color: white; -fx-border-color: black;" unFocusColor="WHITE" />
             <Label fx:id="lblPassword" layoutX="241.0" layoutY="438.0" prefHeight="25.0" prefWidth="302.0" />
             <ImageView fitHeight="219.0" fitWidth="552.0" layoutY="-2.0">
@@ -59,6 +59,7 @@
                </image>
             </ImageView>
             <Label fx:id="lblConfirmPassword" layoutX="24.0" layoutY="513.0" prefHeight="16.0" prefWidth="227.0" />
+            <JFXButton fx:id="btnNewUser" layoutX="376.0" layoutY="245.0" onAction="#btnNewUserOnAction" prefHeight="32.0" prefWidth="156.0" style="-fx-background-color: #1da1f2;" text="add new user" />
          </children>
       </AnchorPane>
    </children>

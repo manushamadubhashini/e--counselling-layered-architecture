@@ -8,14 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import lk.ijse.eCounselling.Util.Regex;
 import lk.ijse.eCounselling.model.Appointment;
 import lk.ijse.eCounselling.model.Schedule;
@@ -85,9 +82,7 @@ public class ScheduleFormController {
     @FXML
     private TextField txtStartTime;
 
-    private List<Schedule> scheduleList = new ArrayList<>();
     public void initialize() {
-        this.scheduleList = getAllSchedule();
         setCellValueFactory();
         loadScheduleTable();
         getEmployeeId();
@@ -100,6 +95,19 @@ public class ScheduleFormController {
         txtStartTime.setDisable(true);
         txtEndTime.setDisable(true);
         cmbEmpId.setDisable(true);
+        txtDate.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); // Optional styling for disabled dates
+                        }
+                    }
+                };
+            }
+        });
         tblSchedule.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             btnDelete.setDisable(newValue == null);
             //btnUpdate.setText(newValue != null ? "Update" : "Save");
@@ -160,18 +168,6 @@ public class ScheduleFormController {
 
     }
 
-    private List<Schedule> getAllSchedule() {
-        List<Schedule>  scheduleList1 = null;
-        try {
-            scheduleList1 = ScheduleRepo.getAll();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return scheduleList1;
-
-
-    }
-
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml"));
@@ -195,6 +191,8 @@ public class ScheduleFormController {
         txtStartTime.setText("");
         txtEndTime.setText("");
         cmbEmpId.setValue(null);
+        tblSchedule.getSelectionModel().clearSelection();
+        init();
     }
 
     @FXML
@@ -245,6 +243,19 @@ public class ScheduleFormController {
             String STime = txtStartTime.getText();
             String ETime = txtEndTime.getText();
             String eid = (String) cmbEmpId.getValue();
+
+            if(! STime.matches("\\b(1[0-2]|0?[1-9]):([0-5][0-9])\\s*(AM|PM|am|pm)\\b")){
+                new Alert(Alert.AlertType.ERROR,"invalid time").show();
+                txtStartTime.requestFocus();
+                txtStartTime.setStyle("-fx-border-color: red");
+           }
+           if(! ETime.matches("\\b(1[0-2]|0?[1-9]):([0-5][0-9])\\s*(AM|PM|am|pm)\\b")) {
+               new Alert(Alert.AlertType.ERROR,"invalid time").show();
+               txtEndTime.requestFocus();
+               txtEndTime.setStyle("-fx-border-color: red");
+               return;
+           }
+
 
             Schedule schedule = new Schedule(id, date, STime, ETime, eid);
 
@@ -312,17 +323,6 @@ public class ScheduleFormController {
         }
     }
 
-    public void ScheduleIdOnAction(ActionEvent event) {
-        String schId = txtId.getText();
-        if (Regex.isScheduleId(schId)) {
-            txtId.setStyle("-fx-border-color: green;");
-            txtId.requestFocus();
-        } else {
-            txtId.setStyle("-fx-border-color: red;");
-            txtId.requestFocus();
-        }
-
-    }
     @FXML
     void btnNewScheduleOnAction(ActionEvent event) {
         txtId.clear();
@@ -348,6 +348,11 @@ public class ScheduleFormController {
         return "H001";
     }
     private void init(){
+        txtId.setDisable(true);
+        txtDate.setDisable(true);
+        txtStartTime.setDisable(true);
+        txtEndTime.setDisable(true);
+        cmbEmpId.setDisable(true);
         btnSave.setDisable(true);
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);

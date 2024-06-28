@@ -3,10 +3,7 @@ package lk.ijse.eCounselling.repository;
 import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +49,19 @@ public class UserRepo {
         }
         return idList;
     }
+    public static String generateId() throws SQLException {
+        Connection connection=DbConnection.getInstance().getConnection();
+        Statement stm=connection.createStatement();
+        ResultSet rst=stm.executeQuery("SELECT user_id  FROM user ORDER BY user_id  DESC LIMIT 1;");
+        if (rst.next()) {
+            String id = rst.getString("user_id");
+            int newAppointmentId = Integer.parseInt(id.replace("U", "")) + 1;
+            return String.format("U%03d", newAppointmentId);
+        } else {
+            return "U001";
+        }
+    }
+
 
 
 

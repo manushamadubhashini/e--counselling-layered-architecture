@@ -41,9 +41,6 @@ public class TreatmentFormController {
     private TableColumn<?, ?> ColStatus;
 
     @FXML
-    private TableColumn<?, ?> colDesc;
-
-    @FXML
     private TableColumn<?, ?> colDuration;
 
     @FXML
@@ -62,9 +59,6 @@ public class TreatmentFormController {
     private TableView<TreatmentDescTm> tblTreatment;
 
     @FXML
-    private TextField txtDescription;
-
-    @FXML
     private TextField txtDuration;
 
     @FXML
@@ -74,7 +68,7 @@ public class TreatmentFormController {
     private JFXComboBox cmbMid;
 
     @FXML
-    private TextField txtStatus;
+    private JFXComboBox cmbStatus;
 
     @FXML
     private JFXButton btnClear;
@@ -96,10 +90,10 @@ public class TreatmentFormController {
         loadTreatmentTable();
         getPatientIds();
         getTreatmentMethodIds();
+        setStatus();
         txtId.setDisable(true);
         cmbMid.setDisable(true);
-        txtStatus.setDisable(true);
-        txtDescription.setDisable(true);
+        cmbStatus.setDisable(true);
         txtDuration.setDisable(true);
         cmbPatientId.setDisable(true);
         btnDelete.setDisable(true);
@@ -113,19 +107,30 @@ public class TreatmentFormController {
             if (newValue != null) {
                 txtId.setText(newValue.getId());
                 cmbMid.setValue(newValue.getMid());
-                txtStatus.setText(newValue.getStatus());
-                txtDescription.setText(newValue.getDescription());
+                cmbStatus.setValue(newValue.getStatus());
                 txtDuration.setText(String.valueOf(newValue.getDuration()));
                 cmbPatientId.setValue(newValue.getPid());
 
                 txtId.setDisable(false);
                 cmbMid.setDisable(false);
-                txtStatus.setDisable(false);
-                txtDescription.setDisable(false);
+                cmbStatus.setDisable(false);
                 txtDuration.setDisable(false);
                 cmbPatientId.setDisable(false);
             }
         });
+    }
+
+    private void setStatus(){
+        ObservableList<String> observableList=FXCollections.observableArrayList();
+        List<String> arrayList=new ArrayList<>();
+        arrayList.add("Completed");
+        arrayList.add("Pending");
+        arrayList.add("In Progress");
+        arrayList.add("Cancelled");
+        for (String status:arrayList){
+            observableList.add(status);
+        }
+        cmbStatus.setItems(observableList);
     }
 
     private void getTreatmentMethodIds() {
@@ -157,7 +162,6 @@ public class TreatmentFormController {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colMid.setCellValueFactory(new PropertyValueFactory<>("mid"));
         ColStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
         colDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         colPid.setCellValueFactory(new PropertyValueFactory<>("pid"));
     }
@@ -166,7 +170,7 @@ public class TreatmentFormController {
         try {
             ArrayList<TreatmentDesc> treatmentDescs =TreatmentDescRepo.getAll();
             for (TreatmentDesc d:treatmentDescs){
-                tblTreatment.getItems().add(new TreatmentDescTm(d.getId(),d.getMid(),d.getStatus(),d.getDescription(),d.getDuration(),d.getPid()));
+                tblTreatment.getItems().add(new TreatmentDescTm(d.getId(),d.getMid(),d.getStatus(),d.getDuration(),d.getPid()));
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
@@ -175,15 +179,15 @@ public class TreatmentFormController {
     }
 
     @FXML
-    void btnBackOnAction(MouseEvent event) throws IOException {
+    void btnBackOnAction(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml"));
         Stage stage = (Stage) root.getScene().getWindow();
 
         stage.setScene(new Scene(anchorPane));
         stage.setTitle("Dashboard Form");
         stage.centerOnScreen();
-
     }
+
 
     @FXML
     void btnClearOnAction(ActionEvent event) {
@@ -194,8 +198,7 @@ public class TreatmentFormController {
     private void clearFields() {
         txtId.setText("");
         cmbMid.setValue(null);
-        txtStatus.setText("");
-        txtDescription.setText("");
+        cmbStatus.setValue(null);
         txtDuration.setText("");
         cmbPatientId.setValue(null);
         tblTreatment.getSelectionModel().clearSelection();
@@ -219,8 +222,7 @@ public class TreatmentFormController {
             txtId.clear();
             cmbMid.setValue(null);
             cmbPatientId.setValue(null);
-            txtStatus.clear();
-            txtDescription.clear();
+            cmbStatus.setValue(null);
             txtDuration.clear();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -239,11 +241,11 @@ public class TreatmentFormController {
             } else {
                 txtId.setStyle("");
             }
-            if (txtStatus.getText().isEmpty()) {
-                txtStatus.setStyle("-fx-border-color: red;");
+            if (cmbStatus.getItems()==null) {
+                cmbStatus.setStyle("-fx-border-color: red;");
                 hasError=true;
             } else {
-                txtStatus.setStyle("");
+                cmbStatus.setStyle("");
 
             }
             if (txtDuration.getText().isEmpty()) {
@@ -256,12 +258,6 @@ public class TreatmentFormController {
                 cmbMid.setStyle("-fx-border-color: red;");
             } else {
                 cmbMid.setStyle("");
-            }
-            if (txtDescription.getText().isEmpty()) {
-                txtDescription.setStyle("-fx-border-color: red;");
-                hasError=true;
-            } else {
-                txtDescription.setStyle("");
             }
             if(cmbPatientId.getValue()==null){
                 cmbMid.setStyle("-fx-border-color: red");
@@ -280,12 +276,25 @@ public class TreatmentFormController {
                 String id = txtId.getText();
                 String mid = (String) cmbMid.getValue();
                 String pid = (String) cmbPatientId.getValue();
-                String status = txtStatus.getText();
-                String description=txtDescription.getText();
-                int duration = Integer.parseInt(txtDuration.getText());
+                String status = (String) cmbStatus.getValue();
+                int duration;
+             try {
+                 duration = Integer.parseInt(txtDuration.getText());
+             }catch (NumberFormatException e){
+                  txtDuration.setStyle("-fx-border-color: red");
+                  txtDuration.requestFocus();
+                  return;
+             }
 
             Treatment treatment = new Treatment(id, status, pid);
             TreatmentMethodDetail treatmentMethodDetail = new TreatmentMethodDetail(id, mid, duration);
+
+            if(! txtDuration.getText().matches("^(?:[1-9][0-9]?|100)$")){
+                 new Alert(Alert.AlertType.ERROR,"invalid value").show();
+                 txtDuration.setStyle("-fx-border-color: red");
+                 txtDuration.requestFocus();
+
+             }
 
             try {
                 boolean isTreatmentSaved = TreatmentRepo.save(treatment);
@@ -294,7 +303,7 @@ public class TreatmentFormController {
                     new Alert(Alert.AlertType.CONFIRMATION, "Treatment, and Detail saved!").show();
                     init();
                 }
-                tblTreatment.getItems().add(new TreatmentDescTm(id,mid,status,description,duration,pid));
+                tblTreatment.getItems().add(new TreatmentDescTm(id,mid,status,duration,pid));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
@@ -306,9 +315,8 @@ public class TreatmentFormController {
         String id = txtId.getText();
         String mid = (String) cmbMid.getValue();
         String pid= (String) cmbPatientId.getValue();
-        String status=txtStatus.getText();
+        String status= (String) cmbStatus.getValue();
         int duration= Integer.parseInt(txtDuration.getText());
-        String description=txtDescription.getText();
 
         try {
             boolean isTreatmentUpdated = TreatmentRepo.update(id,status,pid);
@@ -321,7 +329,6 @@ public class TreatmentFormController {
             TreatmentDescTm selectedItem=tblTreatment.getSelectionModel().getSelectedItem();
             selectedItem.setId(id);
             selectedItem.setStatus(status);
-            selectedItem.setDescription(description);
             selectedItem.setDuration(duration);
             selectedItem.setPid(pid);
             tblTreatment.refresh();
@@ -358,14 +365,12 @@ public class TreatmentFormController {
     void btnNewTreatmentOnAction(ActionEvent event) {
         txtId.clear();
         cmbMid.setValue(null);
-        txtStatus.clear();
-        txtDescription.clear();
+        cmbStatus.setValue(null);
         txtDuration.clear();
         cmbPatientId.setValue(null);
         txtId.setDisable(false);
         cmbMid.setDisable(false);
-        txtStatus.setDisable(false);
-        txtDescription.setDisable(false);
+        cmbStatus.setDisable(false);
         txtDuration.setDisable(false);
         cmbPatientId.setDisable(false);
         txtId.setText(generateId());
@@ -383,8 +388,7 @@ public class TreatmentFormController {
     private void init(){
         txtId.setDisable(true);
         cmbMid.setDisable(true);
-        txtStatus.setDisable(true);
-        txtDescription.setDisable(true);
+        cmbStatus.setDisable(true);
         txtDuration.setDisable(true);
         cmbPatientId.setDisable(true);
         btnUpdate.setDisable(true);

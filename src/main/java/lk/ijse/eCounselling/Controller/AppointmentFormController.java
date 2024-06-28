@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import lk.ijse.eCounselling.Util.Regex;
 import lk.ijse.eCounselling.model.*;
 import lk.ijse.eCounselling.model.tm.AppointmentTm;
@@ -77,7 +78,7 @@ public class AppointmentFormController {
     private TableView<AppointmentTm> tblAppointment;
 
     @FXML
-    private TextField txtDate;
+    private DatePicker txtDate;
 
     @FXML
     private TextField txtId;
@@ -101,6 +102,19 @@ public class AppointmentFormController {
         getPatientId();
         getEmployeeId();
         setTime();
+        txtDate.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); // Optional styling for disabled dates
+                        }
+                    }
+                };
+            }
+        });
 
         tblAppointment.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             btnDelete.setDisable(newValue == null);
@@ -110,7 +124,7 @@ public class AppointmentFormController {
             if (newValue != null) {
                 txtId.setText(newValue.getId());
                 txtType.setText(newValue.getType());
-                txtDate.setText(newValue.getDate());
+                txtDate.setValue(newValue.getDate());
                 cmbTime.setValue(newValue.getTime());
                 cmbEmployeeId.setValue(newValue.getEid());
                 cmbPatientId.setValue(newValue.getPid());
@@ -208,10 +222,12 @@ public class AppointmentFormController {
     private void clearFields() {
         txtId.setText("");
         txtType.setText("");
-        txtDate.setText("");
+        txtDate.setValue(null);
         cmbTime.setValue(null);
         cmbEmployeeId.setValue(null);
         cmbPatientId.setValue(null);
+        tblAppointment.getSelectionModel().clearSelection();
+        init();
     }
 
     @FXML
@@ -227,7 +243,7 @@ public class AppointmentFormController {
             tblAppointment.getSelectionModel().clearSelection();
             txtId.clear();
             txtType.clear();
-            txtDate.clear();
+            txtDate.setValue(null);
             cmbTime.setValue(null);
             cmbEmployeeId.setValue(null);
             cmbPatientId.setValue(null);
@@ -254,7 +270,7 @@ public class AppointmentFormController {
         } else {
             txtType.setStyle("");
         }
-        if (txtDate.getText().isEmpty()) {
+        if (txtDate.getValue()==null) {
             txtDate.setStyle("-fx-border-color: red;");
             hasError = true;
         } else {
@@ -290,10 +306,18 @@ public class AppointmentFormController {
         }
             String id = txtId.getText();
             String type = txtType.getText();
-            String date=txtDate.getText();
+            LocalDate date=txtDate.getValue();
             String time = (String) cmbTime.getValue();
             String eid = (String) cmbEmployeeId.getValue();
             String pid = (String) cmbPatientId.getValue();
+
+
+            if(! type.matches("[A-Za-z ]+")){
+                new Alert(Alert.AlertType.ERROR,"invalid value").show();
+                txtType.setStyle("-fx-border-color: red");
+                txtType.requestFocus();
+                return;
+            }
 
             Appointment appointment = new Appointment(id, type, date, time, eid, pid);
 
@@ -316,7 +340,7 @@ public class AppointmentFormController {
     void btnUpdateOnAction(ActionEvent event) {
         String id = txtId.getText();
         String type = txtType.getText();
-        String date=txtDate.getText();
+        LocalDate date=txtDate.getValue();
         String time= (String) cmbTime.getValue();
         String eid= (String) cmbEmployeeId.getValue();
         String pid= (String) cmbPatientId.getValue();
@@ -344,53 +368,11 @@ public class AppointmentFormController {
 
 
     }
-
-    public void txtAppointmentIdOnAction(ActionEvent event) {
-            txtId.setStyle("-fx-border-color: green;");
-            txtType.requestFocus();
-    }
-
-    public void AppointmentTypeOnAction(ActionEvent event) {
-        String type=txtType.getText();
-        txtType.setStyle("-fx-border-color: green");
-        txtDate.requestFocus();
-
-    }
-
-    public void DateOnAction(ActionEvent event) {
-        String date=txtDate.getText();
-        txtDate.setStyle("-fx-border-color: green");
-        cmbTime.requestFocus();
-
-    }
-
-
-
-    public void StatusOnAction(ActionEvent event) {
-        String status= (String) cmbTime.getValue();
-        cmbTime.setStyle("-fx-border-color: green");
-        cmbEmployeeId.requestFocus();
-    }
-
-    public void EIDOnAction(ActionEvent event) {
-        String eid= (String) cmbEmployeeId.getValue();
-        cmbEmployeeId.setStyle("-fx-border-color: green");
-        cmbPatientId.requestFocus();
-
-
-    }
-
-    public void PIDOnAction(ActionEvent event) {
-        String pid= (String) cmbPatientId.getValue();
-        cmbPatientId.setStyle("-fx-border-color: green");
-
-
-    }
     @FXML
     void btnNewAppointmentOnAction(ActionEvent event) {
         txtId.clear();
         txtType.clear();
-        txtDate.clear();
+        txtDate.setValue(null);
         cmbTime.setValue(null);
         cmbEmployeeId.setValue(null);
         cmbPatientId.setValue(null);
@@ -403,9 +385,6 @@ public class AppointmentFormController {
         txtId.setText(generateNewId());
         txtId.setEditable(false);
         btnSave.setDisable(false);
-        txtDate.setText(String.valueOf(LocalDate.now()));
-        txtDate.setEditable(false);
-
     }
 
     private String generateNewId() {
@@ -419,6 +398,12 @@ public class AppointmentFormController {
 
     }
     private void init(){
+        txtId.setDisable(true);
+        txtType.setDisable(true);
+        txtDate.setDisable(true);
+        cmbTime.setDisable(true);
+        cmbEmployeeId.setDisable(true);
+        cmbPatientId.setDisable(true);
         btnSave.setDisable(true);
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);

@@ -115,6 +115,8 @@ public class TreatmentMethodFormController {
     private void clearField() {
         txtId.setText("");
         txtDescription.setText("");
+        tblTreatmentMethod.getSelectionModel().clearSelection();
+        init();
     }
 
     @FXML
@@ -175,6 +177,13 @@ public class TreatmentMethodFormController {
         String id=txtId.getText();
         String description=txtDescription.getText();
 
+        if(! description.matches("[A-Za-z ]+")) {
+            new Alert(Alert.AlertType.ERROR,"invalid value").show();
+            txtDescription.setStyle("-fx-border-color: red");
+            txtDescription.requestFocus();
+            return;
+        }
+
         TreatmentMethod treatmentMethod=new TreatmentMethod(id,description);
         try {
             boolean isSaved=TreatmentMethodRepo.save(treatmentMethod);
@@ -211,6 +220,8 @@ public class TreatmentMethodFormController {
 
 
     private void init(){
+        txtId.setDisable(true);
+        txtDescription.setDisable(true);
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
         btnSave.setDisable(true);

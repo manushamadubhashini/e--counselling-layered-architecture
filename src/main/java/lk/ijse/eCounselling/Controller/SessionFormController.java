@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import lk.ijse.eCounselling.Util.Regex;
 import lk.ijse.eCounselling.model.Appointment;
 import lk.ijse.eCounselling.model.Session;
@@ -100,6 +101,19 @@ public class SessionFormController  {
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
         txtId.setEditable(false);
+        txtDate.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); // Optional styling for disabled dates
+                        }
+                    }
+                };
+            }
+        });
         tblSession.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             btnDelete.setDisable(newValue == null);
             //btnUpdate.setText(newValue != null ? "Update" : "Save");
@@ -203,6 +217,8 @@ public class SessionFormController  {
         txtDuration.setText("");
         cmbId.setValue(null);
         cmbPaid.setValue(null);
+        tblSession.getSelectionModel().clearSelection();
+        init();
 
     }
 
@@ -282,10 +298,32 @@ public class SessionFormController  {
             String id = txtId.getText();
             String type = txtType.getText();
             LocalDate date = txtDate.getValue();
-            int duration = Integer.parseInt(txtDuration.getText());
+            int duration;
             String eid = (String) cmbId.getValue();
             String pid = (String) cmbPaid.getValue();
+            try {
+                 duration = Integer.parseInt(txtDuration.getText());
+            }catch (NumberFormatException e){
+                txtDuration.setStyle("-fx-border-color: red");
+                txtDuration.requestFocus();
+                return;
+
+            }
             Session session = new Session(id, type, date, duration, eid, pid);
+
+           if(! type.matches("[A-Za-z ]+")){
+              new Alert(Alert.AlertType.ERROR,"invalid value").show();
+              txtType.setStyle("-fx-border-color: red");
+              txtType.requestFocus();
+              return;
+           }
+
+            if(! txtDuration.getText().matches("^(?:[1-9][0-9]?|100)$")) {
+                new Alert(Alert.AlertType.ERROR,"invalid duration").show();
+                txtDuration.setStyle("-fx-border-color: red");
+                txtDuration.requestFocus();
+                return;
+            }
 
             try {
                 boolean isSaved = SessionRepo.save(session);
@@ -371,6 +409,12 @@ public class SessionFormController  {
 
     }
     private void init(){
+        txtId.setDisable(true);
+        txtType.setDisable(true);
+        txtDate.setDisable(true);
+        txtDuration.setDisable(true);
+        cmbId.setDisable(true);
+        cmbPaid.setDisable(true);
         btnUpdate.setDisable(true);
         btnDelete.setDisable(true);
         btnSave.setDisable(true);

@@ -30,9 +30,9 @@
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="165.0" prefHeight="543.0" prefWidth="419.0" style="-fx-background-radius: 20; -fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 53.3333% 50.0%, radius 55.814%, #eaeff2 0.0%, #8fc6e4 100.0%);">
          <children>
-            <TextField fx:id="txtId" layoutX="50.0" layoutY="87.0" onAction="#ScheduleIdOnAction" prefHeight="38.0" prefWidth="284.0" promptText="Enter schedule id" />
-            <TextField fx:id="txtStartTime" layoutX="50.0" layoutY="262.0" prefHeight="38.0" prefWidth="284.0" promptText="Enter start time" />
-            <TextField fx:id="txtEndTime" layoutX="50.0" layoutY="350.0" prefHeight="38.0" prefWidth="284.0" promptText="Enter end time" />
+            <TextField fx:id="txtId" layoutX="50.0" layoutY="87.0" prefHeight="38.0" prefWidth="284.0" promptText="Enter schedule id" />
+            <TextField fx:id="txtStartTime" layoutX="50.0" layoutY="262.0" prefHeight="38.0" prefWidth="284.0" promptText="Enter start time (ex: 8:30 p.m)" />
+            <TextField fx:id="txtEndTime" layoutX="50.0" layoutY="345.0" prefHeight="38.0" prefWidth="284.0" promptText="Enter end time (ex: 9.30 p.m)" />
             <Text layoutX="50.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule ID" />
             <Text layoutX="50.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule Date" />
             <Text layoutX="50.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time" />
@@ -59,7 +59,7 @@
                </image>
             </ImageView>
             <JFXButton fx:id="btnDelete" layoutX="367.0" layoutY="84.0" onAction="#btnDeleteOnAction" prefHeight="45.0" prefWidth="26.0" />
-            <JFXComboBox fx:id="cmbEmpId" layoutX="53.0" layoutY="428.0" prefHeight="37.0" prefWidth="284.0" promptText="Select employee id" style="-fx-background-color: white;" />
+            <JFXComboBox fx:id="cmbEmpId" layoutX="50.0" layoutY="428.0" prefHeight="37.0" prefWidth="284.0" promptText="Select employee id" style="-fx-background-color: white;" />
             <Text layoutX="53.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee ID" />
             <JFXButton fx:id="btnNewSchedule" layoutX="253.0" layoutY="26.0" onAction="#btnNewScheduleOnAction" prefHeight="37.0" prefWidth="152.0" style="-fx-background-color: #3E8EDE;" text="add new schedule" />
          </children></AnchorPane>

@@ -39,6 +39,10 @@ import java.util.Date;
 import java.util.function.DoubleBinaryOperator;
 
 public class RegisterFormController {
+
+    @FXML
+    private JFXButton btnNewUser;
+
     @FXML
     private AnchorPane rootNode;
 
@@ -66,6 +70,12 @@ public class RegisterFormController {
     private JFXButton btnRegiser;
 
     public void initialize() {
+        txtUserId.setDisable(true);
+        txtUserName.setDisable(true);
+        txtPassword.setDisable(true);
+        cmbUserType.setDisable(true);
+        txtConfirmPassword.setDisable(true);
+        btnRegiser.setDisable(true);
         setType();
 
     }
@@ -87,59 +97,80 @@ public class RegisterFormController {
     }
 
     @FXML
-     void btnRegistrationOnAction(ActionEvent event) {
-        // Check if any of the text fields are empty
-        if (txtUserId.getText().isEmpty() || txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty() || txtConfirmPassword.getText().isEmpty() || cmbUserType.getValue() == null) {
-            // Set border color of empty text fields to red
-            if (txtUserId.getText().isEmpty()) {
-                txtUserId.setStyle("-fx-border-color: red;");
-            } else {
-                txtUserId.setStyle("");
-            }
-            if (txtUserName.getText().isEmpty()) {
-                txtUserName.setStyle("-fx-border-color: red;");
-            } else {
-                txtUserName.setStyle("");
-            }
-            if (txtPassword.getText().isEmpty()) {
-                txtPassword.setStyle("-fx-border-color: red;");
-            } else {
-                txtPassword.setStyle("");
-            }
-            if (txtConfirmPassword.getText().isEmpty()) {
-                txtConfirmPassword.setStyle("-fx-border-color: red;");
-            } else {
-                txtConfirmPassword.setStyle("");
-            }
-            if (cmbUserType.getValue() == null) {
-                cmbUserType.setStyle("-fx-border-color: red;");
-            } else {
-                cmbUserType.setStyle("");
-            }
+    void btnRegistrationOnAction(ActionEvent event) {
+        boolean hasError = false;
+        StringBuilder errorMessage = new StringBuilder("Please fill in all fields correctly.\n");
 
-            // Show the alert for missing fields
+        // Validate User ID
+        if (txtUserId.getText().isEmpty() || !Regex.isValidUserId(txtUserId.getText())) {
+            txtUserId.setStyle("-fx-border-color: red;");
+            errorMessage.append("Invalid User ID.\n");
+            hasError = true;
+        } else {
+            txtUserId.setStyle("");
+        }
+
+        // Validate User Name
+        if (txtUserName.getText().isEmpty()) {
+            txtUserName.setStyle("-fx-border-color: red;");
+            errorMessage.append("User Name is required.\n");
+            hasError = true;
+        } else {
+            txtUserName.setStyle("");
+        }
+
+        // Validate Password
+        if (txtPassword.getText().isEmpty() || !isValidPassword(txtPassword.getText())) {
+            txtPassword.setStyle("-fx-border-color: red;");
+            errorMessage.append("Password must be at least 8 characters long and contain at least one special character (#, @, $).\n");
+            hasError = true;
+        } else {
+            txtPassword.setStyle("");
+        }
+
+        // Validate Confirm Password
+        if (txtConfirmPassword.getText().isEmpty() || !txtPassword.getText().equals(txtConfirmPassword.getText())) {
+            txtConfirmPassword.setStyle("-fx-border-color: red;");
+            errorMessage.append("Passwords do not match.\n");
+            hasError = true;
+        } else {
+            txtConfirmPassword.setStyle("");
+        }
+
+        // Validate User Type
+        if (cmbUserType.getValue() == null) {
+            cmbUserType.setStyle("-fx-border-color: red;");
+            errorMessage.append("User Type is required.\n");
+            hasError = true;
+        } else {
+            cmbUserType.setStyle("");
+        }
+
+        // Show error alert if there are validation errors
+        if (hasError) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Please fill in all fields.");
+            alert.setContentText(errorMessage.toString());
             alert.show();
-        } else {
-            // If all fields are filled, proceed with registration
-            String id = txtUserId.getText();
-            String name = txtUserName.getText();
-            String type = cmbUserType.getValue();
-            String password = txtPassword.getText();
+            return;
+        }
 
-            User user = new User(id, name, type, password);
+        String id = txtUserId.getText();
+        String name = txtUserName.getText();
+        String type = cmbUserType.getValue();
+        String password = txtPassword.getText();
 
-            try {
-                boolean isSaved = UserRepo.setUser(user);
-                if (isSaved) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "Registration Successfully!").show();
-                }
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        User user = new User(id, name, type, password);
+
+        try {
+            boolean isSaved = UserRepo.setUser(user);
+            if (isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Registration Successfully!").show();
+                init();
             }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
@@ -151,35 +182,25 @@ public class RegisterFormController {
         stage.setScene(new Scene(anchorPane));
         stage.setTitle("Register Form");
         stage.centerOnScreen();
-
     }
 
-
-
-
+    @FXML
     public void txtPasswordOnAction(ActionEvent event) {
         String password = txtPassword.getText();
-
-        if (password.length() < 8) {
+        if (!isValidPassword(password)) {
             txtPassword.setStyle("-fx-border-color: red;");
-            lblPassword.setText("Password must be at least 8 characters long.");
-            lblPassword.setTextFill(Color.RED);
-            lblPassword.setStyle("-fx-font-size: 12;");
-        } else if (!password.matches(".*[#@$&].*")) {
-            // Set border color to red if password does not contain #, @, or $
-            txtPassword.setStyle("-fx-border-color: red;");
-            lblPassword.setText("Your Password is not strong");
+            lblPassword.setText("Password must be at least 8 characters long and contain at least one special character (#, @, $).");
             lblPassword.setTextFill(Color.RED);
             lblPassword.setStyle("-fx-font-size: 12;");
         } else {
-            // Set border color to green if password is valid
             txtPassword.setStyle("-fx-border-color: green;");
             lblPassword.setText(" ");
-            lblPassword.setStyle("-fx-font-sizet: 12;");
+            lblPassword.setStyle("-fx-font-size: 12;");
             txtConfirmPassword.requestFocus();
         }
     }
 
+    @FXML
     public void txtUserIdOnAction(ActionEvent event) {
         String userId = txtUserId.getText();
         if (Regex.isValidUserId(userId)) {
@@ -189,44 +210,81 @@ public class RegisterFormController {
             txtUserId.setStyle("-fx-border-color: red;");
             txtUserId.requestFocus();
         }
-
-        
     }
 
+    @FXML
     public void txtNameOnAction(ActionEvent event) {
-        String name=txtUserName.getText();
         txtUserName.setStyle("-fx-border-color: green");
         cmbUserType.requestFocus();
     }
 
+    @FXML
     public void txtConfirmPasswordOnAction(ActionEvent event) {
-        // Perform registration process
-        String passWord = txtPassword.getText();
+        String password = txtPassword.getText();
         String confirmPassword = txtConfirmPassword.getText();
-        if (!passWord.equals(confirmPassword)) {
-            // Change border color of confirm password field to red
+        if (!password.equals(confirmPassword)) {
             txtConfirmPassword.setStyle("-fx-border-color: red;");
-
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Passwords do not match!");
-
-            // Position the alert near the confirm password field
-            alert.initOwner(txtConfirmPassword.getScene().getWindow());
             alert.showAndWait();
         } else {
-            // Reset border color of confirm password field
             txtConfirmPassword.setStyle("-fx-border-color: green");
             btnRegiser.requestFocus();
-
         }
     }
 
+    @FXML
     public void userTypeOnAction(ActionEvent event) {
-        String type=cmbUserType.getValue();
         cmbUserType.setStyle("-fx-border-color: green");
         txtPassword.requestFocus();
     }
-}
 
+    private boolean isValidPassword(String password) {
+        return password.length() >= 8 && password.matches(".*[#@$&].*");
+    }
+
+    @FXML
+    void btnNewUserOnAction(ActionEvent event) {
+        txtUserId.clear();
+        txtUserName.clear();
+        txtPassword.clear();
+        txtConfirmPassword.clear();
+        cmbUserType.setValue("");
+        txtUserId.setDisable(false);
+        txtUserName.setDisable(false);
+        txtPassword.setDisable(false);
+        cmbUserType.setDisable(false);
+        txtConfirmPassword.setDisable(false);
+        btnRegiser.setDisable(false);
+        txtUserId.setText(generateId());
+        txtUserId.setEditable(false);
+        //init();
+
+    }
+    private String generateId(){
+        try{
+            return UserRepo.generateId();
+
+        }catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        }
+        return "U001";
+    }
+    private void init(){
+        txtUserId.clear();
+        txtUserName.clear();
+        txtPassword.clear();
+        txtConfirmPassword.clear();
+        cmbUserType.setValue("");
+        txtUserId.setDisable(true);
+        txtUserName.setDisable(true);
+        txtPassword.setDisable(true);
+        cmbUserType.setDisable(true);
+        txtConfirmPassword.setDisable(true);
+        btnRegiser.setDisable(true);
+
+    }
+
+}

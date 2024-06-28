@@ -25,7 +25,7 @@ public class AppointmentRepo {
 
 
     }
-    public static boolean update(String ID, String type, String date, String time,String eid,String pid) throws SQLException {
+    public static boolean update(String ID, String type, LocalDate date, String time,String eid,String pid) throws SQLException {
         String sql = "UPDATE appointment SET  app_type  = ?,app_date  = ?, app_time= ?,emp_id= ?,pa_id= ? WHERE app_id  = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -63,12 +63,12 @@ public class AppointmentRepo {
         while (resultSet.next()) {
             String id = resultSet.getString(1);
             String type = resultSet.getString(2);
-            String date = resultSet.getString(3);
+            Date date = resultSet.getDate(3);
             String time = resultSet.getString(4);
             String eid=resultSet.getString(5);
             String pid=resultSet.getString(6);
 
-            Appointment appointment = new Appointment(id, type,date,time,eid,pid);
+            Appointment appointment = new Appointment(id, type, date.toLocalDate(),time,eid,pid);
             appointmentList.add(appointment);
         }
         return appointmentList;

@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import lk.ijse.eCounselling.model.Employee;
 import lk.ijse.eCounselling.model.User;
 import lk.ijse.eCounselling.model.tm.EmployeeTm;
@@ -97,6 +98,8 @@ public class EmployeeFormController {
 
 
     public void initialize() {
+        txtId.setStyle("");
+        txtName.setStyle("");
         txtId.setDisable(true);
         txtName.setDisable(true);
         txtDOB.setDisable(true);
@@ -113,6 +116,19 @@ public class EmployeeFormController {
         setCellValueFactory();
         loadCustomerTable();
         setUserId();
+        txtDate.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isAfter(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); // Optional styling for disabled dates
+                        }
+                    }
+                };
+            }
+        });
         tblEmployee.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             btnDelete.setDisable(newValue == null);
             //btnUpdate.setText(newValue != null ? "Update" : "Save");
@@ -261,45 +277,30 @@ public class EmployeeFormController {
                 txtName.requestFocus();
                 txtName.setStyle("-fx-border-color: red");
                 return;
-            }else{
-                txtName.setStyle("-fx-border-color: green");
-                txtDOB.requestFocus();
             }
             if(!dob.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")){
                 new Alert(Alert.AlertType.ERROR,"Invalid Date of Birth").show();
                 txtDOB.requestFocus();
                 txtDOB.setStyle("-fx-border-color: red");
                 return;
-            }else{
-                txtDOB.setStyle("-fx-border-color: green");
-                txtAddress.requestFocus();
             }
             if (!address.matches(".{3,}")) {
                 new Alert(Alert.AlertType.ERROR, "Address should be at least 3 characters long").show();
                 txtAddress.requestFocus();
                 txtAddress.setStyle("-fx-border-color: red");
                 return;
-            }else{
-                txtAddress.setStyle("-fx-border-color: green");
-                txtContact.requestFocus();
             }
             if(!contact.matches("^0[0-9]{9}$")){
                 new Alert(Alert.AlertType.ERROR,"Invalid Phone Number").show();
                 txtContact.requestFocus();
                 txtAddress.setStyle("-fx-border-color: red");
                 return;
-            }else{
-                txtContact.setStyle("-fx-border-color: green");
-                txtPosition.requestFocus();
             }
             if(! position.matches("[A-Za-z ]+")){
                 new Alert(Alert.AlertType.ERROR,"Invalid Value").show();
                 txtPosition.requestFocus();
                 txtPosition.setStyle("-fx-border-color: red");
                 return;
-            }else{
-                txtPosition.setStyle("-fx-border-color: green");
-                txtUserId.requestFocus();
             }
 
 
@@ -328,6 +329,8 @@ public class EmployeeFormController {
         txtContact.setText("");
         txtContact.setText("");
         txtDate.setValue(null);
+        tblEmployee.getSelectionModel().clearSelection();
+        init();
     }
 
     @FXML
@@ -442,6 +445,14 @@ public class EmployeeFormController {
         return "E001";
     }
     private void init(){
+        txtId.setDisable(true);
+        txtName.setDisable(true);
+        txtDOB.setDisable(true);
+        txtAddress.setDisable(true);
+        txtContact.setDisable(true);
+        txtPosition.setDisable(true);
+        txtDate.setDisable(true);
+        txtUserId.setDisable(true);
         btnSave.setDisable(true);
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
