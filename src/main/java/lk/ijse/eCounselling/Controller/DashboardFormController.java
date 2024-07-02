@@ -6,33 +6,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
-import javafx.scene.paint.Color;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.Patient;
-import lk.ijse.eCounselling.model.Treatment;
+import lk.ijse.eCounselling.dto.Patient;
 import lk.ijse.eCounselling.repository.PatientRepo;
-import lk.ijse.eCounselling.repository.TreatmentRepo;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class DashboardFormController {
@@ -110,7 +101,7 @@ public class DashboardFormController {
     }
 
     private int getAppointmentCount() throws SQLException {
-        String sql = "SELECT COUNT(*) AS appointment_count FROM appointment";
+        String sql = "SELECT COUNT(*) AS appointment_count FROM Appointment";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -130,7 +121,7 @@ public class DashboardFormController {
     }
 
     private int getSessionCount() throws SQLException {
-        String sql = "SELECT COUNT(*) AS session_count FROM  sessions  ";
+        String sql = "SELECT COUNT(*) AS session_count FROM  Session  ";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -282,7 +273,7 @@ public class DashboardFormController {
         }
     private void populateChart(BarChart<String, Number> barChart) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "SELECT DATE_FORMAT(app_date, '%m') as app_month, COUNT(app_id) as Count FROM appointment GROUP BY app_month";
+        String sql = "SELECT DATE_FORMAT(app_date, '%m') as app_month, COUNT(app_id) as Count FROM Appointment GROUP BY app_month";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();
 

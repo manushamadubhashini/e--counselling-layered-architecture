@@ -14,20 +14,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import lk.ijse.eCounselling.Util.Regex;
-import lk.ijse.eCounselling.model.*;
-import lk.ijse.eCounselling.model.tm.AppointmentTm;
-import lk.ijse.eCounselling.model.tm.EmployeeTm;
+import lk.ijse.eCounselling.bo.custom.AppointmentBO;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.EmployeeBO;
+import lk.ijse.eCounselling.dto.*;
+import lk.ijse.eCounselling.dto.tm.AppointmentTm;
 import lk.ijse.eCounselling.repository.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AppointmentFormController {
@@ -86,6 +83,9 @@ public class AppointmentFormController {
     @FXML
     private TextField txtType;
 
+    AppointmentBO appointmentBO= (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.APPOINTMENT);
+    EmployeeBO employeeBO=(EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
+
     public void initialize() {
         txtId.setDisable(true);
         txtType.setDisable(true);
@@ -97,6 +97,7 @@ public class AppointmentFormController {
         btnUpdate.setDisable(true);
         btnDelete.setDisable(true);
         txtId.setEditable(false);
+        txtDate.setEditable(false);
         setCellValueFactory();
         loadAppointmentTable();
         getPatientId();
@@ -157,8 +158,8 @@ public class AppointmentFormController {
 
     private void getEmployeeId() {
         try {
-          ArrayList<Employee> employees= EmployeeRepo.getAll();
-            for (Employee e : employees) {
+          ArrayList<EmployeeDTO> employees= employeeBO.getAll();
+            for (EmployeeDTO e : employees) {
                 cmbEmployeeId.getItems().add(e.getId());
             }
         } catch (SQLException e) {
@@ -191,8 +192,8 @@ public class AppointmentFormController {
     private void loadAppointmentTable(){
        tblAppointment.getItems().clear();
        try {
-           ArrayList<Appointment> appointments=AppointmentRepo.getAll();
-           for (Appointment a:appointments){
+           ArrayList<AppointmentDTO> appointments=appointmentBO.getAll();
+           for (AppointmentDTO a:appointments){
                tblAppointment.getItems().add(new AppointmentTm(a.getId(),a.getType(),a.getDate(),a.getTime(),a.getEid(),a.getPid()));
            }
        }catch (SQLException e){
@@ -235,7 +236,7 @@ public class AppointmentFormController {
         String id = tblAppointment.getSelectionModel().getSelectedItem().getId();
 
         try {
-            boolean isDeleted = AppointmentRepo.delete(id);
+            boolean isDeleted = appointmentBO.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "appointment deleted!").show();
             }
@@ -319,10 +320,10 @@ public class AppointmentFormController {
                 return;
             }
 
-            Appointment appointment = new Appointment(id, type, date, time, eid, pid);
+            AppointmentDTO appointment = new AppointmentDTO(id, type, date, time, eid, pid);
 
             try {
-                boolean isSaved = AppointmentRepo.save(appointment);
+                boolean isSaved = appointmentBO.save(appointment);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "appointment saved!").show();
                     init();
@@ -345,10 +346,15 @@ public class AppointmentFormController {
         String eid= (String) cmbEmployeeId.getValue();
         String pid= (String) cmbPatientId.getValue();
 
-
-
+        if(! type.matches("[A-Za-z ]+")){
+            new Alert(Alert.AlertType.ERROR,"invalid value").show();
+            txtType.setStyle("-fx-border-color: red");
+            txtType.requestFocus();
+            return;
+        }
+        AppointmentDTO appointmentDTO=new AppointmentDTO(id,type,date,time,eid,pid);
         try {
-            boolean isUpdated = AppointmentRepo.update(id,type,date,time,eid,pid);
+            boolean isUpdated = appointmentBO.update(appointmentDTO);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "appointment updated!").show();
             }
@@ -390,7 +396,7 @@ public class AppointmentFormController {
     private String generateNewId() {
         try {
             //Generate New ID
-            return AppointmentRepo.generateId();
+            return appointmentBO.generateId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
         }

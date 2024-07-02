@@ -1,17 +1,15 @@
 package lk.ijse.eCounselling.repository;
 
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.Employee;
+import lk.ijse.eCounselling.dto.EmployeeDTO;
 
-import java.awt.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EmployeeRepo {
-    public static boolean save(Employee employee) throws SQLException {
-        String sql = "INSERT INTO employee ( emp_id ,  emp_name , emp_DOB  ,  emp_address, emp_contact, emp_position, emp_joinDate,user_id) VALUES(?, ?, ?, ?, ?,?,?,?)";
+    public static boolean save(EmployeeDTO employee) throws SQLException {
+        String sql = "INSERT INTO Employee ( emp_id ,  emp_name , emp_DOB  ,  emp_address, emp_contact, emp_position, emp_joinDate,user_id) VALUES(?, ?, ?, ?, ?,?,?,?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -29,7 +27,7 @@ public class EmployeeRepo {
 
     }
     public static boolean update(String id, String name, String DOB,String address,String contact,String position,LocalDate joinDate,String uid) throws SQLException {
-        String sql = "UPDATE employee SET emp_name = ?, emp_DOB = ?, emp_address = ?,emp_contact= ?,emp_position= ?,emp_joinDate= ?,user_id=? WHERE emp_id = ?";
+        String sql = "UPDATE Employee SET emp_name = ?, emp_DOB = ?, emp_address = ?,emp_contact= ?,emp_position= ?,emp_joinDate= ?,user_id=? WHERE emp_id = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -47,7 +45,7 @@ public class EmployeeRepo {
 
     }
     public static boolean delete(String id) throws SQLException {
-        String sql = "DELETE FROM employee WHERE emp_id = ?";
+        String sql = "DELETE FROM Employee WHERE emp_id = ?";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -56,47 +54,25 @@ public class EmployeeRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static ArrayList<Employee> getAll() throws SQLException {
-        String sql = "SELECT * FROM employee";
+    public static ArrayList<EmployeeDTO> getAll() throws SQLException {
+        String sql = "SELECT * FROM Employee";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
         ResultSet resultSet = pstm.executeQuery();
 
-       ArrayList<Employee> employeeList=new ArrayList<>();
+       ArrayList<EmployeeDTO> employeeList=new ArrayList<>();
         while (resultSet.next()) {
-            String id = resultSet.getString(1);
-            String name = resultSet.getString(2);
-            String dob = resultSet.getString(3);
-            String address = resultSet.getString(4);
-            String contact = resultSet.getString(5);
-            String position=resultSet.getString(6);
-            Date joinDate = resultSet.getDate(7);
-            String uid=resultSet.getString(8);
-
-            Employee employee = new Employee(id, name, dob,address,contact,position, joinDate.toLocalDate(),uid);
+            EmployeeDTO employee=new EmployeeDTO(resultSet.getString("emp_id"),resultSet.getString("emp_name"),resultSet.getString("emp_DOB"),resultSet.getString("emp_address"),resultSet.getString("emp_contact"),resultSet.getString("emp_position"), resultSet.getDate("emp_joinDate").toLocalDate(),resultSet.getString("user_id"));
             employeeList.add(employee);
         }
         return employeeList;
     }
-    public static List<String> getIds() throws SQLException {
-        String sql = "SELECT emp_id FROM employee";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
-
-        List<String> idList = new ArrayList<>();
-
-        while (resultSet.next()) {
-            idList.add(resultSet.getString(1));
-        }
-        return idList;
-    }
     public static String generateId() throws SQLException {
         Connection connection=DbConnection.getInstance().getConnection();
         Statement stm=connection.createStatement();
-        ResultSet rst=stm.executeQuery("SELECT emp_id  FROM employee ORDER BY emp_id  DESC LIMIT 1;");
+        ResultSet rst=stm.executeQuery("SELECT emp_id  FROM Employee ORDER BY emp_id  DESC LIMIT 1;");
         if (rst.next()) {
             String id = rst.getString("emp_id");
             int newEmployeeId = Integer.parseInt(id.replace("E", "")) + 1;

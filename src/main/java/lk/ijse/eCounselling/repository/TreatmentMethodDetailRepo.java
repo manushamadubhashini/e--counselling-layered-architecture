@@ -1,7 +1,7 @@
 package lk.ijse.eCounselling.repository;
 
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.TreatmentMethodDetail;
+import lk.ijse.eCounselling.dto.TreatmentMethodDetail;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

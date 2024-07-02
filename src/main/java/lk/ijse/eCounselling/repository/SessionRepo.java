@@ -1,12 +1,11 @@
 package lk.ijse.eCounselling.repository;
 
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.Session;
+import lk.ijse.eCounselling.dto.Session;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SessionRepo {
     public static boolean save(Session session) throws SQLException {

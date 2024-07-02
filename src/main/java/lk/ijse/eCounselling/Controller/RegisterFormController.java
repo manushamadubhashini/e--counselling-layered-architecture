@@ -2,7 +2,6 @@ package lk.ijse.eCounselling.Controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,31 +11,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import lk.ijse.eCounselling.Util.Regex;
-import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.Appointment;
-import lk.ijse.eCounselling.model.User;
-import lk.ijse.eCounselling.model.tm.AppointmentTm;
-import lk.ijse.eCounselling.repository.AppointmentRepo;
+import lk.ijse.eCounselling.dto.User;
 import lk.ijse.eCounselling.repository.UserRepo;
-import lombok.SneakyThrows;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
-import java.awt.event.FocusEvent;
 import java.util.List;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.function.DoubleBinaryOperator;
 
 public class RegisterFormController {
 

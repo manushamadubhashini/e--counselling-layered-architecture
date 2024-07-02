@@ -1,11 +1,10 @@
 package lk.ijse.eCounselling.repository;
 
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.TreatmentMethod;
+import lk.ijse.eCounselling.dto.TreatmentMethod;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TreatmentMethodRepo {
     public static boolean save(TreatmentMethod treatmentMethod) throws SQLException {

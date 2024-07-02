@@ -1,13 +1,11 @@
 package lk.ijse.eCounselling.repository;
 
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.Appointment;
-import lk.ijse.eCounselling.model.Schedule;
+import lk.ijse.eCounselling.dto.Schedule;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ScheduleRepo {
     public static boolean save(Schedule schedule) throws SQLException {

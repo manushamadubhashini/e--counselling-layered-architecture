@@ -1,16 +1,14 @@
 package lk.ijse.eCounselling.repository;
 
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.Appointment;
-import lk.ijse.eCounselling.model.Employee;
+import lk.ijse.eCounselling.dto.AppointmentDTO;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AppointmentRepo {
-    public static boolean save(Appointment appointment) throws SQLException {
+    public static boolean save(AppointmentDTO appointment) throws SQLException {
         String sql = "INSERT INTO appointment (app_id, app_type, app_date, app_time, emp_id,pa_id ) VALUES(?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -51,7 +49,7 @@ public class AppointmentRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static ArrayList<Appointment> getAll() throws SQLException {
+    public static ArrayList<AppointmentDTO> getAll() throws SQLException {
         String sql = "SELECT * FROM appointment";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
@@ -59,16 +57,9 @@ public class AppointmentRepo {
 
         ResultSet resultSet = pstm.executeQuery();
 
-        ArrayList<Appointment> appointmentList = new ArrayList<>();
+        ArrayList<AppointmentDTO> appointmentList = new ArrayList<>();
         while (resultSet.next()) {
-            String id = resultSet.getString(1);
-            String type = resultSet.getString(2);
-            Date date = resultSet.getDate(3);
-            String time = resultSet.getString(4);
-            String eid=resultSet.getString(5);
-            String pid=resultSet.getString(6);
-
-            Appointment appointment = new Appointment(id, type, date.toLocalDate(),time,eid,pid);
+            AppointmentDTO appointment = new AppointmentDTO(resultSet.getString("app_id"), resultSet.getString("app_type"), resultSet.getDate("app_date").toLocalDate(), resultSet.getString("app_time"),resultSet.getString("emp_id"),resultSet.getString("pa_id"));
             appointmentList.add(appointment);
         }
         return appointmentList;

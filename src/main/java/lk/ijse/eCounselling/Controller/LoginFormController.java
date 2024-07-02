@@ -11,15 +11,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.eCounselling.Util.Regex;
-import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.User;
+import lk.ijse.eCounselling.dto.User;
 import lk.ijse.eCounselling.repository.UserRepo;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginFormController {

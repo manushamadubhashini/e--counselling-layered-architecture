@@ -14,19 +14,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import lk.ijse.eCounselling.model.Employee;
-import lk.ijse.eCounselling.model.User;
-import lk.ijse.eCounselling.model.tm.EmployeeTm;
-import lk.ijse.eCounselling.repository.EmployeeRepo;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.EmployeeBO;
+import lk.ijse.eCounselling.bo.impl.EmployeeBOImpl;
+import lk.ijse.eCounselling.dao.custom.EmployeeDAO;
+import lk.ijse.eCounselling.dao.impl.EmployeeDAOImpl;
+import lk.ijse.eCounselling.dto.EmployeeDTO;
+import lk.ijse.eCounselling.dto.tm.EmployeeTm;
 import lk.ijse.eCounselling.repository.UserRepo;
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 public class EmployeeFormController {
 
@@ -95,8 +96,7 @@ public class EmployeeFormController {
     @FXML
     private JFXComboBox txtUserId;
 
-
-
+    EmployeeBO employeeBO= (EmployeeBO) BOFactory.getBoFactory().getDAO(BOFactory.BOType.EMPLOYEE);
     public void initialize() {
         txtId.setStyle("");
         txtName.setStyle("");
@@ -114,7 +114,7 @@ public class EmployeeFormController {
         txtId.setEditable(false);
         txtUserId.setDisable(false);
         setCellValueFactory();
-        loadCustomerTable();
+        loadEmployeeTable();
         setUserId();
         txtDate.setDayCellFactory(new Callback<DatePicker, DateCell>() {
             public DateCell call(final DatePicker datePicker) {
@@ -173,11 +173,11 @@ public class EmployeeFormController {
 
     }
 
-    private void loadCustomerTable() {
+    private void loadEmployeeTable() {
         tblEmployee.getItems().clear();
         try {
-            ArrayList<Employee> employees=EmployeeRepo.getAll();
-            for (Employee e:employees){
+            ArrayList<EmployeeDTO> employees=employeeBO.getAll();
+            for (EmployeeDTO e:employees){
                 tblEmployee.getItems().add(new EmployeeTm(e.getId(),e.getName(),e.getDOB(),e.getAddress(),e.getContact(),e.getPosition(),e.getJoinDate(),e.getUid()));
             }
         }catch (SQLException e){
@@ -293,7 +293,7 @@ public class EmployeeFormController {
             if(!contact.matches("^0[0-9]{9}$")){
                 new Alert(Alert.AlertType.ERROR,"Invalid Phone Number").show();
                 txtContact.requestFocus();
-                txtAddress.setStyle("-fx-border-color: red");
+                txtContact.setStyle("-fx-border-color: red");
                 return;
             }
             if(! position.matches("[A-Za-z ]+")){
@@ -304,10 +304,10 @@ public class EmployeeFormController {
             }
 
 
-            Employee employee = new Employee(id, name, dob, address, contact, position, joinDate, uid);
+            EmployeeDTO employee = new EmployeeDTO(id, name, dob, address, contact, position, joinDate, uid);
 
             try {
-                boolean isSaved = EmployeeRepo.save(employee);
+                boolean isSaved = employeeBO.save(employee);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
                 }
@@ -327,8 +327,8 @@ public class EmployeeFormController {
         txtDOB.setText("");
         txtAddress.setText("");
         txtContact.setText("");
-        txtContact.setText("");
         txtDate.setValue(null);
+        txtUserId.setValue(null);
         tblEmployee.getSelectionModel().clearSelection();
         init();
     }
@@ -344,11 +344,42 @@ public class EmployeeFormController {
         LocalDate joinDate=txtDate.getValue();
         String uid= (String) txtUserId.getValue();
 
+        if(! name.matches("[A-Za-z ]+")){
+            new Alert(Alert.AlertType.ERROR,"Invalid Name").show();
+            txtName.requestFocus();
+            txtName.setStyle("-fx-border-color: red");
+            return;
+        }
+        if(!DOB.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")){
+            new Alert(Alert.AlertType.ERROR,"Invalid Date of Birth").show();
+            txtDOB.requestFocus();
+            txtDOB.setStyle("-fx-border-color: red");
+            return;
+        }
+        if (!address.matches(".{3,}")) {
+            new Alert(Alert.AlertType.ERROR, "Address should be at least 3 characters long").show();
+            txtAddress.requestFocus();
+            txtAddress.setStyle("-fx-border-color: red");
+            return;
+        }
+        if(!contact.matches("^0[0-9]{9}$")){
+            new Alert(Alert.AlertType.ERROR,"Invalid Phone Number").show();
+            txtContact.requestFocus();
+            txtContact.setStyle("-fx-border-color: red");
+            return;
+        }
+        if(! position.matches("[A-Za-z ]+")){
+            new Alert(Alert.AlertType.ERROR,"Invalid Value").show();
+            txtPosition.requestFocus();
+            txtPosition.setStyle("-fx-border-color: red");
+            return;
+        }
 
-        //Employee employee = new Employee(id, name,DOB, address, contact,position,joinDate);
 
+
+        EmployeeDTO employee = new EmployeeDTO(id, name,DOB, address, contact,position,joinDate,uid);
         try {
-            boolean isUpdated = EmployeeRepo.update(id,name,DOB,address,contact,position,joinDate,uid);
+            boolean isUpdated = employeeBO.update(employee);
            if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
             }
@@ -377,7 +408,7 @@ public class EmployeeFormController {
         String id = txtId.getText();
 
         try {
-            boolean isDeleted = EmployeeRepo.delete(id);
+            boolean isDeleted = employeeBO.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "employee deleted!").show();
                 tblEmployee.getItems().remove(tblEmployee.getSelectionModel().getSelectedItem());
@@ -437,7 +468,7 @@ public class EmployeeFormController {
     }
     private String generateNewId() {
         try {
-            return EmployeeRepo.generateId();
+            return employeeBO.generateId();
         }
         catch (SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();

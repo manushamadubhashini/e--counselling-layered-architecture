@@ -2,8 +2,6 @@ package lk.ijse.eCounselling.Controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import lk.ijse.eCounselling.Util.Regex;
-import lk.ijse.eCounselling.model.Appointment;
-import lk.ijse.eCounselling.model.Schedule;
-import lk.ijse.eCounselling.model.tm.AppointmentTm;
-import lk.ijse.eCounselling.model.tm.ScheduleTm;
-import lk.ijse.eCounselling.repository.AppointmentRepo;
+import lk.ijse.eCounselling.dto.EmployeeDTO;
+import lk.ijse.eCounselling.dto.Schedule;
+import lk.ijse.eCounselling.dto.tm.ScheduleTm;
 import lk.ijse.eCounselling.repository.EmployeeRepo;
 import lk.ijse.eCounselling.repository.ScheduleRepo;
 
@@ -26,8 +21,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class ScheduleFormController {
     @FXML
@@ -130,15 +123,11 @@ public class ScheduleFormController {
     }
 
     private void getEmployeeId() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<String> codeList = EmployeeRepo.getIds();
-            for (String code : codeList) {
-                obList.add(code);
+            ArrayList<EmployeeDTO> employees=EmployeeRepo.getAll();
+            for (EmployeeDTO e:employees){
+                cmbEmpId.getItems().add(e.getId());
             }
-
-            cmbEmpId.setItems(obList);
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

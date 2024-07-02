@@ -1,10 +1,8 @@
 package lk.ijse.eCounselling.repository;
 
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.model.Appointment;
-import lk.ijse.eCounselling.model.Report;
+import lk.ijse.eCounselling.dto.Report;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

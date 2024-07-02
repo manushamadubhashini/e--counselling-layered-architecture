@@ -14,17 +14,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import lk.ijse.eCounselling.Util.Regex;
-import lk.ijse.eCounselling.model.Appointment;
-import lk.ijse.eCounselling.model.Session;
-import lk.ijse.eCounselling.model.tm.AppointmentTm;
-import lk.ijse.eCounselling.model.tm.SessionTm;
+import lk.ijse.eCounselling.dto.EmployeeDTO;
+import lk.ijse.eCounselling.dto.Session;
+import lk.ijse.eCounselling.dto.tm.SessionTm;
 import lk.ijse.eCounselling.repository.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SessionFormController  {
@@ -157,15 +155,12 @@ public class SessionFormController  {
     }
 
     private void getEmployeeId() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
+
         try {
-            List<String> codeList = EmployeeRepo.getIds();
-            for (String code : codeList) {
-                obList.add(code);
+            ArrayList<EmployeeDTO> employees=EmployeeRepo.getAll();
+            for (EmployeeDTO e:employees){
+                cmbId.getItems().add(e.getId());
             }
-
-            cmbId.setItems(obList);
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
