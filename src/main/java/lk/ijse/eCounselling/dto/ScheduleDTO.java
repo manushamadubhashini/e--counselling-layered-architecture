@@ -10,11 +10,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 
-public class Session {
+public class ScheduleDTO {
     private String id;
-    private String type;
     private LocalDate date;
-    private int duration;
+    private String stime;
+    private String etime;
     private String eid;
-    private String pid;
 }

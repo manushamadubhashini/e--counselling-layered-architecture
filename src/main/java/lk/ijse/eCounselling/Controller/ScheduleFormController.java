@@ -11,8 +11,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.ScheduleBO;
+import lk.ijse.eCounselling.bo.impl.ScheduleBOImpl;
 import lk.ijse.eCounselling.dto.EmployeeDTO;
-import lk.ijse.eCounselling.dto.Schedule;
+import lk.ijse.eCounselling.dto.ScheduleDTO;
 import lk.ijse.eCounselling.dto.tm.ScheduleTm;
 import lk.ijse.eCounselling.repository.EmployeeRepo;
 import lk.ijse.eCounselling.repository.ScheduleRepo;
@@ -74,6 +77,8 @@ public class ScheduleFormController {
 
     @FXML
     private TextField txtStartTime;
+
+    ScheduleBO scheduleBO= (ScheduleBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SCHEDULE);
 
     public void initialize() {
         setCellValueFactory();
@@ -137,8 +142,8 @@ public class ScheduleFormController {
     private void loadScheduleTable() {
         tblSchedule.getItems().clear();
         try {
-            ArrayList<Schedule> schedules = ScheduleRepo.getAll();
-            for (Schedule s : schedules) {
+            ArrayList<ScheduleDTO> schedules = scheduleBO.getAll();
+            for (ScheduleDTO s : schedules) {
                 tblSchedule.getItems().add(new ScheduleTm(s.getId(), s.getDate(), s.getStime(), s.getEtime(), s.getEid()));
             }
 
@@ -245,11 +250,10 @@ public class ScheduleFormController {
                return;
            }
 
-
-            Schedule schedule = new Schedule(id, date, STime, ETime, eid);
+            ScheduleDTO schedule = new ScheduleDTO(id, date, STime, ETime, eid);
 
             try {
-                boolean isSaved = ScheduleRepo.save(schedule);
+                boolean isSaved = scheduleBO.save(schedule);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "schedule saved!").show();
                     init();
@@ -271,9 +275,21 @@ public class ScheduleFormController {
         String ETime=txtEndTime.getText();
         String eid= (String) cmbEmpId.getValue();
 
+        if(! STime.matches("\\b(1[0-2]|0?[1-9]):([0-5][0-9])\\s*(AM|PM|a.m|p.m)\\b")){
+            new Alert(Alert.AlertType.ERROR,"invalid time").show();
+            txtStartTime.requestFocus();
+            txtStartTime.setStyle("-fx-border-color: red");
+        }
+        if(! ETime.matches("\\b(1[0-2]|0?[1-9]):([0-5][0-9])\\s*(AM|PM|a.m|p.m)\\b")) {
+            new Alert(Alert.AlertType.ERROR,"invalid time").show();
+            txtEndTime.requestFocus();
+            txtEndTime.setStyle("-fx-border-color: red");
+            return;
+        }
+        ScheduleDTO schedule=new ScheduleDTO(id,date,STime,ETime,eid);
 
         try {
-            boolean isUpdated = ScheduleRepo.update(id,date,STime,ETime,eid);
+            boolean isUpdated = scheduleBO.update(schedule);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "schedule updated!").show();
             }
@@ -295,7 +311,7 @@ public class ScheduleFormController {
         String id = txtId.getText();
 
         try {
-            boolean isDeleted = ScheduleRepo.delete(id);
+            boolean isDeleted = scheduleBO.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "schedule deleted!").show();
             }
@@ -330,7 +346,7 @@ public class ScheduleFormController {
     private String generateNewId(){
         try {
             //Generate New ID
-            return ScheduleRepo.generateId();
+            return scheduleBO.generateId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
         }

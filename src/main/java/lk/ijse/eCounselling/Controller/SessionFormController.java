@@ -14,8 +14,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import lk.ijse.eCounselling.Util.Regex;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.EmployeeBO;
+import lk.ijse.eCounselling.bo.custom.SessionBO;
 import lk.ijse.eCounselling.dto.EmployeeDTO;
-import lk.ijse.eCounselling.dto.Session;
+import lk.ijse.eCounselling.dto.SessionDTO;
 import lk.ijse.eCounselling.dto.tm.SessionTm;
 import lk.ijse.eCounselling.repository.*;
 
@@ -83,6 +86,9 @@ public class SessionFormController  {
 
     @FXML
     private TextField txtType;
+
+    SessionBO sessionBO= (SessionBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SESSION);
+    EmployeeBO employeeBO=(EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
 
     public void initialize() {
         setCellValueFactory();
@@ -157,7 +163,7 @@ public class SessionFormController  {
     private void getEmployeeId() {
 
         try {
-            ArrayList<EmployeeDTO> employees=EmployeeRepo.getAll();
+            ArrayList<EmployeeDTO> employees=employeeBO.getAll();
             for (EmployeeDTO e:employees){
                 cmbId.getItems().add(e.getId());
             }
@@ -179,8 +185,8 @@ public class SessionFormController  {
     private void loadSessionTable() {
         tblSession.getItems().clear();
         try {
-            ArrayList<Session> sessions = SessionRepo.getAll();
-            for (Session s : sessions) {
+            ArrayList<SessionDTO> sessions = sessionBO.getAll();
+            for (SessionDTO s : sessions) {
                 tblSession.getItems().add(new SessionTm(s.getId(), s.getType(), s.getDate(), s.getDuration(), s.getEid(), s.getPid()));
             }
         }catch (SQLException e){
@@ -222,7 +228,7 @@ public class SessionFormController  {
         String id = txtId.getText();
 
         try {
-            boolean isDeleted = SessionRepo.delete(id);
+            boolean isDeleted = sessionBO.delete(id);
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "session deleted!").show();
             }
@@ -304,7 +310,7 @@ public class SessionFormController  {
                 return;
 
             }
-            Session session = new Session(id, type, date, duration, eid, pid);
+            SessionDTO session = new SessionDTO(id, type, date, duration, eid, pid);
 
            if(! type.matches("[A-Za-z ]+")){
               new Alert(Alert.AlertType.ERROR,"invalid value").show();
@@ -321,7 +327,7 @@ public class SessionFormController  {
             }
 
             try {
-                boolean isSaved = SessionRepo.save(session);
+                boolean isSaved = sessionBO.save(session);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "session saved!").show();
                     init();
@@ -343,9 +349,22 @@ public class SessionFormController  {
         String eid= (String) cmbId.getValue();
         String pid= (String) cmbPaid.getValue();
 
+        if(! type.matches("[A-Za-z ]+")){
+            new Alert(Alert.AlertType.ERROR,"invalid value").show();
+            txtType.setStyle("-fx-border-color: red");
+            txtType.requestFocus();
+            return;
+        }
 
+        if(! txtDuration.getText().matches("^(?:[1-9][0-9]?|100)$")) {
+            new Alert(Alert.AlertType.ERROR,"invalid duration").show();
+            txtDuration.setStyle("-fx-border-color: red");
+            txtDuration.requestFocus();
+            return;
+        }
+        SessionDTO session=new SessionDTO(id,type,date,duration,eid,pid);
         try {
-            boolean isUpdated = SessionRepo.update(id,type,date,duration,eid,pid);
+            boolean isUpdated = sessionBO.update(session);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "session updated!").show();
                 init();
@@ -396,7 +415,7 @@ public class SessionFormController  {
     }
     private String generateId(){
         try {
-            return SessionRepo.generateId();
+            return sessionBO.generateId();
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }

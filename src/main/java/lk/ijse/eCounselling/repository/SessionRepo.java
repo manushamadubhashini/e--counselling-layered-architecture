@@ -1,15 +1,15 @@
 package lk.ijse.eCounselling.repository;
 
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.dto.Session;
+import lk.ijse.eCounselling.dto.SessionDTO;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SessionRepo {
-    public static boolean save(Session session) throws SQLException {
-        String sql = "INSERT INTO sessions (ses_id, ses_type, ses_date, ses_duration,emp_id,pa_id) VALUES(?, ?, ?, ?,?,?)";
+    public static boolean save(SessionDTO session) throws SQLException {
+        String sql = "INSERT INTO Session (ses_id, ses_type, ses_date, ses_duration,emp_id,pa_id) VALUES(?, ?, ?, ?,?,?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -24,24 +24,24 @@ public class SessionRepo {
 
 
     }
-    public static boolean update(String id, String type, LocalDate date, int duration, String eid, String pid) throws SQLException {
-        String sql = "UPDATE sessions SET  ses_type = ?, ses_date = ?,ses_duration= ?,emp_id=?,pa_id=?  WHERE ses_id = ?";
+    public static boolean update(SessionDTO session) throws SQLException {
+        String sql = "UPDATE Session SET  ses_type = ?, ses_date = ?,ses_duration= ?,emp_id=?,pa_id=?  WHERE ses_id = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
-        pstm.setObject(1, type);
-        pstm.setObject(2, date);
-        pstm.setObject(3, duration);
-        pstm.setObject(4,eid);
-        pstm.setObject(5,pid);
-        pstm.setObject(6,id);
+        pstm.setObject(1, session.getType());
+        pstm.setObject(2, session.getDate());
+        pstm.setObject(3, session.getDuration());
+        pstm.setObject(4,session.getEid());
+        pstm.setObject(5,session.getPid());
+        pstm.setObject(6,session.getId());
         return pstm.executeUpdate() > 0;
 
 
 
     }
     public static boolean delete(String id) throws SQLException {
-        String sql = "DELETE FROM sessions WHERE ses_id = ?";
+        String sql = "DELETE FROM Session WHERE ses_id = ?";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -50,32 +50,24 @@ public class SessionRepo {
         return pstm.executeUpdate() > 0;
     }
 
-    public static ArrayList<Session> getAll() throws SQLException {
-        String sql = "SELECT * FROM sessions";
+    public static ArrayList<SessionDTO> getAll() throws SQLException {
+        String sql = "SELECT * FROM Session";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
         ResultSet resultSet = pstm.executeQuery();
 
-        ArrayList<Session> sessionList = new ArrayList<>();
+        ArrayList<SessionDTO> sessionList = new ArrayList<>();
         while (resultSet.next()) {
-            String id = resultSet.getString(1);
-            String type = resultSet.getString(2);
-            Date date = resultSet.getDate(3);
-            int duration = Integer.parseInt(resultSet.getString(4));
-            String eid=resultSet.getString(5);
-            String pid=resultSet.getString(6);
-
-            Session session = new Session(id,type, date.toLocalDate(),duration,eid,pid);
-            sessionList.add(session);
+            sessionList.add(new SessionDTO(resultSet.getString("ses_id"),resultSet.getString("ses_type"), resultSet.getDate("ses_date").toLocalDate(),resultSet.getInt("ses_duration"),resultSet.getString("emp_id"),resultSet.getString("pa_id")));
         }
         return sessionList;
     }
     public static String generateId() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
         Statement stm = connection.createStatement();
-        ResultSet rst = stm.executeQuery("SELECT ses_id  FROM sessions ORDER BY ses_id  DESC LIMIT 1;");
+        ResultSet rst = stm.executeQuery("SELECT ses_id  FROM Session ORDER BY ses_id  DESC LIMIT 1;");
         if (rst.next()) {
             String id = rst.getString("ses_id");
             int newSessionId = Integer.parseInt(id.replace("S", "")) + 1;

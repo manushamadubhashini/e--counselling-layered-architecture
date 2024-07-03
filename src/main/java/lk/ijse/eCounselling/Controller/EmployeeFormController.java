@@ -96,7 +96,7 @@ public class EmployeeFormController {
     @FXML
     private JFXComboBox txtUserId;
 
-    EmployeeBO employeeBO= (EmployeeBO) BOFactory.getBoFactory().getDAO(BOFactory.BOType.EMPLOYEE);
+    EmployeeBO employeeBO= (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
     public void initialize() {
         txtId.setStyle("");
         txtName.setStyle("");
@@ -309,7 +309,7 @@ public class EmployeeFormController {
             try {
                 boolean isSaved = employeeBO.save(employee);
                 if (isSaved) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
+                    new Alert(Alert.AlertType.CONFIRMATION, "employee saved!").show();
                 }
                 tblEmployee.getItems().add(new EmployeeTm(id,name,dob,address,contact,position,joinDate,uid));
                 init();
@@ -381,7 +381,7 @@ public class EmployeeFormController {
         try {
             boolean isUpdated = employeeBO.update(employee);
            if (isUpdated) {
-                new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
+                new Alert(Alert.AlertType.CONFIRMATION, "employee updated!").show();
             }
            EmployeeTm selectedEmployee=tblEmployee.getSelectionModel().getSelectedItem();
            selectedEmployee.setName(name);
