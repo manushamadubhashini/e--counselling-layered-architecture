@@ -12,7 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.eCounselling.dto.TreatmentMethod;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.TreatmentMethodBO;
+import lk.ijse.eCounselling.dto.TreatmentMethodDTO;
 import lk.ijse.eCounselling.dto.tm.TreatmentMethodTm;
 import lk.ijse.eCounselling.repository.TreatmentMethodRepo;
 
@@ -55,6 +57,8 @@ public class TreatmentMethodFormController {
     @FXML
     private TextField txtId;
 
+    TreatmentMethodBO treatmentMethodBO= (TreatmentMethodBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.TREATMENTMETHOD);
+
     public void initialize(){
         txtId.setDisable(true);
         txtDescription.setDisable(true);
@@ -82,8 +86,8 @@ public class TreatmentMethodFormController {
     private void loadTreatmentMethodTable() {
         tblTreatmentMethod.getItems().clear();
         try {
-            ArrayList<TreatmentMethod> treatmentMethods= TreatmentMethodRepo.getAll();
-            for (TreatmentMethod tm:treatmentMethods){
+            ArrayList<TreatmentMethodDTO> treatmentMethods= treatmentMethodBO.getAll();
+            for (TreatmentMethodDTO tm:treatmentMethods){
                 tblTreatmentMethod.getItems().add(new TreatmentMethodTm(tm.getMid(),tm.getDescription()));
             }
         }catch (SQLException e){
@@ -121,7 +125,7 @@ public class TreatmentMethodFormController {
     void btnDeleteOnAction(ActionEvent event) {
         String id=tblTreatmentMethod.getSelectionModel().getSelectedItem().getMid();
         try {
-            boolean isDeleted=TreatmentMethodRepo.delete(id);
+            boolean isDeleted=treatmentMethodBO.delete(id);
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION,"Treatment Method Deleted").show();
                 init();
@@ -182,9 +186,9 @@ public class TreatmentMethodFormController {
             return;
         }
 
-        TreatmentMethod treatmentMethod=new TreatmentMethod(id,description);
+        TreatmentMethodDTO treatmentMethod=new TreatmentMethodDTO(id,description);
         try {
-            boolean isSaved=TreatmentMethodRepo.save(treatmentMethod);
+            boolean isSaved=treatmentMethodBO.save(treatmentMethod);
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"treatment method saved").show();
                 init();
@@ -200,8 +204,17 @@ public class TreatmentMethodFormController {
     void btnUpdateOnAction(ActionEvent event) {
         String id = txtId.getText();
         String description = txtDescription.getText();
+
+        if(! description.matches("[A-Za-z ]+")) {
+            new Alert(Alert.AlertType.ERROR,"invalid value").show();
+            txtDescription.setStyle("-fx-border-color: red");
+            txtDescription.requestFocus();
+            return;
+        }
+        TreatmentMethodDTO treatmentMethodDTO=new TreatmentMethodDTO(id,description);
+
         try {
-            boolean isUpdated = TreatmentMethodRepo.update(id, description);
+            boolean isUpdated = treatmentMethodBO.update(treatmentMethodDTO);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "treatment method updated").show();
                 init();
@@ -227,7 +240,7 @@ public class TreatmentMethodFormController {
 
     private String generateNewId(){
         try {
-            return TreatmentMethodRepo.generateId();
+            return treatmentMethodBO.generateId();
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }

@@ -11,7 +11,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.eCounselling.dto.User;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.UserBO;
+import lk.ijse.eCounselling.dto.UserDTO;
 import lk.ijse.eCounselling.repository.UserRepo;
 
 import java.io.IOException;
@@ -30,7 +32,7 @@ public class LoginFormController {
     @FXML
     private JFXButton btnLoginButton;
 
-
+    UserBO userBO= (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.USER);
     @FXML
     void btnLoginOnAction(ActionEvent actionEvent) throws IOException, SQLException {
         String userName = txtUserName.getText();
@@ -54,7 +56,7 @@ public class LoginFormController {
             // Reset border color if both fields are filled
             txtUserName.setStyle("-fx-border-color: green;");
             txtPassword.setStyle("-fx-border-color: green;");
-            User user = UserRepo.setLogionDetail(userName);
+            UserDTO user = userBO.setLoginDetail(userName);
             if (user != null) {
                 if (user.getPassword().equals(password)) {
                     navigateDashBoard();

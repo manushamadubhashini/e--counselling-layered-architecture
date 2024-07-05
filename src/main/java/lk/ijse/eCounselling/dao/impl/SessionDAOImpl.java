@@ -10,18 +10,21 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class SessionDAOImpl implements SessionDAO {
+    @Override
     public  boolean save(Session entity) throws SQLException {
         return SQLUtil.execute("INSERT INTO Session (ses_id, ses_type, ses_date, ses_duration,emp_id,pa_id) VALUES(?, ?, ?, ?,?,?)",entity.getId(),entity.getType(),entity.getDate(),entity.getDuration(),entity.getEid(),entity.getPid());
 
     }
+    @Override
     public  boolean update(Session entity) throws SQLException {
         return SQLUtil.execute("UPDATE Session SET  ses_type = ?, ses_date = ?,ses_duration= ?,emp_id=?,pa_id=?  WHERE ses_id = ?",entity.getType(),entity.getDate(),entity.getDuration(),entity.getEid(),entity.getPid(),entity.getId());
 
     }
+    @Override
     public  boolean delete(String id) throws SQLException {
         return SQLUtil.execute("DELETE FROM Session WHERE ses_id = ?",id);
     }
-
+    @Override
     public  ArrayList<Session> getAll() throws SQLException {
         ResultSet resultSet =SQLUtil.execute("SELECT * FROM Session");
         ArrayList<Session> sessionList = new ArrayList<>();
@@ -30,6 +33,7 @@ public class SessionDAOImpl implements SessionDAO {
         }
         return sessionList;
     }
+    @Override
     public  String generateId() throws SQLException {
 
         ResultSet rst = SQLUtil.execute("SELECT ses_id  FROM Session ORDER BY ses_id  DESC LIMIT 1;");

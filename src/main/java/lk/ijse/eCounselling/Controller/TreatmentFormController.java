@@ -134,8 +134,8 @@ public class TreatmentFormController {
 
     private void getTreatmentMethodIds() {
         try {
-            ArrayList<TreatmentMethod> treatmentMethods=TreatmentMethodRepo.getAll();
-            for (TreatmentMethod tm:treatmentMethods){
+            ArrayList<TreatmentMethodDTO> treatmentMethods=TreatmentMethodRepo.getAll();
+            for (TreatmentMethodDTO tm:treatmentMethods){
                 cmbMid.getItems().add(tm.getMid());
             }
         }catch (SQLException e){

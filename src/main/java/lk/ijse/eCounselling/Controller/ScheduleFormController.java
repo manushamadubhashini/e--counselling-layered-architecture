@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.EmployeeBO;
 import lk.ijse.eCounselling.bo.custom.ScheduleBO;
 import lk.ijse.eCounselling.bo.impl.ScheduleBOImpl;
 import lk.ijse.eCounselling.dto.EmployeeDTO;
@@ -79,6 +80,7 @@ public class ScheduleFormController {
     private TextField txtStartTime;
 
     ScheduleBO scheduleBO= (ScheduleBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SCHEDULE);
+    EmployeeBO employeeBO=(EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
 
     public void initialize() {
         setCellValueFactory();
@@ -129,7 +131,7 @@ public class ScheduleFormController {
 
     private void getEmployeeId() {
         try {
-            ArrayList<EmployeeDTO> employees=EmployeeRepo.getAll();
+            ArrayList<EmployeeDTO> employees=employeeBO.getAll();
             for (EmployeeDTO e:employees){
                 cmbEmpId.getItems().add(e.getId());
             }

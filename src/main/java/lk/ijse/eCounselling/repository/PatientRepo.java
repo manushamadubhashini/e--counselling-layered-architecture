@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PatientRepo {
     public static boolean save(Patient patient) throws SQLException {
-        String sql = "INSERT INTO patient (pa_id , Pa_name , Pa_DOB , Pa_address,pa_contact,pa_status) VALUES(?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO Patient (pa_id , Pa_name , Pa_DOB , Pa_address,pa_contact,pa_status) VALUES(?, ?, ?, ?, ?,?)";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -25,7 +25,7 @@ public class PatientRepo {
     }
 
     public static boolean update(String ID, String name, Date dob, String address, String contact, String status) throws SQLException {
-        String sql = "UPDATE  patient SET  Pa_name = ?,Pa_DOB = ?, Pa_address = ?,pa_contact = ?,pa_status = ?  WHERE pa_id  = ?";
+        String sql = "UPDATE  Patient SET  Pa_name = ?,Pa_DOB = ?, Pa_address = ?,pa_contact = ?,pa_status = ?  WHERE pa_id  = ?";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -41,7 +41,7 @@ public class PatientRepo {
     }
 
     public static boolean delete(String id) throws SQLException {
-        String sql = "DELETE FROM patient WHERE pa_id = ?";
+        String sql = "DELETE FROM Patient WHERE pa_id = ?";
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
 
@@ -51,7 +51,7 @@ public class PatientRepo {
     }
 
     public static ArrayList<Patient> getAll() throws SQLException {
-        String sql = "SELECT * FROM patient";
+        String sql = "SELECT * FROM Patient";
 
         PreparedStatement pstm = DbConnection.getInstance().getConnection()
                 .prepareStatement(sql);
@@ -75,7 +75,7 @@ public class PatientRepo {
     }
 
     public static List<String> getIds() throws SQLException {
-        String sql = "SELECT pa_id FROM patient";
+        String sql = "SELECT pa_id FROM Patient";
 
         Connection connection = DbConnection.getInstance().getConnection();
         ResultSet resultSet = connection.prepareStatement(sql).executeQuery();

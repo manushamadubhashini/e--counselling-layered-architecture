@@ -1,9 +1,6 @@
 package lk.ijse.eCounselling.bo;
 
-import lk.ijse.eCounselling.bo.impl.AppointmentBOImpl;
-import lk.ijse.eCounselling.bo.impl.EmployeeBOImpl;
-import lk.ijse.eCounselling.bo.impl.ScheduleBOImpl;
-import lk.ijse.eCounselling.bo.impl.SessionBoImpl;
+import lk.ijse.eCounselling.bo.impl.*;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -17,7 +14,7 @@ public class BOFactory {
     }
 
     public enum BOType{
-        APPOINTMENT,EMPLOYEE,SCHEDULE,SESSION
+        APPOINTMENT,EMPLOYEE,SCHEDULE,SESSION,USER,DASHBOARD,TREATMENTMETHOD
     }
     public SuperBO getBO(BOType boType){
         switch (boType){
@@ -29,6 +26,12 @@ public class BOFactory {
                 return new ScheduleBOImpl();
             case SESSION:
                 return new SessionBoImpl();
+            case USER:
+                return new UserBoImpl();
+            case DASHBOARD:
+                return new DashBoardBOImpl();
+            case TREATMENTMETHOD:
+                return new TreatmentMethodBOImpl();
         }
         return null;
     }

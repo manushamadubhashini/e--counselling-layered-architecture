@@ -14,6 +14,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.DashBoardBO;
+import lk.ijse.eCounselling.dao.impl.DashBoardDAOImpl;
 import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.dto.Patient;
 import lk.ijse.eCounselling.repository.PatientRepo;
@@ -54,7 +57,7 @@ public class DashboardFormController {
     @FXML
     private PieChart pieChart;
 
-
+   DashBoardBO dashBoardBO= (DashBoardBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.DASHBOARD);
 
     public void initialize() throws SQLException {
         try {
@@ -82,18 +85,7 @@ public class DashboardFormController {
     }
 
     private int getPatientCount() throws SQLException {
-        String sql = "SELECT COUNT(*) AS patient_count FROM patient";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        int patientCount = 0;
-        if (resultSet.next()) {
-            patientCount = resultSet.getInt("patient_count");
-        }
-        return patientCount;
+        return dashBoardBO.getPatientCount();
     }
 
     private void setAppointmentCount(int appointmentCount) {
@@ -101,18 +93,7 @@ public class DashboardFormController {
     }
 
     private int getAppointmentCount() throws SQLException {
-        String sql = "SELECT COUNT(*) AS appointment_count FROM Appointment";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        int appointmentCount = 0;
-        if (resultSet.next()) {
-            appointmentCount = resultSet.getInt("appointment_count");
-        }
-        return appointmentCount;
+        return dashBoardBO.getAppointmentCount();
     }
 
     private void setSessionCount(int sessionCount) {
@@ -272,22 +253,7 @@ public class DashboardFormController {
         }
         }
     private void populateChart(BarChart<String, Number> barChart) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "SELECT DATE_FORMAT(app_date, '%m') as app_month, COUNT(app_id) as Count FROM Appointment GROUP BY app_month";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Appointments per Month");
-
-        while (resultSet.next()) {
-            String appMonth = resultSet.getString("app_month");
-            int count = resultSet.getInt("Count");
-            series.getData().add(new XYChart.Data<>(appMonth, count));
-        }
-
-        barChart.getData().add(series);
-
+        dashBoardBO.getAppointmentCount(barChart);
         // Define an array of colors
         String[] colors = {"#AFDBF5", "#FFD700", "#FF6347", "#4CBB17", "#0096FF"};
 
@@ -302,17 +268,7 @@ public class DashboardFormController {
 
     }
     private void populatePieChart(PieChart pieChart) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "SELECT treat_status, COUNT(treat_status) as treatment_count FROM treatments GROUP BY treat_status";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()) {
-            String treatmentName = resultSet.getString("treat_status");
-            int count = resultSet.getInt("treatment_count");
-            PieChart.Data slice = new PieChart.Data(treatmentName, count);
-            pieChart.getData().add(slice);
-        }
+        dashBoardBO.getTreatmentCount(pieChart);
     }
 
 }

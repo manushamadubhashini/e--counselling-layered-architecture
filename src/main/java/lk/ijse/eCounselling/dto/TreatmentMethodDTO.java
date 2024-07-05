@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TreatmentMethod {
+public class TreatmentMethodDTO {
     private String mid;
     private String description;
 }

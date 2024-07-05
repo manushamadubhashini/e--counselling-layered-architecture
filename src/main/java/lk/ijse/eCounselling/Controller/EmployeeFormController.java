@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import lk.ijse.eCounselling.bo.BOFactory;
 import lk.ijse.eCounselling.bo.custom.EmployeeBO;
+import lk.ijse.eCounselling.bo.custom.UserBO;
 import lk.ijse.eCounselling.bo.impl.EmployeeBOImpl;
 import lk.ijse.eCounselling.dao.custom.EmployeeDAO;
 import lk.ijse.eCounselling.dao.impl.EmployeeDAOImpl;
@@ -97,6 +98,7 @@ public class EmployeeFormController {
     private JFXComboBox txtUserId;
 
     EmployeeBO employeeBO= (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
+    UserBO userBO=(UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.USER);
     public void initialize() {
         txtId.setStyle("");
         txtName.setStyle("");
@@ -159,7 +161,7 @@ public class EmployeeFormController {
     private void setUserId(){
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<String> codeList = UserRepo.getIds();
+            List<String> codeList = userBO.getIds();
             for (String code : codeList) {
                 obList.add(code);
             }

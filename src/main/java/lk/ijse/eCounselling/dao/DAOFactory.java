@@ -1,9 +1,6 @@
 package lk.ijse.eCounselling.dao;
 
-import lk.ijse.eCounselling.dao.impl.AppointmentDAOImpl;
-import lk.ijse.eCounselling.dao.impl.EmployeeDAOImpl;
-import lk.ijse.eCounselling.dao.impl.ScheduleDAOImpl;
-import lk.ijse.eCounselling.dao.impl.SessionDAOImpl;
+import lk.ijse.eCounselling.dao.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -14,7 +11,7 @@ public class DAOFactory {
         return (daoFactory == null) ? daoFactory=new DAOFactory() : daoFactory;
     }
     public enum DAOType{
-        APPOINTMENT,EMPLOYEE,SCHEDULE,SESSION
+        APPOINTMENT,EMPLOYEE,SCHEDULE,SESSION,USER,DASHBOARD,TREATMENTMETHOD
     }
     public SuperDAO getDAO(DAOType daoType){
         switch (daoType){
@@ -26,6 +23,12 @@ public class DAOFactory {
                 return new ScheduleDAOImpl();
             case SESSION:
                 return new SessionDAOImpl();
+            case USER:
+                return new UserDAOImpl();
+            case DASHBOARD:
+                return new DashBoardDAOImpl();
+            case TREATMENTMETHOD:
+                return new TreatmentMethodDAOImpl();
         }
         return null;
     }

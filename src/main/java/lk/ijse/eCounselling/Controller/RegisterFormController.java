@@ -15,7 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import lk.ijse.eCounselling.Util.Regex;
-import lk.ijse.eCounselling.dto.User;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.UserBO;
+import lk.ijse.eCounselling.dto.UserDTO;
 import lk.ijse.eCounselling.repository.UserRepo;
 import javafx.scene.paint.Color;
 
@@ -55,6 +57,8 @@ public class RegisterFormController {
     @FXML
     private JFXButton btnRegiser;
 
+    UserBO userBO= (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.USER);
+
     public void initialize() {
         txtUserId.setDisable(true);
         txtUserName.setDisable(true);
@@ -87,19 +91,19 @@ public class RegisterFormController {
         boolean hasError = false;
         StringBuilder errorMessage = new StringBuilder("Please fill in all fields correctly.\n");
 
-        // Validate User ID
+        // Validate UserDTO ID
         if (txtUserId.getText().isEmpty() || !Regex.isValidUserId(txtUserId.getText())) {
             txtUserId.setStyle("-fx-border-color: red;");
-            errorMessage.append("Invalid User ID.\n");
+            errorMessage.append("Invalid UserDTO ID.\n");
             hasError = true;
         } else {
             txtUserId.setStyle("");
         }
 
-        // Validate User Name
+        // Validate UserDTO Name
         if (txtUserName.getText().isEmpty()) {
             txtUserName.setStyle("-fx-border-color: red;");
-            errorMessage.append("User Name is required.\n");
+            errorMessage.append("UserDTO Name is required.\n");
             hasError = true;
         } else {
             txtUserName.setStyle("");
@@ -123,10 +127,10 @@ public class RegisterFormController {
             txtConfirmPassword.setStyle("");
         }
 
-        // Validate User Type
+        // Validate UserDTO Type
         if (cmbUserType.getValue() == null) {
             cmbUserType.setStyle("-fx-border-color: red;");
-            errorMessage.append("User Type is required.\n");
+            errorMessage.append("UserDTO Type is required.\n");
             hasError = true;
         } else {
             cmbUserType.setStyle("");
@@ -147,10 +151,10 @@ public class RegisterFormController {
         String type = cmbUserType.getValue();
         String password = txtPassword.getText();
 
-        User user = new User(id, name, type, password);
+        UserDTO user = new UserDTO(id, name, type, password);
 
         try {
-            boolean isSaved = UserRepo.setUser(user);
+            boolean isSaved = userBO.save(user);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Registration Successfully!").show();
                 init();
@@ -251,7 +255,7 @@ public class RegisterFormController {
     }
     private String generateId(){
         try{
-            return UserRepo.generateId();
+            return userBO.generateId();
 
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
