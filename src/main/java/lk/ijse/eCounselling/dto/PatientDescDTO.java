@@ -8,7 +8,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PatientDesc {
+public class PatientDescDTO {
     private String id;
     private String rid;
     private String name;

@@ -11,4 +11,5 @@ public interface DashBoarDAO extends SuperDAO {
     public void getTreatmentCount(PieChart pieChart) throws SQLException;
     public int getPatientCount() throws SQLException;
     public int getAppointmentCount() throws SQLException;
+    public int getSessionCount() throws SQLException;
 }

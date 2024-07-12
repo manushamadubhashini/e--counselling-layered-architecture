@@ -15,4 +15,6 @@ public interface DashBoardBO extends SuperBO {
 
     public int getAppointmentCount() throws SQLException;
 
+    public int getSessionCount() throws SQLException;
+
 }

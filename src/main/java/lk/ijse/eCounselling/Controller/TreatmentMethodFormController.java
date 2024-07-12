@@ -16,7 +16,6 @@ import lk.ijse.eCounselling.bo.BOFactory;
 import lk.ijse.eCounselling.bo.custom.TreatmentMethodBO;
 import lk.ijse.eCounselling.dto.TreatmentMethodDTO;
 import lk.ijse.eCounselling.dto.tm.TreatmentMethodTm;
-import lk.ijse.eCounselling.repository.TreatmentMethodRepo;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -127,7 +126,7 @@ public class TreatmentMethodFormController {
         try {
             boolean isDeleted=treatmentMethodBO.delete(id);
             if(isDeleted){
-                new Alert(Alert.AlertType.CONFIRMATION,"Treatment Method Deleted").show();
+                new Alert(Alert.AlertType.CONFIRMATION,"TreatmentDTO Method Deleted").show();
                 init();
             }
             tblTreatmentMethod.getItems().remove(tblTreatmentMethod.getSelectionModel().getSelectedItem());

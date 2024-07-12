@@ -22,7 +22,7 @@ import lk.ijse.eCounselling.dao.custom.EmployeeDAO;
 import lk.ijse.eCounselling.dao.impl.EmployeeDAOImpl;
 import lk.ijse.eCounselling.dto.EmployeeDTO;
 import lk.ijse.eCounselling.dto.tm.EmployeeTm;
-import lk.ijse.eCounselling.repository.UserRepo;
+
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -8,13 +8,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.eCounselling.Util.Regex;
+import javafx.util.Callback;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.PatientBO;
+import lk.ijse.eCounselling.bo.custom.ReportBO;
 import lk.ijse.eCounselling.dto.*;
-import lk.ijse.eCounselling.repository.*;
+import com.jfoenix.controls.JFXButton;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -53,10 +57,42 @@ public class PatientFormController {
     private TextField txtRid;
 
     @FXML
-    private TextField txtStatus;
+    private JFXComboBox cmbStatus;
+
+    @FXML
+    private JFXButton btnNewPatient;
+
+    @FXML
+    private JFXButton btnSaved;
+
+    @FXML
+    private JFXButton btnUpdate;
+
+    @FXML
+    private JFXButton btnDelete;
+
+    PatientBO patientBO= (PatientBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PATIENT);
+    ReportBO reportBO=(ReportBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.REPORT);
 
     public void initialize() {
         setGender();
+        btnSaved.setDisable(true);
+        setStatus();
+
+        txtDOB.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isAfter(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); // Optional styling for disabled dates
+                        }
+                    }
+                };
+            }
+        });
+
     }
 
     private void setGender() {
@@ -70,6 +106,17 @@ public class PatientFormController {
             obList.add(STATUS);
         }
         cmbGender.setItems(obList);
+    }
+    private void setStatus(){
+        ObservableList<String> observableList=FXCollections.observableArrayList();
+        List<String> status=new ArrayList<>();
+        status.add("High Risky PatientDTO");
+        status.add("Moderate Risky PatientDTO");
+        status.add("Low Risky PatientDTO");
+        for (String STATUS:status){
+            observableList.add(STATUS);
+        }
+        cmbStatus.setItems(observableList);
     }
 
 
@@ -99,231 +146,228 @@ public class PatientFormController {
         txtDOB.setValue(null);
         txtAddress.setText("");
         txtContact.setText("");
-        txtStatus.setText("");
+        cmbStatus.setValue(null);
         cmbGender.setValue(null);
         txtDescription.setText("");
 
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException {
         String patientId = txtId.getText(); // Assuming this retrieves patient id
         String reportId = txtRid.getText(); // Assuming this retrieves report id
-
         try {
-            boolean isPatientDeleted = PatientRepo.delete(patientId);
-            boolean isReportDeleted = ReportRepo.delete(reportId);
-
-            if (isPatientDeleted && isReportDeleted) {
+            boolean isDeleted= patientBO.delete(patientId);
+            if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Patient and report Deleted!").show();
-            } else if (isPatientDeleted) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Patient deleted!").show();
-            } else if (isReportDeleted) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Report deleted!").show();
-            } else {
-                new Alert(Alert.AlertType.CONFIRMATION, "No values deleted!").show();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
-
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException {
 
-        if (txtId.getText().isEmpty() || txtRid.getText().isEmpty() || txtDOB.getValue() == null || txtName.getText().isEmpty() || txtDOB.getValue() == null || txtAddress.getText().isEmpty() || txtContact.getText().isEmpty() || txtStatus.getText().isEmpty() || cmbGender.getValue()==null || txtDescription.getText().isEmpty()) {
+            boolean hasError=false;
             // Set border color of empty text fields to red
             if (txtId.getText().isEmpty()) {
                 txtId.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtId.setStyle("");
             }
             if (txtRid.getText().isEmpty()) {
                 txtRid.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtRid.setStyle("");
             }
             if (txtDOB.getValue() == null) {
                 txtDOB.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtDOB.setStyle("");
             }
             if (txtName.getText().isEmpty()) {
                 txtName.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtName.setStyle("");
             }
             if (txtAddress.getText().isEmpty()) {
                 txtAddress.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtAddress.setStyle("");
             }
             if (txtContact.getText().isEmpty()) {
                 txtContact.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtContact.setStyle("");
             }
-            if (txtStatus.getText().isEmpty()) {
-                txtStatus.setStyle("-fx-border-color: red;");
+            if (cmbStatus.getValue() == null) {
+                cmbStatus.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
-                txtStatus.setStyle("");
+                cmbStatus.setStyle("");
             }
             if (cmbGender.getValue() == null) {
                 cmbGender.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 cmbGender.setStyle("");
             }
             if (txtDescription.getText().isEmpty()) {
                 txtDescription.setStyle("-fx-border-color: red;");
+                hasError=true;
             } else {
                 txtDescription.setStyle("");
             }
-
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all fields.");
-            alert.show();
-
-            String id = txtId.getText();
+             if(hasError) {
+                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Please fill in all fields.");
+                 alert.show();
+             }
+            String id=txtId.getText();
             String rid = txtRid.getText();
             String name = txtName.getText();
             LocalDate DOB = txtDOB.getValue();
-            Date datee = java.sql.Date.valueOf(DOB);
             String address = txtAddress.getText();
             String contact = txtContact.getText();
-            String status = txtStatus.getText();
+            String status = (String) cmbStatus.getValue();
             String gender = (String) cmbGender.getValue();
             String description = txtDescription.getText();
+            List<ReportDTO> reportDTOList=new ArrayList<>();
+            reportDTOList.add(new ReportDTO(rid,gender,description,id));
 
-            Patient patient = new Patient(id, name, datee, address, contact, status);
-            Report report = new Report(rid, gender, description, id);
-
-            try {
-                boolean isSaved = PatientRepo.save(patient);
-                boolean isSaved1 = ReportRepo.save(report);
-
-                if (isSaved && isSaved1) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "Patient and report saved!").show();
-                }
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            if(! name.matches("[A-Za-z ]+")){
+                new Alert(Alert.AlertType.ERROR,"Invalid Name").show();
+                txtName.requestFocus();
+                txtName.setStyle("-fx-border-color: red");
+                return;
             }
-        }
+            if (!address.matches(".{3,}")) {
+                new Alert(Alert.AlertType.ERROR, "Address should be at least 3 characters long").show();
+                txtAddress.requestFocus();
+                txtAddress.setStyle("-fx-border-color: red");
+                return;
+            }
+            if(!contact.matches("^0[0-9]{9}$")){
+                new Alert(Alert.AlertType.ERROR,"Invalid Phone Number").show();
+                txtContact.requestFocus();
+                txtContact.setStyle("-fx-border-color: red");
+                return;
+            }
+           if(! name.matches("[A-Za-z ]+")){
+                new Alert(Alert.AlertType.ERROR,"Invalid description").show();
+                txtDescription.requestFocus();
+                txtDescription.setStyle("-fx-border-color: red");
+
+           }
+           try {
+               boolean isSaved= patientBO.save(new PatientDTO(id,name,DOB,address,contact,status));
+               boolean isSaved1= reportBO.save(new ReportDTO(rid,gender,description,id));
+               if (isSaved && isSaved1) {
+                   new Alert(Alert.AlertType.CONFIRMATION, "PatientDTO and report saved!").show();
+                   btnSaved.setDisable(true);
+               }
+           }catch (SQLException e){
+               new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+           }
+
+
+
 
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException {
         String id = txtId.getText();
         String rid = txtRid.getText();
         String name=txtName.getText();
         LocalDate dob = txtDOB.getValue();
-        Date datee = java.sql.Date.valueOf(dob);
         String address=txtAddress.getText();
         String contact=txtContact.getText();
-        String status=txtStatus.getText();
+        String status= (String) cmbStatus.getValue();
         String gender= (String) cmbGender.getValue();
         String description=txtDescription.getText();
-
-
-        try {
-            boolean isUpdated = PatientRepo.update(id,name, (java.sql.Date) datee,address,contact,status);
-            boolean isUpdate1=ReportRepo.update(rid,gender,description,id);
-
-            if (isUpdated && isUpdate1) {
-                new Alert(Alert.AlertType.CONFIRMATION, "patient and report updated!").show();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-
-    }
-    @FXML
-    void DOBOnAction(ActionEvent event) {
-        LocalDate dob=txtDOB.getValue();
-        txtDOB.setStyle("-fx-border-color: green");
-        txtAddress.requestFocus();
-
-    }
-
-    @FXML
-    void PatientIdOnAction(ActionEvent event) {
-        String pid = txtId.getText();
-        if (Regex.isPatientId(pid)) {
-            txtId.setStyle("-fx-border-color: green;");
-            txtRid.requestFocus();
-        } else {
-            txtId.setStyle("-fx-border-color: red;");
-            txtId.requestFocus();
-        }
-    }
-
-    @FXML
-    void addressOnAction(ActionEvent event) {
-        String address=txtAddress.getText();
-        txtAddress.setStyle("-fx-border-color: green");
-        txtContact.requestFocus();
-
-    }
-    @FXML
-    void contactOnAction(ActionEvent event) {
-        String contact = txtContact.getText();
-        if (Regex.isContact(contact)) {
-            txtContact.setStyle("-fx-border-color: green;");
-            txtStatus.requestFocus();
-        } else {
-            txtContact.setStyle("-fx-border-color: red;");
-            txtContact.requestFocus();
-        }
-
-    }
-
-    @FXML
-    void descOnAction(ActionEvent event) {
-        String desc=txtDescription.getText();
-        txtDescription.setStyle("-fx-border-color: green");
-        txtDescription.requestFocus();
-
-    }
-
-    @FXML
-    void genderOnAction(ActionEvent event) {
-        String gender= (String) cmbGender.getValue();
-        cmbGender.setStyle("-fx-border-color: green");
-        txtDescription.requestFocus();
-
-    }
-
-    @FXML
-    void nameOnAction(ActionEvent event) {
-        String name=txtName.getText();
-        txtName.setStyle("-fx-border-color: green");
-        txtDOB.requestFocus();
-
-    }
-
-    @FXML
-    void reportIdOnAction(ActionEvent event) {
-        String rid = txtRid.getText();
-        if (Regex.isReportId(rid)) {
-            txtRid.setStyle("-fx-border-color: green;");
+        List<ReportDTO> reportDTOList=new ArrayList<>();
+        reportDTOList.add(new ReportDTO(rid,gender,description,id));
+        if(! name.matches("[A-Za-z ]+")){
+            new Alert(Alert.AlertType.ERROR,"Invalid Name").show();
             txtName.requestFocus();
-        } else {
-            txtRid.setStyle("-fx-border-color: red;");
-            txtRid.requestFocus();
+            txtName.setStyle("-fx-border-color: red");
+            return;
+        }
+        if (!address.matches(".{3,}")) {
+            new Alert(Alert.AlertType.ERROR, "Address should be at least 3 characters long").show();
+            txtAddress.requestFocus();
+            txtAddress.setStyle("-fx-border-color: red");
+            return;
+        }
+        if(!contact.matches("^0[0-9]{9}$")){
+            new Alert(Alert.AlertType.ERROR,"Invalid Phone Number").show();
+            txtContact.requestFocus();
+            txtContact.setStyle("-fx-border-color: red");
+            return;
+        }
+        if(! name.matches("[A-Za-z ]+")){
+            new Alert(Alert.AlertType.ERROR,"Invalid description").show();
+            txtDescription.requestFocus();
+            txtDescription.setStyle("-fx-border-color: red");
+            return;
+        }
+
+            boolean isUpdated = patientBO.update(new PatientDTO(id, name, dob, address, contact, status));
+            boolean isUpdated1 = reportBO.update(new ReportDTO(rid, gender, description, id));
+            if (isUpdated && isUpdated1) {
+                new Alert(Alert.AlertType.CONFIRMATION, "patient and report updated!").show();
+            }else if(isUpdated){
+                new Alert(Alert.AlertType.CONFIRMATION, "patient updated!").show();
+            }else if(isUpdated1){
+                new Alert(Alert.AlertType.CONFIRMATION, "report updated!").show();
+           }else{
+            new Alert(Alert.AlertType.ERROR,"Invalid value!").show();
         }
 
     }
 
     @FXML
-    void statusOnAction(ActionEvent event) {
-        String status=txtStatus.getText();
-        txtStatus.setStyle("-fx-border-color: green");
-        cmbGender.requestFocus();
+    void btnNewPatientOnAction(ActionEvent event) {
+        txtId.setText(generateId());
+        txtId.setEditable(false);
+        btnSaved.setDisable(false);
+        txtRid.setText(generateRid());
+        txtRid.setEditable(false);
+        init();
 
+    }
+
+    private String generateId(){
+        try {
+            return patientBO.generateId();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
+        }
+        return "P001";
+
+    }
+    private String generateRid(){
+        try {
+            return reportBO.generateId();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to generate a new rid " + e.getMessage()).show();
+
+        }
+        return "R001";
+    }
+    private void init(){
+        txtId.setEditable(true);
+        txtRid.setEditable(true);
     }
 
 

@@ -21,12 +21,12 @@
                   <Image url="@../asserts/counsellor4.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="7.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="41.0" fitWidth="41.0" layoutX="29.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../asserts/icons8-back-button-48.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="5.0" layoutY="134.0" onAction="#btnBackOnAction" prefHeight="41.0" prefWidth="41.0" />
+            <JFXButton layoutX="30.0" layoutY="6.0" onAction="#btnBackOnAction" prefHeight="41.0" prefWidth="41.0" />
             <Text layoutX="145.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Information">
                <font>
                   <Font name="System Bold" size="25.0" />
@@ -37,6 +37,7 @@
                   <DropShadow />
                </effect>
             </Separator>
+            <JFXButton fx:id="btnNewPatient" layoutX="29.0" layoutY="160.0" onAction="#btnNewPatientOnAction" prefHeight="29.0" prefWidth="145.0" style="-fx-background-color: #4B9CD3;" text="add new patient" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="514.0" fitWidth="569.0" layoutX="-1.0" layoutY="209.0">
@@ -44,14 +45,6 @@
             <Image url="@../asserts/blue%20(1).jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="txtId" layoutX="30.0" layoutY="266.0" onAction="#PatientIdOnAction" prefHeight="41.0" prefWidth="219.0" promptText="Enter patient id" />
-      <TextField fx:id="txtRid" layoutX="308.0" layoutY="266.0" onAction="#reportIdOnAction" prefHeight="41.0" prefWidth="219.0" promptText="Enter report id" />
-      <DatePicker fx:id="txtDOB" layoutX="307.0" layoutY="350.0" onAction="#DOBOnAction" prefHeight="41.0" prefWidth="219.0" promptText="Enter patient DOB" />
-      <TextField fx:id="txtName" layoutX="29.0" layoutY="350.0" onAction="#nameOnAction" prefHeight="41.0" prefWidth="219.0" promptText="Enter patient Name" />
-      <TextField fx:id="txtAddress" layoutX="30.0" layoutY="438.0" onAction="#addressOnAction" prefHeight="41.0" prefWidth="219.0" promptText="Enter patient address" />
-      <TextField fx:id="txtContact" layoutX="308.0" layoutY="438.0" onAction="#contactOnAction" prefHeight="41.0" prefWidth="219.0" promptText="Enter patient contact" />
-      <TextField fx:id="txtStatus" layoutX="30.0" layoutY="520.0" onAction="#statusOnAction" prefHeight="41.0" prefWidth="219.0" promptText="Enter patient status" />
-      <TextField fx:id="txtDescription" layoutX="29.0" layoutY="602.0" onAction="#descOnAction" prefHeight="41.0" prefWidth="219.0" promptText="Enter report description" />
       <Text layoutX="30.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient ID" />
       <Text layoutX="308.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Report ID" />
       <Text layoutX="30.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name" />
@@ -61,7 +54,7 @@
       <Text layoutX="308.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" />
       <Text layoutX="33.0" layoutY="589.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Report Description" />
       <Text layoutX="33.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Status" />
-      <JFXButton layoutX="21.0" layoutY="664.0" onAction="#btnSaveOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" stylesheets="@../StyleSheets/button2.css" text="Save">
+      <JFXButton fx:id="btnSaved" layoutX="21.0" layoutY="664.0" onAction="#btnSaveOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" stylesheets="@../StyleSheets/button2.css" text="Save">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -71,16 +64,24 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="296.0" layoutY="664.0" onAction="#btnUpdateOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" stylesheets="@../StyleSheets/button2.css" text="Update">
+      <JFXButton fx:id="btnUpdate" layoutX="296.0" layoutY="664.0" onAction="#btnUpdateOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" stylesheets="@../StyleSheets/button2.css" text="Update">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="430.0" layoutY="664.0" onAction="#btnDeleteOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" stylesheets="@../StyleSheets/button2.css" text="Delete">
+      <JFXButton fx:id="btnDelete" layoutX="430.0" layoutY="664.0" onAction="#btnDeleteOnAction" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" stylesheets="@../StyleSheets/button2.css" text="Delete">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="cmbGender" layoutX="307.0" layoutY="520.0" onAction="#genderOnAction" prefHeight="41.0" prefWidth="225.0" promptText="Select Gender" style="-fx-background-color: white;" />
+      <TextField fx:id="txtId" layoutX="30.0" layoutY="256.0" prefHeight="41.0" prefWidth="219.0" promptText="Enter patient id" />
+      <TextField fx:id="txtName" layoutX="30.0" layoutY="344.0" prefHeight="41.0" prefWidth="219.0" promptText="Enter patient name" />
+      <TextField fx:id="txtAddress" layoutX="30.0" layoutY="430.0" prefHeight="41.0" prefWidth="219.0" promptText="Enter address" />
+      <TextField fx:id="txtDescription" layoutX="32.0" layoutY="592.0" prefHeight="41.0" prefWidth="219.0" promptText="Enter description" />
+      <TextField fx:id="txtRid" layoutX="307.0" layoutY="256.0" prefHeight="41.0" prefWidth="219.0" promptText="Enter report id" />
+      <TextField fx:id="txtContact" layoutX="307.0" layoutY="430.0" prefHeight="41.0" prefWidth="219.0" promptText="Enter contact" />
+      <JFXComboBox fx:id="cmbGender" layoutX="311.0" layoutY="511.0" prefHeight="41.0" prefWidth="219.0" promptText="Select gender" style="-fx-background-color: white;" />
+      <JFXComboBox fx:id="cmbStatus" layoutX="30.0" layoutY="511.0" prefHeight="41.0" prefWidth="219.0" promptText="Select patient status" style="-fx-background-color: white;" />
+      <DatePicker fx:id="txtDOB" layoutX="307.0" layoutY="344.0" prefHeight="41.0" prefWidth="219.0" promptText="Enter Birthday" />
    </children>
 </AnchorPane>

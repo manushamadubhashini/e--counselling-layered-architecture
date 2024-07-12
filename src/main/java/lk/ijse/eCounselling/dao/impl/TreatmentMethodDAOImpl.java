@@ -15,7 +15,6 @@ public class TreatmentMethodDAOImpl implements TreatmentMethodDAO {
         return SQLUtil.execute("INSERT INTO TreatmentMethod (treatm_id,treatm_description) VALUES(?, ?)",entity.getMid(),entity.getDescription());
 
     }
-
     @Override
     public  boolean update(TreatmentMethod entity ) throws SQLException {
        return SQLUtil.execute("UPDATE TreatmentMethod SET treatm_description = ? WHERE treatm_id = ?",entity.getDescription(),entity.getMid());

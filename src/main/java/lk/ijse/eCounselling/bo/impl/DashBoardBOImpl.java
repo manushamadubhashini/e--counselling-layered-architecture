@@ -21,10 +21,17 @@ public class DashBoardBOImpl implements DashBoardBO {
         dashBoarDAO.getTreatmentCount(pieChart);
 
     }
+    @Override
     public int getPatientCount() throws SQLException{
         return dashBoarDAO.getPatientCount();
     }
+    @Override
     public int getAppointmentCount() throws SQLException{
         return dashBoarDAO.getAppointmentCount();
+    }
+
+    @Override
+    public int getSessionCount() throws SQLException {
+        return dashBoarDAO.getSessionCount();
     }
 }

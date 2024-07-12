@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import lk.ijse.eCounselling.bo.BOFactory;
 import lk.ijse.eCounselling.bo.custom.UserBO;
 import lk.ijse.eCounselling.dto.UserDTO;
-import lk.ijse.eCounselling.repository.UserRepo;
+
 
 import java.io.IOException;
 import java.sql.SQLException;

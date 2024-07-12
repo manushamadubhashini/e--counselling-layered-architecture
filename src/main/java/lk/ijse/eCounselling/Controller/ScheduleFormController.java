@@ -18,8 +18,6 @@ import lk.ijse.eCounselling.bo.impl.ScheduleBOImpl;
 import lk.ijse.eCounselling.dto.EmployeeDTO;
 import lk.ijse.eCounselling.dto.ScheduleDTO;
 import lk.ijse.eCounselling.dto.tm.ScheduleTm;
-import lk.ijse.eCounselling.repository.EmployeeRepo;
-import lk.ijse.eCounselling.repository.ScheduleRepo;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -17,9 +17,10 @@ import javafx.util.Callback;
 import lk.ijse.eCounselling.bo.custom.AppointmentBO;
 import lk.ijse.eCounselling.bo.BOFactory;
 import lk.ijse.eCounselling.bo.custom.EmployeeBO;
+import lk.ijse.eCounselling.bo.custom.PatientBO;
 import lk.ijse.eCounselling.dto.*;
 import lk.ijse.eCounselling.dto.tm.AppointmentTm;
-import lk.ijse.eCounselling.repository.*;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -85,6 +86,7 @@ public class AppointmentFormController {
 
     AppointmentBO appointmentBO= (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.APPOINTMENT);
     EmployeeBO employeeBO=(EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
+    PatientBO patientBO=(PatientBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PATIENT);
 
     public void initialize() {
         txtId.setDisable(true);
@@ -169,11 +171,10 @@ public class AppointmentFormController {
 
     private void getPatientId() {
         try {
-        ArrayList<Patient> patients= PatientRepo.getAll();
-        for (Patient p:patients){
-            cmbPatientId.getItems().add(p.getId());
-
-        }
+            ArrayList<PatientDTO> patientDTOS=patientBO.getAll();
+            for (PatientDTO p:patientDTOS) {
+                cmbPatientId.getItems().add(p.getId());
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

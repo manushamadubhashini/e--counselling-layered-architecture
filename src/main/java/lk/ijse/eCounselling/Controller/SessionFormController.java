@@ -16,11 +16,13 @@ import javafx.util.Callback;
 import lk.ijse.eCounselling.Util.Regex;
 import lk.ijse.eCounselling.bo.BOFactory;
 import lk.ijse.eCounselling.bo.custom.EmployeeBO;
+import lk.ijse.eCounselling.bo.custom.PatientBO;
 import lk.ijse.eCounselling.bo.custom.SessionBO;
 import lk.ijse.eCounselling.dto.EmployeeDTO;
+import lk.ijse.eCounselling.dto.PatientDTO;
 import lk.ijse.eCounselling.dto.SessionDTO;
 import lk.ijse.eCounselling.dto.tm.SessionTm;
-import lk.ijse.eCounselling.repository.*;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -90,6 +92,8 @@ public class SessionFormController  {
     SessionBO sessionBO= (SessionBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SESSION);
     EmployeeBO employeeBO=(EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
 
+    PatientBO patientBO=(PatientBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PATIENT);
+
     public void initialize() {
         setCellValueFactory();
         loadSessionTable();
@@ -144,15 +148,11 @@ public class SessionFormController  {
     }
 
     private void getPatientId() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<String> codeList = PatientRepo.getIds();
-            for (String code : codeList) {
-                obList.add(code);
+            ArrayList<PatientDTO> patientDTOS=patientBO.getAll();
+            for (PatientDTO p:patientDTOS){
+                cmbPaid.getItems().add(p.getId());
             }
-
-            cmbPaid.setItems(obList);
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

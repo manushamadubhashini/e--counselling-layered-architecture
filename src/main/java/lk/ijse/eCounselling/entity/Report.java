@@ -1,6 +1,5 @@
-package lk.ijse.eCounselling.dto.tm;
+package lk.ijse.eCounselling.entity;
 
-import lk.ijse.eCounselling.dto.TreatmentDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TreatmentTm extends TreatmentDTO {
+public class Report {
+    private String rid;
+    private String gender;
+    private String des;
     private String id;
-    private String status;
+
 }

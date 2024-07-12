@@ -14,7 +14,7 @@ public class BOFactory {
     }
 
     public enum BOType{
-        APPOINTMENT,EMPLOYEE,SCHEDULE,SESSION,USER,DASHBOARD,TREATMENTMETHOD
+        APPOINTMENT,EMPLOYEE,SCHEDULE,SESSION,USER,DASHBOARD,TREATMENTMETHOD,TREATMENT,TREATMENTDESC,PATIENT,REPORT,PATIENTREPORTDESC
     }
     public SuperBO getBO(BOType boType){
         switch (boType){
@@ -32,6 +32,16 @@ public class BOFactory {
                 return new DashBoardBOImpl();
             case TREATMENTMETHOD:
                 return new TreatmentMethodBOImpl();
+            case TREATMENT:
+                return new TreatmentBOImpl();
+            case TREATMENTDESC:
+                return new TreatmentDescBOImpl();
+            case PATIENT:
+                return new PatientBOImpl();
+            case REPORT:
+                return new ReportBOImpl();
+            case PATIENTREPORTDESC:
+                return new PatientDescBOImpl();
         }
         return null;
     }

@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -16,10 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.eCounselling.bo.BOFactory;
 import lk.ijse.eCounselling.bo.custom.DashBoardBO;
-import lk.ijse.eCounselling.dao.impl.DashBoardDAOImpl;
+import lk.ijse.eCounselling.bo.custom.PatientBO;
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.dto.Patient;
-import lk.ijse.eCounselling.repository.PatientRepo;
+import lk.ijse.eCounselling.dto.PatientDTO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -58,6 +56,8 @@ public class DashboardFormController {
     private PieChart pieChart;
 
    DashBoardBO dashBoardBO= (DashBoardBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.DASHBOARD);
+
+   PatientBO patientBO=(PatientBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PATIENT);
 
     public void initialize() throws SQLException {
         try {
@@ -102,18 +102,7 @@ public class DashboardFormController {
     }
 
     private int getSessionCount() throws SQLException {
-        String sql = "SELECT COUNT(*) AS session_count FROM  Session  ";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        int sessionCount = 0;
-        if (resultSet.next()) {
-            sessionCount = resultSet.getInt("session_count");
-        }
-        return sessionCount;
+        return dashBoardBO.getSessionCount();
     }
 
     @FXML
@@ -231,9 +220,9 @@ public class DashboardFormController {
 
     private void checkForHighRiskPatients() {
         try {
-            List<Patient> patients = PatientRepo.getAll();
+            List<PatientDTO> patients = patientBO.getAll();
             boolean highRiskFound = false;
-            for (Patient patient : patients) {
+            for (PatientDTO patient : patients) {
                 if (patient.getStatus().equalsIgnoreCase("High Risky Patient")) {
                     highRiskFound = true;
                     break;

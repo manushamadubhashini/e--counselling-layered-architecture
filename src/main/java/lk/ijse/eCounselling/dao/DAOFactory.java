@@ -11,7 +11,7 @@ public class DAOFactory {
         return (daoFactory == null) ? daoFactory=new DAOFactory() : daoFactory;
     }
     public enum DAOType{
-        APPOINTMENT,EMPLOYEE,SCHEDULE,SESSION,USER,DASHBOARD,TREATMENTMETHOD
+        APPOINTMENT,EMPLOYEE,SCHEDULE,SESSION,USER,DASHBOARD,TREATMENTMETHOD,TREATMENT,TREATMENTDETAIL,TREATMENTDESC,PATIENT,REPORT,PATIENTREPORTDESC
     }
     public SuperDAO getDAO(DAOType daoType){
         switch (daoType){
@@ -29,6 +29,18 @@ public class DAOFactory {
                 return new DashBoardDAOImpl();
             case TREATMENTMETHOD:
                 return new TreatmentMethodDAOImpl();
+            case TREATMENT:
+                return new TreatmentDAOImpl();
+            case TREATMENTDETAIL:
+                return new TreatmentMethodDetailDAOImpl();
+            case TREATMENTDESC:
+                return new TreatmentDescDAOImpl();
+            case PATIENT:
+                return new PatientDAOImpl();
+            case REPORT:
+                return new ReportDAOImpl();
+            case PATIENTREPORTDESC:
+                return new PatientDescDAOImpl();
         }
         return null;
     }

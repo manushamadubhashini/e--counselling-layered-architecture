@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TreatmentMethodDetail {
+public class TreatmentDescDTO {
     private String id;
     private String mid;
+    private String status;
     private int duration;
+    private String pid;
 }

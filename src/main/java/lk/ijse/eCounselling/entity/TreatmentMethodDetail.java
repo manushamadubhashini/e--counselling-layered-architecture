@@ -1,16 +1,16 @@
-package lk.ijse.eCounselling.dto;
+package lk.ijse.eCounselling.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TreatmentDesc {
+public class TreatmentMethodDetail implements Serializable {
     private String id;
     private String mid;
-    private String status;
     private int duration;
-    private String pid;
 }

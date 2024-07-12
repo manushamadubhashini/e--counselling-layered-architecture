@@ -6,15 +6,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.PatientDescBO;
 import lk.ijse.eCounselling.db.DbConnection;
-import lk.ijse.eCounselling.dto.PatientDesc;
+import lk.ijse.eCounselling.dto.PatientDescDTO;
 import lk.ijse.eCounselling.dto.tm.PatientDescTm;
-import lk.ijse.eCounselling.repository.PatientDescRepo;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -62,49 +64,26 @@ public class PatientViewFormController {
     @FXML
     private TableView<PatientDescTm> tblPatient;
 
-    private List<PatientDesc> patientDescList = new ArrayList<>();
+    PatientDescBO patientDescBO= (PatientDescBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PATIENTREPORTDESC);
+
 
     public void initialize() {
-        patientDescList = getAllDesc();
         setCellValueFactory();
         loadTreatmentTable();
     }
 
-    private List<PatientDesc> getAllDesc() {
-        List<PatientDesc> patientDescList1 = null;
-        try {
-            patientDescList1 = PatientDescRepo.getAll();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return patientDescList1;
-    }
 
     private void loadTreatmentTable() {
-        ObservableList<PatientDescTm> PatientDescTMS = FXCollections.observableArrayList();
+        tblPatient.getItems().clear();
+        try {
+            ArrayList<PatientDescDTO> patientDescDTOS=patientDescBO.getAll();
+            for (PatientDescDTO p:patientDescDTOS){
+                tblPatient.getItems().add(new PatientDescTm(p.getId(),p.getRid(),p.getName(),p.getDob(),p.getAddress(),p.getContact(),p.getStatus(),p.getGender(),p.getDes()));
+            }
 
-
-        for (PatientDesc patientDesc : patientDescList) {
-            PatientDescTm patientDescTm = new PatientDescTm(
-                    patientDesc.getId(),
-                    patientDesc.getRid(),
-                    patientDesc.getName(),
-                    patientDesc.getDob(),
-                    patientDesc.getAddress(),
-                    patientDesc.getContact(),
-                    patientDesc.getStatus(),
-                    patientDesc.getGender(),
-                    patientDesc.getDes()
-
-            );
-            PatientDescTMS.add(patientDescTm);
-
+        }catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
-        tblPatient.setItems(PatientDescTMS);
-        PatientDescTm selectedItem = (PatientDescTm) tblPatient.getSelectionModel().getSelectedItem();
-        System.out.println("selectedItem = " + selectedItem);
-
-
     }
 
     private void setCellValueFactory() {
@@ -139,14 +118,14 @@ public class PatientViewFormController {
         Stage stage = (Stage) root.getScene().getWindow();
 
         stage.setScene(new Scene(anchorPane));
-        stage.setTitle("Patient Form");
+        stage.setTitle("PatientDTO Form");
         stage.centerOnScreen();
 
     }
 
     public void btnReportOnAction(ActionEvent event) throws JRException, SQLException {
         try {
-            JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/Report/Patient.jrxml");
+            JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/ReportDTO/PatientDTO.jrxml");
             JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 
             Map<String, Object> data = new HashMap<>();

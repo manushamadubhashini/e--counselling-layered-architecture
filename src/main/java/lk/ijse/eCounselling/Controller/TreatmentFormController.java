@@ -15,10 +15,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.eCounselling.bo.BOFactory;
+import lk.ijse.eCounselling.bo.custom.PatientBO;
+import lk.ijse.eCounselling.bo.custom.TreatmentBO;
+import lk.ijse.eCounselling.bo.custom.TreatmentDescBO;
+import lk.ijse.eCounselling.bo.custom.TreatmentMethodBO;
 import lk.ijse.eCounselling.db.DbConnection;
 import lk.ijse.eCounselling.dto.*;
 import lk.ijse.eCounselling.dto.tm.*;
-import lk.ijse.eCounselling.repository.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -84,6 +88,13 @@ public class TreatmentFormController {
     @FXML
     private JFXButton btnUpdate;
 
+    TreatmentBO treatmentBO=(TreatmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.TREATMENT);
+    TreatmentMethodBO treatmentMethodBO=(TreatmentMethodBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.TREATMENTMETHOD);
+
+    TreatmentDescBO treatmentDescBO=(TreatmentDescBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.TREATMENTDESC);
+
+    PatientBO patientBO=(PatientBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PATIENT);
+
     public void initialize() {
         setCellValueFactory();
         loadTreatmentTable();
@@ -134,7 +145,7 @@ public class TreatmentFormController {
 
     private void getTreatmentMethodIds() {
         try {
-            ArrayList<TreatmentMethodDTO> treatmentMethods=TreatmentMethodRepo.getAll();
+            ArrayList<TreatmentMethodDTO> treatmentMethods=treatmentMethodBO.getAll();
             for (TreatmentMethodDTO tm:treatmentMethods){
                 cmbMid.getItems().add(tm.getMid());
             }
@@ -145,8 +156,8 @@ public class TreatmentFormController {
 
     private void getPatientIds() {
         try {
-            ArrayList<Patient> patients=PatientRepo.getAll();
-            for (Patient p:patients){
+            ArrayList<PatientDTO> patientDTOS=patientBO.getAll();
+            for (PatientDTO p:patientDTOS){
                 cmbPatientId.getItems().add(p.getId());
             }
         }catch (SQLException e){
@@ -167,8 +178,8 @@ public class TreatmentFormController {
 
     private void loadTreatmentTable() {
         try {
-            ArrayList<TreatmentDesc> treatmentDescs =TreatmentDescRepo.getAll();
-            for (TreatmentDesc d:treatmentDescs){
+            ArrayList<TreatmentDescDTO> treatmentDescs =treatmentDescBO.getAll();
+            for (TreatmentDescDTO d:treatmentDescs){
                 tblTreatment.getItems().add(new TreatmentDescTm(d.getId(),d.getMid(),d.getStatus(),d.getDuration(),d.getPid()));
             }
         }catch (SQLException e){
@@ -205,17 +216,12 @@ public class TreatmentFormController {
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-        String id = tblTreatment.getSelectionModel().getSelectedItem().getId();
-        String mid= tblTreatment.getSelectionModel().getSelectedItem().getMid();
-
-        try {
-            boolean isTreatmentDeleted = TreatmentRepo.delete(id);
-            boolean isDetailDeleted=TreatmentMethodDetailRepo.delete(id,mid);
-            if (isTreatmentDeleted || isDetailDeleted) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Treatment and Detail deleted!").show();
-                init();
-            }
+    boolean btnDeleteOnAction(ActionEvent event) throws SQLException {
+        String id =txtId.getText();
+        boolean isTreatmentDeleted=treatmentBO.TreatmentDelete(id);
+        if (isTreatmentDeleted) {
+            new Alert(Alert.AlertType.CONFIRMATION, "TreatmentDTO and Detail deleted!").show();
+            init();
             tblTreatment.getItems().remove(tblTreatment.getSelectionModel().getSelectedItem());
             tblTreatment.getSelectionModel().clearSelection();
             txtId.clear();
@@ -223,15 +229,15 @@ public class TreatmentFormController {
             cmbPatientId.setValue(null);
             cmbStatus.setValue(null);
             txtDuration.clear();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            return true;
         }
+        return false;
 
 
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    boolean btnSaveOnAction(ActionEvent event) throws SQLException {
             boolean hasError=false;
             // Set border color of empty text fields to red
             if (txtId.getText().isEmpty()) {
@@ -276,73 +282,74 @@ public class TreatmentFormController {
                 String mid = (String) cmbMid.getValue();
                 String pid = (String) cmbPatientId.getValue();
                 String status = (String) cmbStatus.getValue();
-                int duration;
+                int duration= Integer.parseInt(txtDuration.getText());
+                List<TreatmentMethodDetailDTO> treatmentMethodDetailDTOList=new ArrayList<>();
+                treatmentMethodDetailDTOList.add(new TreatmentMethodDetailDTO(id,mid,duration));
              try {
                  duration = Integer.parseInt(txtDuration.getText());
              }catch (NumberFormatException e){
                   txtDuration.setStyle("-fx-border-color: red");
                   txtDuration.requestFocus();
-                  return;
+                  //return;
              }
-
-            Treatment treatment = new Treatment(id, status, pid);
-            TreatmentMethodDetail treatmentMethodDetail = new TreatmentMethodDetail(id, mid, duration);
 
             if(! txtDuration.getText().matches("^(?:[1-9][0-9]?|100)$")){
                  new Alert(Alert.AlertType.ERROR,"invalid value").show();
                  txtDuration.setStyle("-fx-border-color: red");
                  txtDuration.requestFocus();
-
              }
-
-            try {
-                boolean isTreatmentSaved = TreatmentRepo.save(treatment);
-                boolean isDetailSaved = TreatmentMethodDetailRepo.save(treatmentMethodDetail);
-                if (isTreatmentSaved  && isDetailSaved) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "Treatment, and Detail saved!").show();
+            boolean isTreatmentSaved=treatmentBO.TreatmentSave(new TreatmentDTO(id,status,pid,treatmentMethodDetailDTOList));
+            if (isTreatmentSaved==true) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "TreatmentDTO, and Detail saved!").show();
                     init();
-                }
-                tblTreatment.getItems().add(new TreatmentDescTm(id,mid,status,duration,pid));
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+                    tblTreatment.getItems().add(new TreatmentDescTm(id,mid,status,duration,pid));
             }
-
+            return false;
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    boolean btnUpdateOnAction(ActionEvent event) throws SQLException {
         String id = txtId.getText();
         String mid = (String) cmbMid.getValue();
         String pid= (String) cmbPatientId.getValue();
         String status= (String) cmbStatus.getValue();
         int duration= Integer.parseInt(txtDuration.getText());
+        List<TreatmentMethodDetailDTO> treatmentMethodDetailDTOList=new ArrayList<>();
+        treatmentMethodDetailDTOList.add(new TreatmentMethodDetailDTO(id,mid,duration));
 
         try {
-            boolean isTreatmentUpdated = TreatmentRepo.update(id,status,pid);
-            boolean isDetailUpdated=TreatmentMethodDetailRepo.update(id,mid,duration);
-
-            if (isTreatmentUpdated  && isDetailUpdated) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Treatment and Detail updated!").show();
-                init();
-            }
-            TreatmentDescTm selectedItem=tblTreatment.getSelectionModel().getSelectedItem();
-            selectedItem.setId(id);
-            selectedItem.setStatus(status);
-            selectedItem.setDuration(duration);
-            selectedItem.setPid(pid);
-            tblTreatment.refresh();
-            tblTreatment.getSelectionModel().clearSelection();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            duration = Integer.parseInt(txtDuration.getText());
+        }catch (NumberFormatException e){
+            txtDuration.setStyle("-fx-border-color: red");
+            txtDuration.requestFocus();
+            //return;
         }
 
+        if(! txtDuration.getText().matches("^(?:[1-9][0-9]?|100)$")){
+            new Alert(Alert.AlertType.ERROR,"invalid value").show();
+            txtDuration.setStyle("-fx-border-color: red");
+            txtDuration.requestFocus();
+        }
+        boolean isTreatmentUpdated=treatmentBO.TreatmentUpdate(new TreatmentDTO(id,status,pid,treatmentMethodDetailDTOList));
+            if (isTreatmentUpdated== true) {
+                new Alert(Alert.AlertType.CONFIRMATION, "TreatmentDTO and Detail updated!").show();
+                init();
+                TreatmentDescTm selectedItem=tblTreatment.getSelectionModel().getSelectedItem();
+                selectedItem.setId(id);
+                selectedItem.setStatus(status);
+                selectedItem.setDuration(duration);
+                selectedItem.setPid(pid);
+                tblTreatment.refresh();
+                tblTreatment.getSelectionModel().clearSelection();
+            }
+            return false;
     }
 
 
     @FXML
     void btnReportOnAction(ActionEvent event) throws JRException, SQLException {
         JasperDesign jasperDesign =
-                JRXmlLoader.load("src/main/resources/Report/TreatmentRepo.jrxml");
+                JRXmlLoader.load("src/main/resources/ReportDTO/TreatmentRepo.jrxml");
         JasperReport jasperReport =
                 JasperCompileManager.compileReport(jasperDesign);
         String patientId = (String) cmbPatientId.getValue();
@@ -378,7 +385,7 @@ public class TreatmentFormController {
     }
     private String generateId(){
         try{
-           return TreatmentRepo.generateId();
+            return treatmentBO.generateId();
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }

@@ -13,7 +13,7 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     @Override
     public ArrayList<User> getAll() throws SQLException {
-        return null;
+        throw new UnsupportedOperationException("This feature is not implemented yet");
     }
     @Override
     public  boolean save(User entity) throws SQLException {
@@ -22,11 +22,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean update(User dto) throws SQLException {
-        return false;
+        throw new UnsupportedOperationException("This feature is not implemented yet");
     }
     @Override
     public  User setLoginDetail(String userName) throws SQLException {
-        ResultSet resultSet = SQLUtil.execute("SELECT user_id,user_name,user_type,password FROM user WHERE user_name = ?");
+        ResultSet resultSet = SQLUtil.execute("SELECT user_id,user_name,user_type,password FROM user WHERE user_name = ?",userName);
         if (resultSet.next()) {
             User user = new User(resultSet.getString("user_id"),resultSet.getString("user_name"),resultSet.getString("user_type"),resultSet.getString("password"));
             return user;
@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean delete(String id) throws SQLException {
-        return false;
+        throw new UnsupportedOperationException("This feature is not implemented yet");
     }
 
 

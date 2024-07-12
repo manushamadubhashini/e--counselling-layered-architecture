@@ -54,4 +54,14 @@ public class DashBoardDAOImpl implements DashBoarDAO {
         }
         return appointmentCount;
     }
+
+    @Override
+    public int getSessionCount() throws SQLException {
+        ResultSet resultSet = SQLUtil.execute("SELECT COUNT(*) AS session_count FROM  Session");
+        int sessionCount = 0;
+        if (resultSet.next()) {
+            sessionCount = resultSet.getInt("session_count");
+        }
+        return sessionCount;
+    }
 }

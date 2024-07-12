@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Report {
+public class ReportDTO {
     private String rid;
     private String gender;
     private String des;
