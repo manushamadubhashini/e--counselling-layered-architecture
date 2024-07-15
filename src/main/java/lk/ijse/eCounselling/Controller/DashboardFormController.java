@@ -233,7 +233,7 @@ public class DashboardFormController {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("High Risk Patients Alert");
                     alert.setHeaderText("High-risk patients found!");
-                    alert.setContentText("There are high-risk patients in the database. Immediate attention is required!");
+                    alert.setContentText("There are high-risk patients in the system. Immediate attention is required!");
                     alert.showAndWait();
                 });
             }
